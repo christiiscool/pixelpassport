@@ -1,0 +1,9 @@
+{
+  "name": "pixel-passport",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node server.mjs",
+    "check": "node --check dist/app.js"
+  }
+}
