@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "node server.mjs",
-    "check": "node --check dist/app.js"
-  }
+    "check": "node --check dist/app.js && node --check dist/storybook.js",
+    "build": "node scripts/build-dashboard.mjs"
+  },
+  "dependencies": {"react": "^19.0.0", "react-dom": "^19.0.0"},
+  "devDependencies": {"esbuild": "^0.25.0"}
 }

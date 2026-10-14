@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "style": "Warm pastel pixel-art storybook with crisp 16-bit inspired icons",
+  "palette": {
+    "cream": "#fff7e8",
+    "parchment": "#f3e6d0",
+    "sageGreen": "#a9be9a",
+    "forestGreen": "#526e58",
+    "dustyRose": "#e7b0ac",
+    "peach": "#f2c6a5",
+    "skyBlue": "#b9d9e8",
+    "lavender": "#c9c0e5",
+    "warmBrown": "#443b35"
+  },
+  "typography": {
+    "display": "Fraunces",
+    "body": "Nunito",
+    "accent": "Press Start 2P"
+  },
+  "delivery": {"format": "WebP", "quality": 92, "originals": "source-art/", "pipeline": "scripts/prepare-art.py"},
+  "components": {"source": "src/dashboard.jsx", "framework": "React", "primaryViewport": "phone", "galleryRoute": "#style-guide"},
+  "assets": {
+    "avatars": {
+      "travelerMap": "/assets/avatars/traveler-map.webp",
+      "expressions": "/assets/avatars/traveler-poses.webp",
+      "outfits": "/assets/avatars/traveler-outfits.webp",
+      "actions": "/assets/avatars/traveler-actions.webp",
+      "turnaroundViews": "/assets/avatars/traveler-views.webp",
+      "spriteLayout": "3 columns x 2 rows; cells indexed left to right, then top to bottom",
+      "expressionNames": ["happy", "excited", "thinking", "walking", "tired", "celebrating"],
+      "outfitNames": ["explorer", "skiing", "summer", "city", "rainy", "hiking"],
+      "actionNames": ["luggage", "walking", "map reading", "photography", "planning", "waving"],
+      "viewNames": ["front", "side", "back", "three-quarter"]
+    },
+    "landscapes": {
+      "alpineTrain": "/assets/landscapes/alpine-train.webp"
+    },
+    "destinations": {
+      "paris": "/assets/destinations/paris.webp",
+      "stGallen": "/assets/destinations/st-gallen.webp",
+      "rome": "/assets/destinations/rome.webp",
+      "finland": "/assets/destinations/finland.webp",
+      "europePostcardsAtlas": "/assets/destinations/europe-postcards.webp",
+      "europePostcardsLayout": "2 columns x 2 rows: Austria, Finland, Greece, Venice"
+    },
+    "skiing": {
+      "alpineResort": "/assets/skiing/alpine-resort.webp"
+    },
+    "backgrounds": {"parchmentGrain": "/assets/backgrounds/parchment-grain.svg"},
+    "decorations": {"floralCorner": "/assets/decorations/floral-corner.svg", "floralAtlas": "/assets/decorations/floral-atlas.webp", "floralAtlasLayout": "2 x 2: left flowers, right flowers, blossom branch, pine tree"},
+    "ui": {"notebookDivider": "/assets/ui/notebook-divider.svg", "ribbon": "/assets/ui/ribbon.svg"},
+    "animations": {"sparkle": "/assets/animations/sparkle.svg"},
+    "icons": {
+      "paintedAtlas": "/assets/icons/travel-inventory-atlas.webp",
+      "paintedAtlasLayout": "6 columns x 4 rows",
+      "paintedAtlasNames": ["home", "backpack", "map", "checklist", "coins", "tickets", "skis", "journal", "settings", "plane", "train", "camera", "jacket", "pants", "thermals", "boots", "gloves", "goggles", "helmet", "toiletries", "electronics", "passport", "bottle", "adapter"],
+      "basePath": "/assets/icons/",
+      "extension": ".svg",
+      "names": ["home", "trips", "map", "packing", "tasks", "budget", "bookings", "ski", "journal", "settings", "plane", "train", "bus", "ferry", "suitcase", "passport", "camera", "compass", "hotel", "calendar", "pin", "jacket", "sweater", "thermals", "pants", "boots", "gloves", "goggles", "helmet", "toiletries", "electronics", "bottle", "adapter", "flower", "star", "mountain", "stamp", "cat", "food", "heart", "clock", "snow", "cloud"]
+    }
+  }
+}

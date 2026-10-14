@@ -1,12 +1,14 @@
 # Pixel Passport
 
-**Every journey is an adventure.** A responsive, offline-first travel planner for a January–May 2027 European exchange.
+**Every journey is an adventure.** A phone-first illustrated travel planner for a January–May 2027 European exchange.
 
 ## Run locally
 
-Requires Node.js 18 or newer. No package install or API key is required.
+Requires Node.js 18 or newer. The checked-in `dist/` output can be served directly. To edit and rebuild the React dashboard, install dependencies first:
 
 ```bash
+npm install
+npm run build
 npm run dev
 ```
 
@@ -14,7 +16,9 @@ Open `http://localhost:4173`. Run `npm run check` to validate JavaScript syntax.
 
 ## What works
 
-- Ten navigable sections with a responsive pixel-inspired interface.
+- Ten planning sections plus a living asset gallery at `#style-guide`, with phone bottom navigation and an illustrated menu drawer.
+- A React dashboard and reusable visual components in `src/dashboard.jsx`, including character avatars, destination postcards, inventory slots, progress bars, quest cards, and passport stamps.
+- Original scenery, city postcards, character expression/action/outfit sheets, a shaded inventory icon atlas, and floral decorations. The asset catalog is in `dist/assets/manifest.json`; optimized WebP delivery copies are in `dist/assets/`, with the original PNGs retained in `source-art/`.
 - Draft trips and destinations with coordinates, order, dates, notes, and status. The map uses MapLibre and OpenStreetMap tiles. A new destination immediately appears on the map.
 - Activity ideas and day plans with dates, times, estimated costs, categories, status, booking links, and drag reordering.
 - Packing inventory with quantities, bags, weights, statuses, and suggestions based on winter destinations and skiing.
@@ -28,7 +32,7 @@ All initial destinations and trips are **drafts**. No booking confirmations, pri
 
 ## Storage and privacy
 
-This release runs in **demo mode**. Records and small journal photos are stored in this browser's `localStorage`, not synchronized across devices. Clearing site data removes them. Export a JSON backup from Settings regularly. The private hosted URL controls access to the app, but data still lives on each device.
+Records and small journal photos are stored in this browser's `localStorage`, not synchronized across devices. Clearing site data removes them. Export a JSON backup from Settings when moving devices. The public app does not publish these browser-local records. The existing `pixel-passport-v1` storage key and record IDs are preserved.
 
 Map tiles, geocoding, weather, fonts, and exchange rates use public third-party services. Their availability depends on the network. The UI retains saved records if those calls fail. No secret keys are embedded in client code.
 
@@ -38,8 +42,8 @@ Supabase is **not connected in this release**. To add synchronized storage and a
 
 ## Deployment
 
-This repository is configured for OpenAI Sites with `.openai/hosting.json`, using `dist/` as a static directory. The app can also be deployed to any static host, including Vercel: set the output directory to `dist` and use no build command. HTTPS is recommended for browser storage and file APIs. Keep the site private if it contains personal travel plans.
+This repository is configured for OpenAI Sites with `.openai/hosting.json`, using `dist/` as a static directory. Rebuild the component bundle with `npm run build` before publishing source changes. The app can also be deployed to another static host with output directory `dist`.
 
 ## Current limits
 
-The preferred Next.js, TypeScript, Tailwind, shadcn/ui, Supabase, and Recharts stack is not used in this first offline release. MapLibre runs from a CDN. Ski plans should be linked to an existing destination to appear on the map. Booking document uploads, long-term cloud photo storage, snow reports, shared syncing, and richer itinerary calendar controls need a backend or further work. Destination deletion explicitly confirms removal of its activities; other linked records are retained and detached.
+The dashboard uses React; the existing editing pages and local data layer retain their established JavaScript implementation. MapLibre runs from a CDN. Ski plans should be linked to an existing destination to appear on the map. Booking document uploads, long-term cloud photo storage, snow reports, shared syncing, and richer itinerary calendar controls need a backend or further work. Destination deletion explicitly confirms removal of its activities; other linked records are retained and detached.

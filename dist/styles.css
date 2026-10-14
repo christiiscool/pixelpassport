@@ -10,7 +10,7 @@ body{background:radial-gradient(circle at 90% 0,#f4dfe6 0,transparent 28%),linea
 .tiny-card,.card,.trip-card,.destination-card{background:#fffaf1;border-color:#dac8bb;box-shadow:3px 3px 0 #e0d0c6}
 .tiny-card{background:#f5e8ef}.sidebar-sprite{height:50px;width:44px;object-fit:contain;object-position:bottom}
 .avatar-chip{height:42px;width:42px;padding:2px;overflow:hidden;background:#f9e3e7}.avatar-chip img{height:49px;width:100%;object-fit:cover;object-position:top}
-.hero{min-height:285px;background-image:linear-gradient(90deg,#fff4e9fa 0%,#fff4e9d9 29%,#fff4e933 55%,transparent 75%),url('/assets/alpine-train.png');background-size:cover;background-position:center 54%;border-color:#5f5158;box-shadow:5px 5px 0 #cfb6b8}
+.hero{min-height:285px;background-image:linear-gradient(90deg,#fff4e9fa 0%,#fff4e9d9 29%,#fff4e933 55%,transparent 75%),url('/assets/alpine-train.webp');background-size:cover;background-position:center 54%;border-color:#5f5158;box-shadow:5px 5px 0 #cfb6b8}
 .hero .cloud,.hero .mountain,.hero .ground,.hero .pixel-train{display:none}.hero-content{padding:31px 34px}.hero h2{color:#4b3c59;text-shadow:1px 1px #fff8ed}.hero p{color:#6b5368;font-weight:700}.hero-stamp{background:#fff8ebdb;border-color:#a77590;color:#805476}
 .btn.primary{background:#bfe0ca}.btn.pink{background:#f6c8d7}.btn.yellow{background:#f9e0a8}
 .pill{background:#e9f3e9}.pill.pink{background:#f9dce3}.pill.lav{background:#e9e1f5}
@@ -18,6 +18,6 @@ body{background:radial-gradient(circle at 90% 0,#f4dfe6 0,transparent 28%),linea
 .soft-blue{background:#edf6f6!important}.soft-pink{background:#fdf0f2!important}.soft-yellow{background:#fff6e5!important}.soft-lav{background:#f6f0fb!important}
 .companion-sprite{height:95px;width:95px;object-fit:contain;object-position:bottom;float:right;margin:-5px 0 0 10px}.card:has(.companion-sprite){min-height:190px;background:linear-gradient(130deg,#fbeef2,#e9f4ed)!important}
 .destination-card .art{background:linear-gradient(135deg,#cbe6ea 0%,#eee0ef 60%,#f7dbd1 100%);border:1px solid #dbbfc7}
-.inventory-slot{background:#fff5eb;border-color:#d6c4ba}.inventory-slot.packed{background:#e5f1df}.quest{background:#fff8ed;border-color:#dfcaba}.snow-banner{background-image:linear-gradient(90deg,#eaf7fbf5,#d9eef1a0),url('/assets/alpine-train.png');background-size:cover;background-position:center 36%}
+.inventory-slot{background:#fff5eb;border-color:#d6c4ba}.inventory-slot.packed{background:#e5f1df}.quest{background:#fff8ed;border-color:#dfcaba}.snow-banner{background-image:linear-gradient(90deg,#eaf7fbf5,#d9eef1a0),url('/assets/alpine-train.webp');background-size:cover;background-position:center 36%}
 @media(max-width:800px){.hero{background-position:60% center}.hero-content{padding:22px}.hero p{max-width:65%}}
-@media(max-width:570px){.hero{min-height:250px;background-image:linear-gradient(90deg,#fff4e9ee 0%,#fff4e9a8 60%,#fff4e933),url('/assets/alpine-train.png');background-position:60% center}.hero p{max-width:87%}.companion-sprite{height:85px;width:75px}}
+@media(max-width:570px){.hero{min-height:250px;background-image:linear-gradient(90deg,#fff4e9ee 0%,#fff4e9a8 60%,#fff4e933),url('/assets/alpine-train.webp');background-position:60% center}.hero p{max-width:87%}.companion-sprite{height:85px;width:75px}}
