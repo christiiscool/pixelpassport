@@ -46,4 +46,16 @@ This repository is configured for OpenAI Sites with `.openai/hosting.json`, usin
 
 ## Current limits
 
-The dashboard uses React; the existing editing pages and local data layer retain their established JavaScript implementation. MapLibre runs from a CDN. Ski plans should be linked to an existing destination to appear on the map. Booking document uploads, long-term cloud photo storage, snow reports, shared syncing, and richer itinerary calendar controls need a backend or further work. Destination deletion explicitly confirms removal of its activities; other linked records are retained and detached.
+The dashboard uses React; the existing editing pages and local data layer retain their established JavaScript implementation. MapLibre runs from a CDN. Ski plans can create a new mapped itinerary stop after a coordinate lookup, or link to an existing stop. Booking document uploads, long-term cloud photo storage, snow reports, shared syncing, and richer itinerary calendar controls need a backend or further work. Destination deletion explicitly confirms removal of its activities; other linked records are retained and detached.
+
+## Living world upgrade
+
+- Seasonal Alpine layers, an independent pixel train on a fixed bridge, cloud drift, pixel particles, restrained parallax, water accents and lantern glow. Canvas animation stops outside the viewport or when the document is hidden; CSS motion has shared tokens and honors reduced motion.
+- Reusable React scene, companion, cat, dialogue, stamp, map-pin, modal and achievement components in `src/world.jsx`. The workshop at `#style-guide` previews seasons, character states, outfits, map pins and effects without changing records.
+- Settings retain manual season, wardrobe and ambient pause preferences. Automatic seasons derive from a selected destination arrival, then the trip departure month, with a deterministic winter fallback.
+- Activity diary disclosures keep their expanded state during completion, calendar/list/timeline transitions use the same motion tokens, and transport entries link to the saved route preview.
+- Packing bag tabs and readiness, actual quest XP feedback, genuine visited-country unlocks and a scrapbook footprint timeline.
+- Interactive category filtering and monthly estimated/actual expense charts use saved conversion amounts. Unconverted and undated costs remain clearly identified.
+- Ski destination creation and cost linking are explicit form controls. Linked estimates carry `sourceSkiId`, a cost-part key and a signature; subsequent saves preserve edited, actual, committed and removed ledger entries. Clearing a ski cost does not silently delete an expense. Equipment and tasks are suggestions until accepted.
+
+Audit and feature proposals: `docs/interactive-upgrade-audit.md`. Original asset prompts: `scripts/living-art-prompts.md`. Functional gates: `npm run check`.

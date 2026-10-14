@@ -4,9 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "node server.mjs",
-    "check": "node --check dist/app.js && node --check dist/storybook.js",
+    "check": "node --check dist/app.js && node --check dist/storybook.js && node --check dist/living-world.js && node scripts/check-living-model.mjs",
     "build": "node scripts/build-dashboard.mjs"
   },
-  "dependencies": {"react": "^19.0.0", "react-dom": "^19.0.0"},
-  "devDependencies": {"esbuild": "^0.25.0"}
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
 }
