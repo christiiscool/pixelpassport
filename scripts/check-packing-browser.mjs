@@ -20,6 +20,18 @@ try {
  });
  await page.reload({waitUntil:'domcontentloaded'});
  await page.locator('.packing-v2').waitFor({timeout:20000});
+ 
+ const metrics=await page.evaluate(()=>{
+  const selectors=['.app','.sidebar','.main','.topbar','.packing-v2','.packing-v2-hero','.pack-stats','.pack-bags','.pack-section-head','.packing-v2-grid'];
+  return Object.fromEntries(selectors.map(selector=>{
+   const el=document.querySelector(selector);if(!el)return [selector,null];
+   const r=el.getBoundingClientRect(),s=getComputedStyle(el);
+   return [selector,{rect:{x:r.x,y:r.y,width:r.width,height:r.height},style:{display:s.display,visibility:s.visibility,opacity:s.opacity,transform:s.transform,animation:s.animationName,zIndex:s.zIndex,position:s.position},text:el.innerText?.slice(0,90)}];
+  }));
+ });
+ console.log('PACKING_VISUAL_METRICS='+JSON.stringify(metrics));
+ await page.screenshot({path:'artifacts/packing-viewport.png'});
+
  await page.screenshot({path:'artifacts/packing-desktop-before.png',fullPage:true});
  assert.equal(await page.locator('.pack-stats').count(),1);
  assert.equal(await page.locator('.pack-bags>button').count(),4);
