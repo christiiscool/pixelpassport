@@ -59,3 +59,16 @@ The dashboard uses React; the existing editing pages and local data layer retain
 - Ski destination creation and cost linking are explicit form controls. Linked estimates carry `sourceSkiId`, a cost-part key and a signature; subsequent saves preserve edited, actual, committed and removed ledger entries. Clearing a ski cost does not silently delete an expense. Equipment and tasks are suggestions until accepted.
 
 Audit and feature proposals: `docs/interactive-upgrade-audit.md`. Original asset prompts: `scripts/living-art-prompts.md`. Functional gates: `npm run check`.
+
+## Travelers, companions and the atlas
+
+- New visitors choose a brunette or blonde traveler, an independent white cat or puppy, and one of six outfits, then review their choices. Returning profiles receive an additive migration and skip onboarding. The original storage key, record IDs and travel arrays remain intact.
+- Wardrobe choices save immediately and update every character island, including the optional map traveler. Both characters have distinct signature and outfit artwork. The wardrobe is available from the page toolbar, map and Settings.
+- Reusable character components live in `src/avatar-system.jsx`; shared motion lifecycle in `src/motion.jsx`; validation and migration in `src/avatar-model.mjs`. Independent transparent sprites are registered and clipped with SVG viewports, preserving aspect ratio and feet alignment. Original PNGs and the supplied blonde reference remain in `source-art/characters/`.
+- The real MapLibre map supports place search, discovery at selected coordinates, editable trip or wishlist additions, saved favorites and illustrated destination cards. Dates, notes, activity counts and estimates come from saved records. Selecting a pin cancels delayed map discovery results.
+- Planning, trip preview and visited modes persist with map filters. The optional selected traveler is labeled **Planning preview** and never marks a visit. Explicit visited actions unlock country stamps; Undo restores the prior status.
+- Journey playback follows saved non-wishlist stops in order. Plane, train, bus and car symbols are selectable preview illustrations. Connections remain labeled approximate because verified routing geometry and journey times are unavailable. Stop journey and Settings animation preferences control playback.
+- Phone layouts use a horizontal illustrated wardrobe, compact map header and collapsible journey controls. The scene pause button was removed at the user's request; ambient animation remains configurable in Settings.
+- Tap the traveler to wave, read a map or take a photograph; tap the selected pet to play or walk beside the traveler. Dialogue reacts immediately. Tap the Alpine landscape for drifting seasonal petals, a breeze and passing birds. These interactions are temporary and do not alter travel records; reduced-motion settings suppress their animation.
+
+Artwork prompts and paths: `scripts/character-art-prompts.md`. Browser verification and screenshots: `docs/character-map-verification.md`.

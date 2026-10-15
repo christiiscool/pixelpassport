@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node server.mjs",
-    "check": "node --check dist/app.js && node --check dist/storybook.js && node --check dist/living-world.js && node scripts/check-living-model.mjs",
+    "check": "node --check dist/app.js && node --check dist/storybook.js && node --check dist/living-world.js && node --check dist/character-world.js && node scripts/check-living-model.mjs && node scripts/check-avatar-model.mjs",
     "build": "node scripts/build-dashboard.mjs"
   },
   "dependencies": {

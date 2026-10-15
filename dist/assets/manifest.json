@@ -192,5 +192,34 @@
     ],
     "gallery": "#style-guide",
     "generationPrompts": "scripts/living-art-prompts.md"
+  },
+  "characters": {
+    "components": "src/avatar-system.jsx",
+    "profileModel": "src/avatar-model.mjs",
+    "registration": "src/character-atlas.json",
+    "generationPrompts": "scripts/character-art-prompts.md",
+    "identities": [
+      "brunette",
+      "blonde"
+    ],
+    "companions": [
+      "cat",
+      "puppy"
+    ],
+    "outfits": [
+      "casual",
+      "ski",
+      "summer",
+      "city",
+      "rain",
+      "hiking"
+    ],
+    "atlases": [
+      "characters/blonde-actions.webp",
+      "characters/blonde-wardrobe.webp",
+      "characters/brunette-actions.webp",
+      "characters/brunette-wardrobe.webp",
+      "characters/companions.webp"
+    ]
   }
 }
