@@ -66,6 +66,7 @@ assert.match(lastDownload.content,/Ski socks/);
 assert.match(lastDownload.content,/"2"/);
 
 assert.equal(sock.status,'needed');
+context.actions.newPacking(); // Restore the inventory form after testing the separate luggage-limits modal.
 assert.throws(()=>onSave({name:'Bad',qty:'5',ownedQty:'2',packedQty:'4',weight:'0',tripId:tripA}),/Packed quantity cannot exceed owned/);
 context.actions.packingAdjust({id:sock.id,field:'owned',delta:1});
 assert.equal(counts(sock).shopping,1);
