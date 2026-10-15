@@ -58,7 +58,7 @@ context.actions.packingAdjust({id:sock.id,field:'packed',delta:1});
 assert.equal(counts(sock).packed,3);
 const proposed=suggestions().find(s=>s.name==='Thermal base layers');
 assert.ok(proposed);
-context.actions.acceptPacking({index:suggestions().indexOf(proposed)});
+context.actions.acceptPacking({index:suggestions().findIndex(s=>s.name==='Thermal base layers')});
 assert.ok(state.packing.find(p=>p.name==='Thermal base layers'&&p.tripId===tripA));
 assert.equal(suggestions().filter(s=>s.name==='Thermal base layers').length,0);
 context.selectedTrip=tripB;
