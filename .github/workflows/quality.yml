@@ -1,0 +1,41 @@
+name: Pixel Passport quality checks
+on:
+  push:
+    branches: [main, feature/pixel-packing-inventory-v2]
+  pull_request:
+    branches: [main]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build and run syntax checks
+        run: |
+          npm run build
+          npm run check
+          node scripts/check-packing-upgrade.mjs
+      - name: Install browser tooling
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check packing interface in a real browser
+        run: |
+          npm run dev > /tmp/pixel-passport-server.log 2>&1 &
+          for i in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/check-packing-browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: packing-desktop-mobile-screenshots
+          path: artifacts/
+          if-no-files-found: ignore
