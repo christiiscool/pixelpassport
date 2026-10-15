@@ -30,3 +30,8 @@
 @media(max-width:980px){.pack-bags{grid-template-columns:repeat(2,minmax(0,1fr))}.packing-v2-avatar{width:130px}.pack-stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){.packing-v2-hero{min-height:270px}.packing-hero-copy{padding:19px;max-width:90%}.packing-hero-copy h2{font-size:34px}.packing-v2-landscape{left:22%;opacity:.6}.packing-v2-avatar{right:-25px;opacity:.6;width:115px;height:160px}.pack-trip{flex-wrap:wrap}.pack-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.pack-stats>div:first-child{grid-column:1/-1}.pack-stats strong{font-size:25px}.pack-stats>div{padding:13px;min-height:110px}.pack-bags{grid-template-columns:repeat(2,minmax(0,1fr))}.pack-bags>button{grid-template-columns:32px 1fr;padding:9px;gap:5px}.pack-bags .pack-art{width:32px;height:32px}.pack-bags b{font-size:14px}.pack-section-head{display:block}.pack-section-head small{display:block;margin-top:5px}.packing-v2-grid{grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:9px}.pack-card{padding:10px}.pack-card-art{width:52px;height:52px}.pack-card-art .pack-art{width:40px;height:40px}.pack-shopping>div{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.packing-v2 *{transition:none!important;animation:none!important}}
+
+/* The packing chapter already owns its Alpine scene; suppress the old duplicate
+   decorative chapter banner so inventory stays near the top of the page. */
+body[data-page="packing"] .living-page-header{display:none!important}
+body[data-page="packing"] .packing-v2{margin-top:10px}
