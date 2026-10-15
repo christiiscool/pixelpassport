@@ -1,0 +1,53 @@
+import assert from 'node:assert/strict';
+import {mkdirSync} from 'node:fs';
+import {chromium} from 'playwright';
+
+mkdirSync('artifacts',{recursive:true});
+const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+const errors=[];
+try {
+ const page=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1});
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:4173/#packing',{waitUntil:'domcontentloaded'});
+ await page.waitForTimeout(500);
+ await page.evaluate(()=>{
+  const key='pixel-passport-v1';
+  const data=JSON.parse(localStorage.getItem(key));
+  if(!data)throw Error('Failed to initialize Pixel Passport demo data');
+  data.profile.onboardingCompleted=true;
+  data.profile.ambientMotion='off';
+  localStorage.setItem(key,JSON.stringify(data));
+ });
+ await page.reload({waitUntil:'domcontentloaded'});
+ await page.locator('.packing-v2').waitFor({timeout:20000});
+ await page.screenshot({path:'artifacts/packing-desktop-before.png',fullPage:true});
+ assert.equal(await page.locator('.pack-stats').count(),1);
+ assert.equal(await page.locator('.pack-bags>button').count(),4);
+ await page.locator('button[data-action="newPacking"]').first().click();
+ await page.locator('input[name="name"]').fill('Thermal socks');
+ await page.locator('input[name="qty"]').fill('5');
+ await page.locator('input[name="ownedQty"]').fill('3');
+ await page.locator('input[name="packedQty"]').fill('2');
+ await page.locator('select[name="tripId"]').selectOption({index:0});
+ await page.locator('#dialog-form button[type=submit]').click();
+ const saved=page.locator('.pack-card').filter({hasText:'Thermal socks'});
+ await saved.waitFor({timeout:5000});
+ assert.match(await saved.innerText(),/2\/5 packed/);
+ assert.match(await saved.innerText(),/3\/5 owned/);
+ await saved.locator('button[data-action="packingAdjust"][data-field="packed"][data-delta="1"]').click();
+ assert.match(await page.locator('.pack-card').filter({hasText:'Thermal socks'}).innerText(),/3\/5 packed/);
+ await page.reload({waitUntil:'domcontentloaded'});
+ await page.locator('.pack-card').filter({hasText:'Thermal socks'}).waitFor({timeout:10000});
+ assert.match(await page.locator('.pack-card').filter({hasText:'Thermal socks'}).innerText(),/3\/5 packed/,'persists after reload');
+ const bought=page.locator('.pack-shopping>div').filter({hasText:'Thermal socks'});
+ assert.match(await bought.innerText(),/2 needed/);
+ await page.screenshot({path:'artifacts/packing-desktop-filled.png',fullPage:true});
+ await page.setViewportSize({width:390,height:844});
+ await page.reload({waitUntil:'domcontentloaded'});
+ await page.locator('.packing-v2').waitFor();
+ await page.screenshot({path:'artifacts/packing-mobile.png',fullPage:true});
+ const dimensions=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,window:innerWidth}));
+ assert.ok(dimensions.scroll<=dimensions.window+5,'mobile layout must not overflow: '+JSON.stringify(dimensions));
+ if(errors.length)throw Error('Browser exceptions: '+errors.join('\n'));
+ console.log('Packing browser test passed: page render, add/edit quantity, persistent partial packing, shopping, 390px responsive layout, no page exceptions');
+} finally {await browser.close()}
