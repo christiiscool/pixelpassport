@@ -21,7 +21,7 @@ Open `http://localhost:4173`. Run `npm run check` to validate JavaScript syntax.
 - Original scenery, city postcards, character expression/action/outfit sheets, a shaded inventory icon atlas, and floral decorations. The asset catalog is in `dist/assets/manifest.json`; optimized WebP delivery copies are in `dist/assets/`, with the original PNGs retained in `source-art/`.
 - Draft trips and destinations with coordinates, order, dates, notes, and status. The map uses MapLibre and OpenStreetMap tiles. A new destination immediately appears on the map.
 - Activity ideas and day plans with dates, times, estimated costs, categories, status, booking links, and drag reordering.
-- Packing inventory with quantities, bags, weights, statuses, and suggestions based on winter destinations and skiing.
+- Packing Adventure inventory with separate needed/owned/packed quantities, per-trip shopping and winter/ski suggestions, illustrated gear icons and character wardrobe access. User-entered luggage limits are per trip, not fabricated airline allowances; the page flags overweight bags and supports CSV export. Packed-weight totals explicitly flag items missing weight estimates.
 - Quest board with due dates, priority, categories, recurrence, XP, and suggestions linked to planned destinations or ski plans.
 - Estimated, committed, and actual expenses with original currency, saved conversion rate, budget totals, category chart, and CSV export. Bookings can reference an expense without counting it twice.
 - Booking vault, ski planner, journal photos under 1 MB, and country stamps unlocked by marking a destination visited.
