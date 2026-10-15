@@ -16,16 +16,17 @@ const state={
 };
 let saveCount=0,onSave=null,lastDownload=null;
 const listeners={};
-const context={
+const context={structuredClone,
   state,selectedTrip:tripA,page:'tasks',filters:{},actions:{},
-  window:{PPReact:null,pixelPassportEnhance:null},
-  document:{addEventListener:(name,fn)=>(listeners[name]??=[]).push(fn)},
-  packingPage(){},packingForm(){},packingSuggestions(){return []},
+  window:{PPReact:null,pixelPassportEnhance:null,PPAvatarUI:{setup(){}}},
+  document:{querySelector:()=>null,addEventListener:(name,fn)=>(listeners[name]??=[]).push(fn)},
+  packingPage(){},packingForm(record){return context.window.PPPackingForm(record)},packingSuggestions(){return []},
   save(){saveCount++},render(){},download:(name,content,type)=>{lastDownload={name,content,type}},
   toast(){},esc:x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'),
   field:()=>'',selectField:()=>'',textField:()=>'',modal:(title,html,fn)=>{onSave=fn},
   id:()=>('test-'+Math.random().toString(36).slice(2))
 };
+vm.runInNewContext(readFileSync(new URL('../dist/packing-model.js',import.meta.url),'utf8'),context);
 vm.runInNewContext(readFileSync(new URL('../dist/packing-upgrade.js',import.meta.url),'utf8'),context,{filename:'packing-upgrade.js'});
 const {counts,totals,suggestions,items,limitsFor,itemIcon}=context.window.PPPackingModel;
 assert.equal(itemIcon({name:'Ski jacket'}),'ski-jacket');
@@ -38,7 +39,7 @@ assert.equal(totals(items()).weight,2.2);
 assert.ok(suggestions().some(s=>s.name==='Thermal base layers'),'winter suggestion for winter trip');
 assert.ok(!suggestions().some(s=>s.name==='Warm coat'),'avoid existing items');
 assert.ok(!suggestions().some(s=>s.name==='Sunscreen SPF 50'),'do not leak a summer suggestion into winter');
-assert.match(context.packingPage(),/CHAPTER THREE/);
+assert.match(context.window.PPPackingPage(),/CHAPTER THREE/);
 context.actions.packingAll({id:'legacy'});
 assert.equal(counts(state.packing[0]).packed,0,'unpack all resets packed only');
 assert.equal(counts(state.packing[0]).owned,2,'unpack all retains owned quantity');
@@ -83,4 +84,15 @@ assert.equal(limitsFor()['checked luggage'],undefined,'another trip cannot inher
 assert.ok(suggestions().some(s=>s.name==='Sun hat'),'summer suggestion for May family trip');
 assert.ok(!suggestions().some(s=>s.name==='Thermal base layers'),'no winter clothes suggested for May family trip');
 assert.ok(saveCount>=4);
+
+const unowned={id:'unowned',name:'New gloves',tripId:tripA,qty:2,ownedQty:0,packedQty:0,status:'needed'};
+state.packing.push(unowned);context.selectedTrip=tripA;
+context.actions.packingAdjust({id:'unowned',field:'packed',delta:1});assert.equal(counts(unowned).packed,0);assert.equal(counts(unowned).owned,0);
+context.actions.packingAll({id:'unowned'});assert.equal(counts(unowned).packed,0,'packing never invents ownership');
+context.actions.packingAdjust({id:'unowned',field:'owned',delta:1});assert.equal(counts(unowned).packed,0,'purchasing does not pack');
+context.actions.packingAdjust({id:'unowned',field:'packed',delta:1});assert.equal(counts(unowned).packed,1);
+context.actions.packingAdjust({id:'unowned',field:'qty',delta:1});assert.equal(counts(unowned).qty,3);
+context.actions.packDelete({id:'unowned'});assert.ok(!state.packing.some(p=>p.id==='unowned'));context.actions.packUndo();assert.equal(state.packing.filter(p=>p.id==='unowned').length,1);
+const legacyRead={id:'untouched',qty:'3',status:'purchased'};const unchanged=JSON.stringify(legacyRead);assert.equal(counts(legacyRead).owned,3);assert.equal(JSON.stringify(legacyRead),unchanged,'migration reads do not rewrite user records');
+
 console.log('Packing model tests passed: migration, partial quantities, owned vs packed, trip isolation, suggestions, and item validation.');

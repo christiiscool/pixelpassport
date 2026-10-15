@@ -1,0 +1,4 @@
+﻿"Item","Quantity needed","Quantity owned","Quantity packed","Quantity to buy","Bag","Unit weight (kg)","Notes"
+"Audit thermal layers","3","3","0","0","cabin luggage","0.25",""
+"QA ski socks","5","3","2","2","cabin luggage","0.2","Edited QA note; quantities retained"
+"Ski jacket","1","0","0","1","checked luggage","0.9","Suggested: Ski trip"

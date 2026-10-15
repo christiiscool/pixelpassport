@@ -1,0 +1,874 @@
+[
+  {
+    "id": "ONBOARD-01",
+    "result": "passed",
+    "evidence": "Executed all four setup screens at 1440 and 390; blonde + puppy + ski selection remained in the toolbar after reload and navigation."
+  },
+  {
+    "id": "TRIPS-FORM",
+    "result": "opened",
+    "evidence": {
+      "fields": [
+        {
+          "name": "name",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "name": "status",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "start",
+          "required": false,
+          "type": "date"
+        },
+        {
+          "name": "end",
+          "required": false,
+          "type": "date"
+        },
+        {
+          "name": "budget",
+          "required": false,
+          "type": "number"
+        },
+        {
+          "name": "focus",
+          "required": false,
+          "type": "text"
+        },
+        {
+          "name": "notes",
+          "required": false,
+          "type": "textarea"
+        }
+      ],
+      "invalid": [
+        "name"
+      ]
+    }
+  },
+  {
+    "id": "MAP-FORM",
+    "result": "opened",
+    "evidence": {
+      "fields": [
+        {
+          "name": "name",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "name": "country",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "name": "tripId",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "status",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "arrival",
+          "required": false,
+          "type": "date"
+        },
+        {
+          "name": "departure",
+          "required": false,
+          "type": "date"
+        },
+        {
+          "name": "lat",
+          "required": true,
+          "type": "number"
+        },
+        {
+          "name": "lng",
+          "required": true,
+          "type": "number"
+        },
+        {
+          "name": "icon",
+          "required": false,
+          "type": "text"
+        },
+        {
+          "name": "notes",
+          "required": false,
+          "type": "textarea"
+        }
+      ],
+      "invalid": [
+        "name",
+        "country",
+        "lat",
+        "lng"
+      ]
+    }
+  },
+  {
+    "id": "PACKING-FORM",
+    "result": "opened",
+    "evidence": {
+      "fields": [
+        {
+          "name": "name",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "name": "icon",
+          "required": false,
+          "type": "text"
+        },
+        {
+          "name": "qty",
+          "required": true,
+          "type": "number"
+        },
+        {
+          "name": "weight",
+          "required": false,
+          "type": "number"
+        },
+        {
+          "name": "bag",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "status",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "tripId",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "notes",
+          "required": false,
+          "type": "textarea"
+        }
+      ],
+      "invalid": [
+        "name"
+      ]
+    }
+  },
+  {
+    "id": "TASKS-FORM",
+    "result": "opened",
+    "evidence": {
+      "fields": [
+        {
+          "name": "title",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "name": "category",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "priority",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "due",
+          "required": false,
+          "type": "date"
+        },
+        {
+          "name": "tripId",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "destinationId",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "recurrence",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "subtasks",
+          "required": false,
+          "type": "textarea"
+        },
+        {
+          "name": "notes",
+          "required": false,
+          "type": "textarea"
+        }
+      ],
+      "invalid": [
+        "title"
+      ]
+    }
+  },
+  {
+    "id": "BUDGET-FORM",
+    "result": "opened",
+    "evidence": {
+      "fields": [
+        {
+          "name": "title",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "name": "category",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "kind",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "amount",
+          "required": true,
+          "type": "number"
+        },
+        {
+          "name": "currency",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "date",
+          "required": false,
+          "type": "date"
+        },
+        {
+          "name": "tripId",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "destinationId",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "payment",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "notes",
+          "required": false,
+          "type": "textarea"
+        }
+      ],
+      "invalid": [
+        "title",
+        "amount"
+      ]
+    }
+  },
+  {
+    "id": "BOOKINGS-FORM",
+    "result": "opened",
+    "evidence": {
+      "fields": [
+        {
+          "name": "type",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "status",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "provider",
+          "required": false,
+          "type": "text"
+        },
+        {
+          "name": "reference",
+          "required": false,
+          "type": "text"
+        },
+        {
+          "name": "date",
+          "required": false,
+          "type": "date"
+        },
+        {
+          "name": "time",
+          "required": false,
+          "type": "time"
+        },
+        {
+          "name": "tripId",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "destinationId",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "cost",
+          "required": false,
+          "type": "number"
+        },
+        {
+          "name": "currency",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "link",
+          "required": false,
+          "type": "url"
+        },
+        {
+          "name": "expenseId",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "notes",
+          "required": false,
+          "type": "textarea"
+        }
+      ],
+      "invalid": []
+    }
+  },
+  {
+    "id": "SKI-FORM",
+    "result": "opened",
+    "evidence": {
+      "fields": [
+        {
+          "name": "resort",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "name": "country",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "name": "tripId",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "destinationId",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "createDestination",
+          "required": false,
+          "type": "checkbox"
+        },
+        {
+          "name": "lat",
+          "required": false,
+          "type": "number"
+        },
+        {
+          "name": "lng",
+          "required": false,
+          "type": "number"
+        },
+        {
+          "name": "start",
+          "required": false,
+          "type": "date"
+        },
+        {
+          "name": "end",
+          "required": false,
+          "type": "date"
+        },
+        {
+          "name": "level",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "passCost",
+          "required": false,
+          "type": "number"
+        },
+        {
+          "name": "rentalCost",
+          "required": false,
+          "type": "number"
+        },
+        {
+          "name": "currency",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "linkEstimates",
+          "required": false,
+          "type": "checkbox"
+        },
+        {
+          "name": "transport",
+          "required": false,
+          "type": "text"
+        },
+        {
+          "name": "equipment",
+          "required": false,
+          "type": "textarea"
+        },
+        {
+          "name": "notes",
+          "required": false,
+          "type": "textarea"
+        }
+      ],
+      "invalid": [
+        "resort",
+        "country"
+      ]
+    }
+  },
+  {
+    "id": "JOURNAL-FORM",
+    "result": "opened",
+    "evidence": {
+      "fields": [
+        {
+          "name": "title",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "name": "date",
+          "required": false,
+          "type": "date"
+        },
+        {
+          "name": "destinationId",
+          "required": false,
+          "type": "select-one"
+        },
+        {
+          "name": "caption",
+          "required": false,
+          "type": "text"
+        },
+        {
+          "name": "photoFile",
+          "required": false,
+          "type": "file"
+        },
+        {
+          "name": "body",
+          "required": false,
+          "type": "textarea"
+        },
+        {
+          "name": "favorite",
+          "required": false,
+          "type": "checkbox"
+        }
+      ],
+      "invalid": [
+        "title"
+      ]
+    }
+  },
+  {
+    "id": "TRIP-DATE-VALIDATION",
+    "result": "passed",
+    "evidence": {
+      "dialogRemains": 1,
+      "message": "End date must be after start date"
+    }
+  },
+  {
+    "id": "GEOCODER-01",
+    "result": "passed",
+    "evidence": {
+      "lat": "47.4256180",
+      "lng": "9.3762397"
+    }
+  },
+  {
+    "id": "DESTINATION-CREATE",
+    "result": "passed",
+    "evidence": {
+      "tripId": "9d4bfc63-5a78-4eae-8bb7-5e1d6124bf62",
+      "destinationId": "e9773b56-9b71-45bd-a9f0-14a7a940cbe7",
+      "name": "St. Gallen"
+    }
+  },
+  {
+    "id": "ITINERARY-LINK",
+    "result": "failed",
+    "evidence": {
+      "details": "Train to St. Gallen\n09:00 · transport · planned\n\nAudit train — local destination time\n\nEstimated $20\n\nSt. Gallen · Saved trip stop order is available on the map.\n\nMark completed\nEdit\nView route\nDelete",
+      "savedBookingLinkVisible": 0
+    }
+  },
+  {
+    "id": "ITINERARY-COMPLETE",
+    "result": "passed",
+    "evidence": "Your diary · 1 / 2 adventures completed · 0 / 1 stops visited"
+  },
+  {
+    "id": "ITINERARY-VIEW-calendar",
+    "result": "passed",
+    "evidence": {
+      "rows": 2
+    }
+  },
+  {
+    "id": "ITINERARY-VIEW-list",
+    "result": "passed",
+    "evidence": {
+      "rows": 2
+    }
+  },
+  {
+    "id": "ITINERARY-VIEW-timeline",
+    "result": "passed",
+    "evidence": {
+      "rows": 2
+    }
+  },
+  {
+    "id": "WEATHER-01",
+    "result": "executed",
+    "evidence": "Now: 8.7°C · precipitation 0 mm · wind 4.4 km/h (Open-Meteo)"
+  },
+  {
+    "id": "SKI-LINK-CREATE",
+    "result": "passed",
+    "evidence": "Open St. Gallen →\nEquipment →\nQuests →\n2 linked ledger entries →"
+  },
+  {
+    "id": "SKI-LINK-IDEMPOTENCE",
+    "result": "passed",
+    "evidence": "Open St. Gallen →\nEquipment →\nQuests →\n2 linked ledger entries →"
+  },
+  {
+    "id": "SKI-PACKING-SUGGESTIONS",
+    "result": "passed",
+    "evidence": [
+      "Warm coat",
+      "Thermal base layers",
+      "Waterproof shoes",
+      "Ski jacket and pants",
+      "Waterproof gloves",
+      "Ski goggles",
+      "Ski socks",
+      "Helmet or rental reminder",
+      "Passport",
+      "Travel adapter",
+      "Reusable water bottle"
+    ]
+  },
+  {
+    "id": "PACKING-QUANTITY-WEIGHT",
+    "result": "passed",
+    "evidence": {
+      "summary": "1 / 1 packed\n100% ready\n0.8 kg estimated\n\nPacked items with weights entered · target 20 kg\n\n11 suggestions\n\nBased on your saved destinations and activities",
+      "item": "Audit thermal layers\n×3 · cabin luggage · packed\n✎\n×"
+    }
+  },
+  {
+    "id": "PACKING-MOBILE-BOUNDS",
+    "result": "executed",
+    "evidence": [
+      {
+        "class": "toolbar",
+        "right": 363,
+        "viewport": 375,
+        "width": 351
+      },
+      {
+        "class": "suitcase-readiness",
+        "right": 363,
+        "viewport": 375,
+        "width": 351
+      },
+      {
+        "class": "inventory",
+        "right": 363,
+        "viewport": 375,
+        "width": 351
+      }
+    ]
+  },
+  {
+    "id": "PACKING-BAG-FILTER",
+    "result": "passed",
+    "evidence": {
+      "visible": 1
+    }
+  },
+  {
+    "id": "QUEST-COMPLETE",
+    "result": "passed",
+    "evidence": {
+      "quests": [
+        "Book audit lift pass",
+        "Book audit lift pass"
+      ],
+      "xp": "Explorer level 1, 25 XP"
+    }
+  },
+  {
+    "id": "QUEST-RECURRENCE-DUPLICATE",
+    "result": "failed",
+    "evidence": {
+      "quests": [
+        "Book audit lift pass",
+        "Book audit lift pass",
+        "Book audit lift pass"
+      ],
+      "dates": [
+        "Book audit lift passMAIN QUEST · +25 XPhigh priorityskiing📅 8 Feb 2027☑ Compare passes\nReserve the passAudit Swiss Journey · St. Gallen · repeats weekly✎×",
+        "Book audit lift passMAIN QUEST · +25 XPhigh priorityskiing📅 8 Feb 2027☑ Compare passes\nReserve the passAudit Swiss Journey · St. Gallen · repeats weekly✎×",
+        "Book audit lift passMAIN QUEST · +25 XPhigh priorityskiing📅 1 Feb 2027☑ Compare passes\nReserve the passAudit Swiss Journey · St. Gallen · repeats weekly✎×"
+      ]
+    }
+  },
+  {
+    "id": "QUEST-HISTORY-FILTER",
+    "result": "passed",
+    "evidence": {
+      "visibleCompleted": 1
+    }
+  },
+  {
+    "id": "BUDGET-CENTS",
+    "result": "failed",
+    "evidence": {
+      "stats": "Exchange budget\n$1,500\nSet budget\nEstimated\n$120\nCommitted\n$0\nActual\n$26\n2% of budget",
+      "ledger": "Audit train ticket\ntrains · actual · 1 Feb 2027 · St. Gallen\n$26\n✎\n×",
+      "expected": "25.50 SGD actual; UI should not round it to 26"
+    }
+  },
+  {
+    "id": "BUDGET-UNCONVERTED",
+    "result": "passed",
+    "evidence": "Amounts in other currencies count toward totals only after a conversion rate is saved. Original amounts and rates stay with each expense. 1 actual expense(s) await conversion."
+  },
+  {
+    "id": "RATES-REFRESH",
+    "result": "executed",
+    "evidence": "Rates fetched 15/10/2026, 10:29:08 am"
+  },
+  {
+    "id": "BUDGET-FILTERS",
+    "result": "passed",
+    "evidence": {
+      "rows": [
+        "Audit Swiss mealfood · actual · 1 Feb 2027 · St. GallenCHF 10✎×"
+      ]
+    }
+  },
+  {
+    "id": "BOOKING-LINK",
+    "result": "passed",
+    "evidence": "🚆\nconfirmed\nAudit Rail\n\ntrain · St. Gallen\n1 Feb 2027 09:00\n\nReference: QA-NOT-A-REAL-BOOKING\n\n$26 · linked expense\n\nEdit\n×"
+  },
+  {
+    "id": "BOOKING-CANCELLATION",
+    "result": "passed",
+    "evidence": "🚆\ncancelled\nAudit Rail\n\ntrain · St. Gallen\n1 Feb 2027 09:00\n\nReference: QA-NOT-A-REAL-BOOKING\n\n$26 · linked expense\n\nEdit\n×"
+  },
+  {
+    "id": "JOURNAL-PHOTO",
+    "result": "passed",
+    "evidence": {
+      "entries": [
+        "Audit lakeside memory"
+      ],
+      "photo": {
+        "alt": "Generated scenery used for QA",
+        "loaded": true
+      },
+      "favorite": "♥ Favorite"
+    }
+  },
+  {
+    "id": "JOURNAL-EDIT-PHOTO-RETAIN",
+    "result": "passed",
+    "evidence": {
+      "photoCount": 1,
+      "title": "Audit lakeside memory — edited"
+    }
+  },
+  {
+    "id": "JOURNAL-OVERSIZE",
+    "result": "passed",
+    "evidence": {
+      "dialog": 1,
+      "message": "Choose a photo under 1 MB for local storage"
+    }
+  },
+  {
+    "id": "MAP-TRIP-FILTER",
+    "result": "passed",
+    "evidence": {
+      "pins": [
+        ""
+      ],
+      "labels": [
+        "View St. Gallen, Switzerland"
+      ]
+    }
+  },
+  {
+    "id": "MAP-DISCOVERY-ADD",
+    "result": "passed",
+    "evidence": {
+      "lat": "47.3744489",
+      "lng": "8.5410422",
+      "name": "Zurich",
+      "status": "wishlist"
+    }
+  },
+  {
+    "id": "MAP-ROUTE-PREVIEW",
+    "result": "passed",
+    "evidence": {
+      "text": "Journey preview · 2 saved stops\nEurope Exchange 2027\nEnd-of-Exchange Family Trip\nAudit Swiss Journey\nPreview journey\nPreview transport symbol\nConnection · no transport selected\nPlane\nTrain\nBus\nCar\nApproximate connection between saved stops; no verified route or travel time is available.\n1. St. Gallen\n→\n2. Zurich\n\nPreview connects your saved non-wishlist coordinates in itinerary order. Lines show stop order, not railway directions or booked transport.\n\nArrived at Zurich · preview complete\n0 visited stops · 0 country stamps",
+      "vehicle": 0
+    }
+  },
+  {
+    "id": "MAP-AVATAR-OUTFIT",
+    "result": "passed",
+    "evidence": "Flora, blonde traveler in Hiking clothes, map"
+  },
+  {
+    "id": "MAP-STAMP-UNLOCK",
+    "result": "passed",
+    "evidence": {
+      "xp": "Explorer level 1, 75 XP",
+      "stampText": "Switzerland"
+    }
+  },
+  {
+    "id": "STAMP-COUNTRY-DEDUPLICATION",
+    "result": "passed",
+    "evidence": {
+      "stampCount": 1,
+      "xp": "Explorer level 2, 125 XP"
+    }
+  },
+  {
+    "id": "MAP-VISIT-UNDO",
+    "result": "passed",
+    "evidence": {
+      "xp": "Explorer level 1, 75 XP",
+      "stampCount": 1
+    }
+  },
+  {
+    "id": "map-duplicate-city-id",
+    "result": "failed",
+    "evidence": "QA-trip St. Gallen pin opens Europe Exchange 2027 / Date TBD / 0 activities. Source resolves pin by title instead of ID; earlier favorite/visit actions affected seed record, not QA stop."
+  },
+  {
+    "id": "favorite-saved-list",
+    "result": "passed",
+    "evidence": "Using saved-place View pin (stable ID), favoriting QA St Gallen leaves exactly that Audit Swiss Journey entry under Favorites only. Visited QA stop adds 50 XP without duplicate Switzerland stamp."
+  },
+  {
+    "id": "motion-preference-reload",
+    "result": "passed",
+    "evidence": "Settings Paused survives full reload. OS reduced-motion emulation has not been executed."
+  },
+  {
+    "id": "after-map-stable-id-and-trip-reload",
+    "result": "passed",
+    "evidence": "After reload Choose trip remains Audit Swiss Journey. Clicking its St Gallen marker opens Audit Swiss Journey, Feb1, two activities, 120 estimated expenses and Hiking avatar."
+  },
+  {
+    "id": "after-activity-booking-link",
+    "result": "passed",
+    "evidence": "Expanded train entry exposes https://example.com/audit-ticket external link."
+  },
+  {
+    "id": "after-recurring-quest",
+    "result": "passed",
+    "evidence": "Reopen/recomplete weekly quest retains three existing records; no new successor. Existing duplicate test records intentionally preserved. Selected blonde now renders in quest buddy."
+  },
+  {
+    "id": "after-budget-csv",
+    "result": "passed",
+    "evidence": "Rendered actual total40.89 =25.50SGD+15.39 saved CHF conversion; estimated120 separate. CSV downloaded."
+  },
+  {
+    "id": "after-owned-unpack",
+    "result": "passed",
+    "evidence": "Purchased→packed→keyboard Space unpack→Edit retains purchased, quantity3 and weight.25. CUA uncheck click had no effect; keyboard succeeded."
+  },
+  {
+    "id": "after-invalid-backup",
+    "result": "passed",
+    "evidence": "UI upload of profile:null backup rejected before replacement prompt with Invalid backup: traveler profile or base currency. QA profile stillFlora/Biscuit,125XP."
+  },
+  {
+    "id": "after-valid-backup",
+    "result": "passed",
+    "evidence": "Exported QA JSON, imported same file via UI, accepted replacement confirmation; Backup imported with traveler and125XP retained."
+  },
+  {
+    "id": "packing-v3-quantities-shopping-bag-limit",
+    "result": "passed",
+    "evidence": "Invalid packed>owned rejected. Added4 needed/2 owned/1packed; increment needed→5, pack→2. Bought one gives3owned/2packed. Moved to cabin; entered0.1kg ticket allowance;0.4kg packed triggers Over your saved limit. Legacy thermal record retained."
+  },
+  {
+    "id": "packing-v3-search-sort-undo",
+    "result": "passed",
+    "evidence": "Search QA ski shows one item; category Ski gear and priority sort selected. Delete removes item, Undo deletion restores same item with5needed/3owned/2packed/cabin assignment."
+  },
+  {
+    "id": "packing-v3-trip-outfit-persistence-export",
+    "result": "passed",
+    "evidence": "Accepted Ski jacket suggestion with0 owned/packed; changing outfit toWinter/Skiing leaves3inventory records unchanged. Family trip shows0records. Switching back and reload retains5needed/3owned/2packed and0.1kg cabin limit. Edited notes retainquantities. Trip-specific CSV downloaded."
+  },
+  {
+    "id": "packing-v3-missing-weight-case",
+    "result": "passed",
+    "evidence": "Packed passport without entered weight explicitly reports1 packed unit lacks weight. Suitcase summary closes. Unowned Ski jacket Pack+ isdisabled. No acquisition is implied by packing."
+  },
+  {
+    "id": "packing-seven-outfits",
+    "result": "passed",
+    "evidence": "Wardrobe now lists seven presets, including separate Winter and Skiing. Selected Winter updates Flora to the new blue wool coat/straw-hat sprite while retaining Biscuit and inventory."
+  },
+  {
+    "id": "journal-paused-entrance-overflow",
+    "result": "passed",
+    "evidence": "With ambient Paused, phone journal now measures scroll375/client375. Root was paused perspective entrance, not static rotation alone; animation is disabled in paused/mobile journal."
+  }
+]

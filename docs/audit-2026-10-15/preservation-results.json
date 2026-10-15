@@ -1,0 +1,49 @@
+{
+  "trips": {
+    "before": 3,
+    "after": 3,
+    "allOriginalIdsRetained": true
+  },
+  "destinations": {
+    "before": 11,
+    "after": 11,
+    "allOriginalIdsRetained": true
+  },
+  "activities": {
+    "before": 2,
+    "after": 2,
+    "allOriginalIdsRetained": true
+  },
+  "tasks": {
+    "before": 3,
+    "after": 3,
+    "allOriginalIdsRetained": true
+  },
+  "packing": {
+    "before": 1,
+    "after": 4,
+    "allOriginalIdsRetained": true
+  },
+  "expenses": {
+    "before": 4,
+    "after": 4,
+    "allOriginalIdsRetained": true
+  },
+  "bookings": {
+    "before": 1,
+    "after": 1,
+    "allOriginalIdsRetained": true
+  },
+  "skiTrips": {
+    "before": 1,
+    "after": 1,
+    "allOriginalIdsRetained": true
+  },
+  "journal": {
+    "before": 1,
+    "after": 1,
+    "allOriginalIdsRetained": true
+  },
+  "journalPhotoRetained": true,
+  "storageKey": "pixel-passport-v1"
+}

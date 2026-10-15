@@ -1,0 +1,5 @@
+"Description","Category","Stage","Amount","Currency","Base amount","Base currency","Rate used","Rate timestamp","Date","Destination","Payment"
+"Lift pass · Audit Flumserberg","skiing","estimated","80","SGD","80","SGD","1","","2027-02-02","St. Gallen","unpaid"
+"Equipment rental · Audit Flumserberg","skiing","estimated","40","SGD","40","SGD","1","","2027-02-02","St. Gallen","unpaid"
+"Audit train ticket","trains","actual","25.50","SGD","25.5","SGD","1","","2027-02-01","St. Gallen","paid"
+"Audit Swiss meal","food","actual","10","CHF","15.39","SGD","1.5385372818354135","2026-10-15T02:29:08.826Z","2027-02-01","St. Gallen","unpaid"

@@ -16,3 +16,12 @@
 @media(max-width:370px){.illustrated-choice>.selected-traveler{width:108px;height:145px}.illustrated-choice>strong{font-size:16px}.setup-content{padding-left:9px;padding-right:9px}.character-choice-grid{gap:7px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.selected-traveler .body-primary,.independent-pet .pet-frame-primary{opacity:1!important}.selected-traveler .body-blink,.selected-traveler .body-walk-secondary,.independent-pet .pet-frame-secondary{opacity:0!important}}
 .appearance-dialog-open{overflow:hidden}.appearance-dialog-open #app *,.appearance-dialog-open #achievement-root *{animation-play-state:paused!important}.wardrobe-save-note{font-size:11px;color:#766855;margin:0 0 9px}.map-pin .pixel-icon{filter:none!important}.legend-pin-0{background:#b49acb!important}.legend-pin-1{background:#df969e!important}.legend-pin-2{background:#779ac6!important}.legend-pin-3{background:#79a67e!important}.avatar-toolbar{min-height:44px}.empty-selected-avatar .selected-traveler{width:110px;height:134px}.map-discovery-panel .discovery-result small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* Audit: clearer empty inventory, atlas isolation, visible keyboard feedback. */
+.inventory-welcome{grid-column:1/-1;text-align:center;padding:24px 12px}.inventory-welcome>.painted-icon{width:60px;height:60px}.inventory-welcome h3{margin:8px 0}.inventory-welcome p{margin:8px 0 16px}.painted-icon{clip-path:inset(5% 3%)}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #427f79;outline-offset:3px}
+@media(max-width:600px){.section-head{flex-wrap:wrap;gap:10px}.section-head>div{min-width:0;flex:1 1 190px}.section-head>.btn{flex-shrink:0}.activity-controls{display:flex;flex-wrap:wrap;gap:10px}.activity-controls .btn{min-height:44px}.trip-card{min-width:0}.quest-companion .empty-selected-avatar{width:82px;flex:none}}
+@media(max-width:600px){.journal-page,.journal-page:nth-child(even){transform:none;max-width:100%;min-width:0;overflow-wrap:anywhere}.journal-page img{max-width:100%}}
+/* One-shot scrapbook entrances must remain readable when ambient scenes are paused. */
+body[data-ambient=off] .journal-page{animation:none!important;opacity:1;transform:none}
+@media(max-width:600px){body[data-page=journal] .journal-page{animation:none!important;transform:none}}

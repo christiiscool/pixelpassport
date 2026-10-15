@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const context={URL,structuredClone};vm.createContext(context);vm.runInContext(fs.readFileSync('dist/data-safety.js','utf8'),context);const model=context.PPData;
+const fixture=JSON.parse(fs.readFileSync('scripts/fixtures/audit-journey.json','utf8'));
+assert.equal(model.validateBackup(fixture).trips.length,3);
+for(const invalid of [{...fixture,profile:null},{...fixture,trips:[]},{...fixture,dismissed:{}},{...fixture,destinations:[{id:'x',lat:999}]},{...fixture,tasks:[{id:'x'},{id:'x'}]}])assert.throws(()=>model.validateBackup(invalid));
+let weekly={id:'q',done:true,recurrence:'weekly',due:'2027-02-01'};let next=model.successor(weekly,[],'n');assert.equal(next.due,'2027-02-08');assert.equal(model.successor(weekly,[next],'other'),null);assert.equal(model.successor({...weekly,done:false},[],'n'),null);
+assert.equal(model.successor({...weekly,recurrence:'monthly',due:'2027-01-31'},[],'n').due,'2027-02-28');
+const rateRecord={amount:10,currency:'CHF',baseAmount:16,baseCurrency:'SGD',conversionRate:1.6,rateTimestamp:'old'};
+assert.deepEqual(Object.keys(model.conversion(rateRecord,{amount:'10',currency:'CHF'},{baseCurrency:'SGD'},{CHF:.5},'new')),[]);
+assert.equal(model.conversion(rateRecord,{amount:'20',currency:'CHF'},{baseCurrency:'SGD'},{CHF:.5},'new').baseAmount,40);
+assert.equal(model.safeURL('javascript:alert(1)'), '');assert.equal(model.safeURL('https://example.com/audit-ticket'),'https://example.com/audit-ticket');
+// Execute the actual app save function against throwing storage, preserving existing form-record references.
+const record={id:'a',name:'Before'},state={profile:{baseCurrency:'SGD'},packing:[record]},durable=structuredClone(state);record.name='Draft';state.packing.push({id:'new'});
+Object.assign(context,{state,durableState:durable,localStorage:{setItem(){throw Error('QuotaExceededError')}},document:{querySelector(){return {}}},KEY:'test',render(){throw Error('Must not destroy draft form')},toast(){},window:{PPData:model}});
+const app=fs.readFileSync('dist/app.js','utf8');vm.runInContext(app.slice(app.indexOf('function save(options='),app.indexOf('\nfunction toast')),context);assert.throws(()=>vm.runInContext('save()',context),/not saved/);assert.equal(state.packing.length,1);assert.equal(record.name,'Before');assert.equal(state.packing[0],record);
+let persisted;context.localStorage.setItem=(key,value)=>persisted=value;context.render=()=>{};record.name='Retry';assert.equal(vm.runInContext('save()',context),true);assert.equal(JSON.parse(persisted).packing[0].name,'Retry');
+const money=app.slice(app.indexOf('const money='),app.indexOf('\nconst date='));vm.runInContext(money,context);assert.match(vm.runInContext('money(25.50)',context),/25\.5/);
+const selected=fixture.expenses.filter(e=>e.kind==='actual');const total=selected.reduce((n,e)=>n+(e.currency==='SGD'?Number(e.amount):Number(e.baseAmount)||0),0);assert.ok(total>25.5);assert.equal(fixture.bookings.length,1);assert.equal(fixture.expenses.filter(e=>e.id===fixture.bookings[0].expenseId).length,1);
+console.log('Audit regressions passed: invalid backups rejected, recurrence idempotent/month-end safe, historic FX preserved, URLs safe, failed save rolls back in place and retry persists, decimal formatting, booking links one ledger record.');

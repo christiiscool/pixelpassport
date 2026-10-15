@@ -1,0 +1,26 @@
+[
+  {
+    "asset": "app.js",
+    "status": 200,
+    "type": "text/javascript",
+    "cacheControl": "public, max-age=0, must-revalidate",
+    "sha256": "d8ca2b6d55087aa6711f1e37d72cb1df015c8db5fecb352c082abc3ccbac088d",
+    "matchesVersion7Source": true
+  },
+  {
+    "asset": "packing-upgrade.js",
+    "status": 200,
+    "type": "text/html",
+    "cacheControl": "public, max-age=0, must-revalidate",
+    "sha256": "92180e87623b28a40e08b99ade320c4b44a037b31174f6e09aa11822ba338d12",
+    "htmlFallback": true
+  },
+  {
+    "asset": "packing-upgrade.css",
+    "status": 200,
+    "type": "text/html",
+    "cacheControl": "public, max-age=0, must-revalidate",
+    "sha256": "92180e87623b28a40e08b99ade320c4b44a037b31174f6e09aa11822ba338d12",
+    "htmlFallback": true
+  }
+]

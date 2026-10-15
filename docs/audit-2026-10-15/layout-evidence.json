@@ -1,0 +1,699 @@
+[
+  {
+    "view": "style-guide",
+    "stage": "before",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Style Guide",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "view": "style-guide",
+    "stage": "before",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Style Guide",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "view": "trips-form",
+    "stage": "before",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "My Trips & Itinerary",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "view": "trips-form",
+    "stage": "before",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "My Trips & Itinerary",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "view": "map-form",
+    "stage": "before",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "World Map",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "view": "map-form",
+    "stage": "before",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "World Map",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "view": "packing-form",
+    "stage": "before",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Packing Inventory",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "view": "packing-form",
+    "stage": "before",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Packing Inventory",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "view": "tasks-form",
+    "stage": "before",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Quest Board",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "view": "tasks-form",
+    "stage": "before",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Quest Board",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "view": "budget-form",
+    "stage": "before",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Budget & Expenses",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "view": "budget-form",
+    "stage": "before",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Budget & Expenses",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "view": "bookings-form",
+    "stage": "before",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Booking Vault",
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "view": "bookings-form",
+    "stage": "before",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Booking Vault",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "view": "ski-form",
+    "stage": "before",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Ski Planner",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "view": "ski-form",
+    "stage": "before",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Ski Planner",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "view": "journal-form",
+    "stage": "before",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Travel Journal",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "view": "journal-form",
+    "stage": "before",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Travel Journal",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "view": "itinerary-form",
+    "stage": "before",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "My Trips & Itinerary",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "view": "itinerary-form",
+    "stage": "before",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "My Trips & Itinerary",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "view": "itinerary",
+    "stage": "before",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "My Trips & Itinerary",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "view": "itinerary",
+    "stage": "before",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "My Trips & Itinerary",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "view": "itinerary",
+    "stage": "after",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "My Trips & Itinerary",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "view": "itinerary",
+    "stage": "after",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "My Trips & Itinerary",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "stage": "after",
+    "view": "trips",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "My Trips & Itinerary",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "stage": "after",
+    "view": "trips",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "My Trips & Itinerary",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "stage": "after",
+    "view": "home",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Adventure Home",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "stage": "after",
+    "view": "home",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Adventure Home",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "stage": "after",
+    "view": "packing",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Packing Inventory",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "stage": "after",
+    "view": "packing",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Packing Inventory",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "stage": "after",
+    "view": "map",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "World Map",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "stage": "after",
+    "view": "map",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "World Map",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "stage": "after",
+    "view": "tasks",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Quest Board",
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "stage": "after",
+    "view": "tasks",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Quest Board",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "stage": "after",
+    "view": "budget",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Budget & Expenses",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "stage": "after",
+    "view": "budget",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Budget & Expenses",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "stage": "after",
+    "view": "bookings",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Booking Vault",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "stage": "after",
+    "view": "bookings",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Booking Vault",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "stage": "after",
+    "view": "ski",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Ski Planner",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "stage": "after",
+    "view": "ski",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Ski Planner",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "stage": "after",
+    "view": "journal",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Travel Journal",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "stage": "after",
+    "view": "journal",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Travel Journal",
+    "overflow": true,
+    "viewport": 375
+  },
+  {
+    "stage": "after",
+    "view": "settings",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Settings",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "stage": "after",
+    "view": "settings",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Settings",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "stage": "after",
+    "view": "style-guide",
+    "width": 1440,
+    "brokenImages": [],
+    "heading": "Style Guide",
+    "overflow": false,
+    "viewport": 1425
+  },
+  {
+    "stage": "after",
+    "view": "style-guide",
+    "width": 390,
+    "brokenImages": [],
+    "heading": "Style Guide",
+    "overflow": false,
+    "viewport": 375
+  },
+  {
+    "stage": "after",
+    "view": "packing-final",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "duplicate": 1,
+    "height": 2915,
+    "legacy": 0,
+    "scroll": 375
+  },
+  {
+    "stage": "after",
+    "view": "packing-final",
+    "width": 768,
+    "broken": [],
+    "client": 753,
+    "duplicate": 1,
+    "height": 2326,
+    "legacy": 0,
+    "scroll": 753
+  },
+  {
+    "stage": "after",
+    "view": "packing-final",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "duplicate": 1,
+    "height": 1774,
+    "legacy": 0,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "packing",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "heading": "Packing Inventory",
+    "height": 1774,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "packing",
+    "width": 768,
+    "broken": [],
+    "client": 753,
+    "heading": "Packing Inventory",
+    "height": 2326,
+    "scroll": 753
+  },
+  {
+    "stage": "final",
+    "view": "packing",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "heading": "Packing Inventory",
+    "height": 2915,
+    "scroll": 375
+  },
+  {
+    "stage": "final",
+    "view": "home",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "heading": "Adventure Home",
+    "height": 1484,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "home",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "heading": "Adventure Home",
+    "height": 3133,
+    "scroll": 375
+  },
+  {
+    "stage": "final",
+    "view": "trips",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "heading": "My Trips & Itinerary",
+    "height": 1693,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "trips",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "heading": "My Trips & Itinerary",
+    "height": 2440,
+    "scroll": 375
+  },
+  {
+    "stage": "final",
+    "view": "map",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "heading": "World Map",
+    "height": 1794,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "map",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "heading": "World Map",
+    "height": 2201,
+    "scroll": 375
+  },
+  {
+    "stage": "final",
+    "view": "tasks",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "heading": "Quest Board",
+    "height": 1692,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "tasks",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "heading": "Quest Board",
+    "height": 2534,
+    "scroll": 375
+  },
+  {
+    "stage": "final",
+    "view": "budget",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "heading": "Budget & Expenses",
+    "height": 2077,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "budget",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "heading": "Budget & Expenses",
+    "height": 2820,
+    "scroll": 375
+  },
+  {
+    "stage": "final",
+    "view": "bookings",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "heading": "Booking Vault",
+    "height": 1102,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "bookings",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "heading": "Booking Vault",
+    "height": 1200,
+    "scroll": 375
+  },
+  {
+    "stage": "final",
+    "view": "ski",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "heading": "Ski Planner",
+    "height": 1504,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "ski",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "heading": "Ski Planner",
+    "height": 1631,
+    "scroll": 375
+  },
+  {
+    "stage": "final",
+    "view": "journal",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "heading": "Travel Journal",
+    "height": 1897,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "journal",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "heading": "Travel Journal",
+    "height": 2353,
+    "scroll": 380
+  },
+  {
+    "stage": "final",
+    "view": "settings",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "heading": "Settings",
+    "height": 1688,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "settings",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "heading": "Settings",
+    "height": 2550,
+    "scroll": 375
+  },
+  {
+    "stage": "final",
+    "view": "style-guide",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "heading": "Style Guide",
+    "height": 4396,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "style-guide",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "heading": "Style Guide",
+    "height": 8507,
+    "scroll": 375
+  },
+  {
+    "stage": "final",
+    "view": "journal",
+    "width": 1440,
+    "broken": [],
+    "client": 1425,
+    "heading": "Travel Journal",
+    "height": 1897,
+    "scroll": 1425
+  },
+  {
+    "stage": "final",
+    "view": "journal",
+    "width": 390,
+    "broken": [],
+    "client": 375,
+    "heading": "Travel Journal",
+    "height": 2353,
+    "scroll": 375
+  }
+]

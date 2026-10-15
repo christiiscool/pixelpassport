@@ -364,5 +364,31 @@
         407
       ]
     ]
+  },
+  "brunette-winter": {
+    "url": "/assets/characters/brunette-winter.png",
+    "width": 1024,
+    "height": 1536,
+    "bounds": [
+      [
+        0,
+        0,
+        1024,
+        1536
+      ]
+    ]
+  },
+  "blonde-winter": {
+    "url": "/assets/characters/blonde-winter.png",
+    "width": 1024,
+    "height": 1536,
+    "bounds": [
+      [
+        0,
+        0,
+        1024,
+        1536
+      ]
+    ]
   }
 }
