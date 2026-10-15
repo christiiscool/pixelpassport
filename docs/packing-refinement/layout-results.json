@@ -1,0 +1,26 @@
+[
+  {
+    "client": 375,
+    "duplicate": 1,
+    "legacy": 0,
+    "scroll": 375,
+    "smallestQuantityTarget": 44,
+    "width": 390
+  },
+  {
+    "client": 753,
+    "duplicate": 1,
+    "legacy": 0,
+    "scroll": 753,
+    "smallestQuantityTarget": 44,
+    "width": 768
+  },
+  {
+    "client": 1425,
+    "duplicate": 1,
+    "legacy": 0,
+    "scroll": 1425,
+    "smallestQuantityTarget": 44,
+    "width": 1440
+  }
+]

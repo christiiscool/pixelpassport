@@ -14,14 +14,14 @@ const state={
   ],
   dismissed:[]
 };
-let saveCount=0,onSave=null,lastDownload=null;
+let saveCount=0,onSave=null,lastDownload=null,lastSaveOptions=null;
 const listeners={};
 const context={structuredClone,
   state,selectedTrip:tripA,page:'tasks',filters:{},actions:{},
   window:{PPReact:null,pixelPassportEnhance:null,PPAvatarUI:{setup(){}}},
   document:{querySelector:()=>null,addEventListener:(name,fn)=>(listeners[name]??=[]).push(fn)},
   packingPage(){},packingForm(record){return context.window.PPPackingForm(record)},packingSuggestions(){return []},
-  save(){saveCount++},render(){},download:(name,content,type)=>{lastDownload={name,content,type}},
+  save(options){saveCount++;lastSaveOptions=options},render(){},download:(name,content,type)=>{lastDownload={name,content,type}},
   toast(){},esc:x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'),
   field:()=>'',selectField:()=>'',textField:()=>'',modal:(title,html,fn)=>{onSave=fn},
   id:()=>('test-'+Math.random().toString(36).slice(2))
@@ -90,9 +90,18 @@ state.packing.push(unowned);context.selectedTrip=tripA;
 context.actions.packingAdjust({id:'unowned',field:'packed',delta:1});assert.equal(counts(unowned).packed,0);assert.equal(counts(unowned).owned,0);
 context.actions.packingAll({id:'unowned'});assert.equal(counts(unowned).packed,0,'packing never invents ownership');
 context.actions.packingAdjust({id:'unowned',field:'owned',delta:1});assert.equal(counts(unowned).packed,0,'purchasing does not pack');
-context.actions.packingAdjust({id:'unowned',field:'packed',delta:1});assert.equal(counts(unowned).packed,1);
+context.actions.packingAdjust({id:'unowned',field:'packed',delta:1});assert.equal(counts(unowned).packed,1);context.actions.packingAll({id:'unowned'});assert.equal(counts(unowned).packed,0,'unpack all available units even when not all needed units are owned');assert.equal(counts(unowned).owned,1);
 context.actions.packingAdjust({id:'unowned',field:'qty',delta:1});assert.equal(counts(unowned).qty,3);
 context.actions.packDelete({id:'unowned'});assert.ok(!state.packing.some(p=>p.id==='unowned'));context.actions.packUndo();assert.equal(state.packing.filter(p=>p.id==='unowned').length,1);
 const legacyRead={id:'untouched',qty:'3',status:'purchased'};const unchanged=JSON.stringify(legacyRead);assert.equal(counts(legacyRead).owned,3);assert.equal(JSON.stringify(legacyRead),unchanged,'migration reads do not rewrite user records');
 
+// All seven outfit choices produce explicit suggestions on an otherwise empty trip.
+context.selectedTrip=tripB;context.filters.packIncludeOutfit=true;
+const previousPacking=state.packing;state.packing=[];
+for(const [outfit,expected] of Object.entries({casual:'Walking shoes',winter:'Warm coat',ski:'Ski jacket',summer:'Sun hat',rain:'Raincoat',hiking:'Hiking boots',city:'Travel wallet'})){state.profile.selectedOutfitId=outfit;const proposed=suggestions();assert.ok(proposed.some(p=>p.name===expected),'specific clothing suggestion for '+outfit);assert.equal(new Set(proposed.map(p=>p.name)).size,proposed.length)}
+state.packing=previousPacking;context.selectedTrip=tripA;
+context.actions.packingAdjust({id:'unowned',field:'qty',delta:1});
+assert.equal(lastSaveOptions.render,false,'inline quantities use a local update rather than a full app render');
+assert.equal(context.window.PPPackingModel.activeBag([{id:'x',name:'Packed',qty:2,ownedQty:2,packedQty:2,bag:'cabin luggage'},{id:'y',name:'Not packed',qty:9,bag:'checked luggage'}]),'cabin luggage');
+context.filters.packBag='personal bag';assert.equal(context.window.PPPackingModel.activeBag([]),'personal bag');
 console.log('Packing model tests passed: migration, partial quantities, owned vs packed, trip isolation, suggestions, and item validation.');
