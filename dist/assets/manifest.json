@@ -242,6 +242,9 @@
       "ski",
       "journal",
       "settings"
-    ]
+    ],
+    "overrides": {
+      "packing": "world/packing-lakeshore.webp"
+    }
   }
 }

@@ -13,7 +13,7 @@ const tinyEmpty=(title,body,action,label,ico='compass')=>`<div class="storybook-
 const bannerCopy={
   trips:['The itinerary book','Gather every stop, stay, and little discovery in one place.','paris'],
   map:['The adventure atlas','Pin the places you dream of, and trace the journey as it grows.','st-gallen'],
-  packing:['The packing room','A place for the practical things that make the magic possible.','st-gallen'],
+  packing:['Pack a little adventure','Fresh air, open skies, and the essentials for your next escape.','st-gallen'],
   tasks:['The quest board','One small step at a time, the journey takes shape.','paris'],
   budget:['The travel ledger','Keep a thoughtful eye on every coin of the adventure.','rome'],
   bookings:['The booking vault','Tickets, stays, and confirmations for the road ahead.','paris'],

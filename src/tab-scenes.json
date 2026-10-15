@@ -1,1 +1,12 @@
-{"url": "/assets/world/tab-settings.webp", "width": 1672, "height": 941}
+{
+  "url": "/assets/world/tab-settings.webp",
+  "width": 1672,
+  "height": 941,
+  "overrides": {
+    "packing": {
+      "url": "/assets/world/packing-lakeshore.webp",
+      "width": 1774,
+      "height": 887
+    }
+  }
+}
