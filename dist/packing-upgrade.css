@@ -35,3 +35,16 @@
    decorative chapter banner so inventory stays near the top of the page. */
 body[data-page="packing"] .living-page-header{display:none!important}
 body[data-page="packing"] .packing-v2{margin-top:10px}
+
+/* Packing 2.1: wardrobe, verified-user bag limits and portable checklist */
+.pack-hero-actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.pack-hero-actions .btn{white-space:normal}
+.pack-bag-heading{align-items:center}
+.pack-bag-heading>small{margin-left:auto}
+.pack-bag-heading>.btn{flex:none}
+.pack-bags>button.pack-overweight{border-color:#bd8374;background:#fff0e8;box-shadow:0 4px 0 #e9c4b6}
+.pack-bag-weight{display:block;margin-top:6px;color:#667e75;font-weight:700;font-size:10px;line-height:1.5}
+.pack-bags .pack-warning{display:inline-block;color:#995b4e;background:#ffe3d7;border:1px solid #e5b09b;padding:3px 5px;border-radius:5px;font:800 10px 'Nunito',sans-serif;line-height:1.4;margin-top:5px}
+.pack-modal-note{padding:10px 13px;border:1px dashed #d6c4aa;border-radius:8px;background:#fff7e6;line-height:1.6;font-size:12px;color:#5f7569}
+@media(max-width:850px){.pack-bag-heading{flex-wrap:wrap}.pack-bag-heading>small{margin-left:0}}
+@media(max-width:650px){.pack-hero-actions{flex-direction:column;align-items:flex-start}.pack-hero-actions>.btn{font-size:11px}.pack-trip>.btn{margin-left:auto}.pack-bag-heading .btn{margin-top:7px}.pack-bags>button{min-height:115px}.pack-bag-weight{font-size:9px}}
