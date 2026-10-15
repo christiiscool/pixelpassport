@@ -14,20 +14,23 @@ const state={
   ],
   dismissed:[]
 };
-let saveCount=0,onSave=null;
+let saveCount=0,onSave=null,lastDownload=null;
 const listeners={};
 const context={
   state,selectedTrip:tripA,page:'tasks',filters:{},actions:{},
   window:{PPReact:null,pixelPassportEnhance:null},
   document:{addEventListener:(name,fn)=>(listeners[name]??=[]).push(fn)},
   packingPage(){},packingForm(){},packingSuggestions(){return []},
-  save(){saveCount++},render(){},
+  save(){saveCount++},render(){},download:(name,content,type)=>{lastDownload={name,content,type}},
   toast(){},esc:x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'),
   field:()=>'',selectField:()=>'',textField:()=>'',modal:(title,html,fn)=>{onSave=fn},
   id:()=>('test-'+Math.random().toString(36).slice(2))
 };
 vm.runInNewContext(readFileSync(new URL('../dist/packing-upgrade.js',import.meta.url),'utf8'),context,{filename:'packing-upgrade.js'});
-const {counts,totals,suggestions,items}=context.window.PPPackingModel;
+const {counts,totals,suggestions,items,limitsFor,itemIcon}=context.window.PPPackingModel;
+assert.equal(itemIcon({name:'Ski jacket'}),'ski-jacket');
+assert.equal(itemIcon({name:'Ski socks'}),'ski-socks');
+assert.equal(itemIcon({name:'Raincoat'}),'raincoat');
 assert.equal(counts(state.packing[0]).packed,2,'migrate old fully packed item');
 assert.equal(counts(state.packing[0]).owned,2,'old packed item is owned');
 assert.equal(items().length,1,'do not include another trip in inventory');
@@ -50,6 +53,18 @@ onSave({name:'Ski socks',qty:'5',ownedQty:'3',packedQty:'2',weight:'0.1',icon:'s
 const sock=state.packing.find(p=>p.name==='Ski socks');
 assert.equal(counts(sock).packed,2);
 assert.equal(counts(sock).shopping,2);
+assert.equal(totals([sock]).weightMissing,0);
+const missingWeight={name:'Unweighed',qty:3,ownedQty:2,packedQty:2,status:'purchased'};
+assert.equal(totals([missingWeight]).weightMissing,2,'missing weight must be reported, not silently treated as measured');
+context.actions.packLimits();
+onSave({limitChecked:'0.2',limitCabin:'8',limitPersonal:''});
+assert.equal(limitsFor()['checked luggage'],0.2,'selected trip limit persists in profile');
+assert.equal(limitsFor()['personal bag'],undefined,'blank limits remain unknown');
+context.actions.packExport();
+assert.match(lastDownload.name,/pixel-passport-europe-exchange-packing.csv/);
+assert.match(lastDownload.content,/Ski socks/);
+assert.match(lastDownload.content,/"2"/);
+
 assert.equal(sock.status,'needed');
 assert.throws(()=>onSave({name:'Bad',qty:'5',ownedQty:'2',packedQty:'4',weight:'0',tripId:tripA}),/Packed quantity cannot exceed owned/);
 context.actions.packingAdjust({id:sock.id,field:'owned',delta:1});
@@ -63,6 +78,7 @@ assert.ok(state.packing.find(p=>p.name==='Thermal base layers'&&p.tripId===tripA
 assert.equal(suggestions().filter(s=>s.name==='Thermal base layers').length,0);
 context.selectedTrip=tripB;
 assert.equal(items().length,1,'second trip list preserved');
+assert.equal(limitsFor()['checked luggage'],undefined,'another trip cannot inherit baggage limits');
 assert.ok(suggestions().some(s=>s.name==='Sun hat'),'summer suggestion for May family trip');
 assert.ok(!suggestions().some(s=>s.name==='Thermal base layers'),'no winter clothes suggested for May family trip');
 assert.ok(saveCount>=4);
