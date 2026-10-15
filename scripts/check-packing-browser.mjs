@@ -20,6 +20,8 @@ try {
  });
  await page.reload({waitUntil:'domcontentloaded'});
  await page.locator('.packing-v2').waitFor({timeout:20000});
+ await page.waitForTimeout(550);
+ assert.equal(await page.locator('.main').evaluate(el=>getComputedStyle(el).opacity),'1','content must finish its entrance animation');
  
  const metrics=await page.evaluate(()=>{
   const selectors=['.app','.sidebar','.main','.topbar','.packing-v2','.packing-v2-hero','.pack-stats','.pack-bags','.pack-section-head','.packing-v2-grid'];
@@ -30,9 +32,9 @@ try {
   }));
  });
  console.log('PACKING_VISUAL_METRICS='+JSON.stringify(metrics));
- await page.screenshot({path:'artifacts/packing-viewport.png'});
+ await page.screenshot({path:'artifacts/packing-viewport.png',animations:'disabled'});
 
- await page.screenshot({path:'artifacts/packing-desktop-before.png',fullPage:true});
+ await page.screenshot({path:'artifacts/packing-desktop-before.png',fullPage:true,animations:'disabled'});
  assert.equal(await page.locator('.pack-stats').count(),1);
  assert.equal(await page.locator('.pack-bags>button').count(),4);
  await page.locator('button[data-action="newPacking"]').first().click();
@@ -53,11 +55,13 @@ try {
  assert.match(await page.locator('.pack-card').filter({hasText:'Thermal socks'}).innerText(),/3\/5 packed/,'persists after reload');
  const bought=page.locator('.pack-shopping>div').filter({hasText:'Thermal socks'});
  assert.match(await bought.innerText(),/2 needed/);
- await page.screenshot({path:'artifacts/packing-desktop-filled.png',fullPage:true});
+ await page.waitForTimeout(350);
+ await page.screenshot({path:'artifacts/packing-desktop-filled.png',fullPage:true,animations:'disabled'});
  await page.setViewportSize({width:390,height:844});
  await page.reload({waitUntil:'domcontentloaded'});
  await page.locator('.packing-v2').waitFor();
- await page.screenshot({path:'artifacts/packing-mobile.png',fullPage:true});
+ await page.waitForTimeout(350);
+ await page.screenshot({path:'artifacts/packing-mobile.png',fullPage:true,animations:'disabled'});
  const dimensions=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,window:innerWidth}));
  assert.ok(dimensions.scroll<=dimensions.window+5,'mobile layout must not overflow: '+JSON.stringify(dimensions));
  if(errors.length)throw Error('Browser exceptions: '+errors.join('\n'));
