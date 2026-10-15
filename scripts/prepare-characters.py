@@ -5,7 +5,7 @@ import json
 import sys
 from collections import deque
 root=Path(__file__).resolve().parents[1]
-grids={'blonde-actions':(4,3),'brunette-actions':(4,3),'blonde-wardrobe':(3,2),'brunette-wardrobe':(3,2),'companions':(3,4)}
+grids={'blonde-actions':(4,3),'brunette-actions':(4,3),'blonde-wardrobe':(3,2),'brunette-wardrobe':(3,2),'companions':(3,4),'mochi-grey':(3,2)}
 data={}
 for name,(cols,rows) in grids.items():
     source=root/'source-art'/'characters'/f'{name}.png'

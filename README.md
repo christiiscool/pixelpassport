@@ -62,7 +62,7 @@ Audit and feature proposals: `docs/interactive-upgrade-audit.md`. Original asset
 
 ## Travelers, companions and the atlas
 
-- New visitors choose a brunette or blonde traveler, an independent white cat or puppy, and one of six outfits, then review their choices. Returning profiles receive an additive migration and skip onboarding. The original storage key, record IDs and travel arrays remain intact.
+- New visitors choose a brunette or blonde traveler, an independent grey cat or white puppy, and one of six outfits, then review their choices. Returning profiles receive an additive migration and skip onboarding. The original storage key, record IDs and travel arrays remain intact.
 - Wardrobe choices save immediately and update every character island, including the optional map traveler. Both characters have distinct signature and outfit artwork. The wardrobe is available from the page toolbar, map and Settings.
 - Reusable character components live in `src/avatar-system.jsx`; shared motion lifecycle in `src/motion.jsx`; validation and migration in `src/avatar-model.mjs`. Independent transparent sprites are registered and clipped with SVG viewports, preserving aspect ratio and feet alignment. Original PNGs and the supplied blonde reference remain in `source-art/characters/`.
 - The real MapLibre map supports place search, discovery at selected coordinates, editable trip or wishlist additions, saved favorites and illustrated destination cards. Dates, notes, activity counts and estimates come from saved records. Selecting a pin cancels delayed map discovery results.

@@ -219,7 +219,12 @@
       "characters/blonde-wardrobe.webp",
       "characters/brunette-actions.webp",
       "characters/brunette-wardrobe.webp",
-      "characters/companions.webp"
-    ]
+      "characters/companions.webp",
+      "characters/mochi-grey.webp"
+    ],
+    "mochi": {
+      "appearance": "Silver-grey fur, teal cat collar and brass tag",
+      "generationPrompt": "scripts/mochi-grey-art.md"
+    }
   }
 }
