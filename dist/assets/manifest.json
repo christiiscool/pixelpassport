@@ -226,5 +226,22 @@
       "appearance": "Silver-grey fur, teal cat collar and brass tag",
       "generationPrompt": "scripts/mochi-grey-art.md"
     }
+  },
+  "tabSettings": {
+    "atlas": "world/tab-settings.webp",
+    "original": "source-art/world/tab-settings.png",
+    "components": "src/tab-scenes.jsx",
+    "prompt": "scripts/tab-setting-art.md",
+    "order": [
+      "trips",
+      "map",
+      "packing",
+      "tasks",
+      "budget",
+      "bookings",
+      "ski",
+      "journal",
+      "settings"
+    ]
   }
 }
