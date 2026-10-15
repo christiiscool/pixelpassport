@@ -22,6 +22,7 @@ try {
  await page.locator('.packing-v2').waitFor({timeout:20000});
  await page.waitForTimeout(550);
  assert.equal(await page.locator('.main').evaluate(el=>getComputedStyle(el).opacity),'1','content must finish its entrance animation');
+ assert.ok(await page.locator('.packing-v2-hero').evaluate(el=>el.getBoundingClientRect().top<190),'Packing hero should be above the fold without duplicate chapter banner');
  
  const metrics=await page.evaluate(()=>{
   const selectors=['.app','.sidebar','.main','.topbar','.packing-v2','.packing-v2-hero','.pack-stats','.pack-bags','.pack-section-head','.packing-v2-grid'];
