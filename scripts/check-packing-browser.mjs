@@ -38,6 +38,13 @@ try {
  await page.screenshot({path:'artifacts/packing-desktop-before.png',fullPage:true,animations:'disabled'});
  assert.equal(await page.locator('.pack-stats').count(),1);
  assert.equal(await page.locator('.pack-bags>button').count(),4);
+ assert.equal(await page.locator('.pack-hero-actions [data-action="openWardrobe"]').count(),1,'wardrobe shortcut must exist');
+ await page.locator('[data-action="packLimits"]').click();
+ await page.locator('input[name="limitChecked"]').fill('0.2');
+ await page.locator('input[name="limitCabin"]').fill('8');
+ await page.locator('#dialog-form button[type=submit]').click();
+ assert.equal(await page.evaluate(()=>window.PPPackingModel.limitsFor()['checked luggage']),0.2);
+
  await page.locator('button[data-action="newPacking"]').first().click();
  await page.locator('input[name="name"]').fill('Thermal socks');
  await page.locator('input[name="qty"]').fill('5');
@@ -51,11 +58,21 @@ try {
  assert.match(await saved.innerText(),/3\/5 owned/);
  await saved.locator('button[data-action="packingAdjust"][data-field="packed"][data-delta="1"]').click();
  assert.match(await page.locator('.pack-card').filter({hasText:'Thermal socks'}).innerText(),/3\/5 packed/);
+ assert.match(await page.locator('.pack-bags .pack-overweight').innerText(),/Over your saved limit/,'packed weight must warn about user-entered limit');
+ const downloadEvent=page.waitForEvent('download');
+ await page.locator('[data-action="packExport"]').click();
+ const checklist=await downloadEvent;
+ assert.match(checklist.suggestedFilename(),/europe-exchange-2027-packing.csv/);
+ const exported=(await import('node:fs')).readFileSync(await checklist.path(),'utf8');
+ assert.match(exported,/Thermal socks/);
+ assert.match(exported,/"3"/);
+
  await page.reload({waitUntil:'domcontentloaded'});
  await page.locator('.pack-card').filter({hasText:'Thermal socks'}).waitFor({timeout:10000});
  assert.match(await page.locator('.pack-card').filter({hasText:'Thermal socks'}).innerText(),/3\/5 packed/,'persists after reload');
  const bought=page.locator('.pack-shopping>div').filter({hasText:'Thermal socks'});
  assert.match(await bought.innerText(),/2 needed/);
+ assert.equal(await page.evaluate(()=>window.PPPackingModel.limitsFor()['checked luggage']),0.2,'baggage limits persist after reload');
  await page.waitForTimeout(350);
  await page.screenshot({path:'artifacts/packing-desktop-filled.png',fullPage:true,animations:'disabled'});
  await page.setViewportSize({width:390,height:844});
