@@ -55,7 +55,7 @@ Executed in a JS-rendering browser on an isolated local origin:
 | Suitcase | Native disclosure opens/closes; contents reflect packed units |
 | Responsive | 390,768,1440 viewport requests; no horizontal overflow, no duplicate legacy UI, no broken `<img>` elements |
 
-Detailed executed cases: [functional results](functional-results.json). Screenshot measurements: [layout evidence](layout-evidence.json). Full-page capture API intermittently failed on the illustrated packing page, so final packing captures use a taller viewport at the requested width to include all content without image stitching. Normal-height overflow checks were performed separately. Native scrollbars reduce content width by15px during normal-height checks.
+Detailed executed cases: [functional results](functional-results.json). Screenshot measurements: [layout evidence](layout-evidence.json). Final1440px and390px main-page captures are full-page images from the actual public deployment. Populated QA captures and the768px tablet packing capture supplement them; some QA captures are viewport-only because the full-page API failed. Normal-height responsive measurements were taken separately. Native scrollbars reduce content width by15px during normal-height checks.
 
 ## Wider audit: scores before → after
 
@@ -125,4 +125,10 @@ Next: real-phone accessibility and performance profiling; complete destructive c
 
 ## Screenshots
 
-[Open the before/after gallery](gallery.html). Baseline main-page images mostly show seed/empty data; final images show the populated QA journey. They demonstrate layout and state handling, not identical-data visual diffs. Forms and onboarding baseline captures are also included in the gallery. Public deployment proof is added after publication.
+[Open the before/after gallery](gallery.html). Baseline main-page images mostly show seed/empty data. Final main-page images show the public deployment, while itinerary/tablet QA captures use the populated isolated journey. Different saved profiles/data appear across origins; these are evidence of layout/state handling, not identical-data visual diffs. Forms and onboarding baseline captures are included.
+
+## Public publication verification
+
+Sites version8 successfully published commit f7f70799fb3d1aeafd95940bd3dcbd489b0da931, matching GitHub main at publication. The final documentation update does not change runtime assets. The actual public URL was opened and reloaded after publication: one new renderer, zero legacy inventory/readiness/checkbox elements, correct JS/CSS content types, all checked runtime files byte-identical to the tested build after newline normalization, no broken images and no observed console warnings/errors. All eleven public routes were then captured full-page at1440px and390px. The live wardrobe exposes distinct Winter and Skiing options.
+
+[Public full-page packing proof](public-packing-full.jpg) · [Public DOM](public-dom.json) · [Asset/source verification](public-assets.json) · [Public console](public-console.json) · [Original-record preservation](preservation-results.json).

@@ -1,0 +1,47 @@
+{
+  "publicURL": "https://pixel-passport-2027.moufufu777.chatgpt.site/#packing",
+  "siteVersion": 8,
+  "commit": "f7f70799fb3d1aeafd95940bd3dcbd489b0da931",
+  "assets": [
+    {
+      "asset": "app.js",
+      "status": 200,
+      "type": "text/javascript",
+      "bytes": 62053,
+      "sha256": "828678bcf0daa664415cc63d2b1f1534cf79ba3759b151b1ee89c115a312c2f5",
+      "matchesBuiltSource": true
+    },
+    {
+      "asset": "packing-model.js",
+      "status": 200,
+      "type": "text/javascript",
+      "bytes": 1113,
+      "sha256": "e81d6278a58339327eb81ee1b4710f38433a1d62f7b0452c7d970c93eb0ba037",
+      "matchesBuiltSource": true
+    },
+    {
+      "asset": "packing-upgrade.js",
+      "status": 200,
+      "type": "text/javascript",
+      "bytes": 25688,
+      "sha256": "43f92f3bfb6d6cc960da22f3a139691dcc43dbad5610e8319439385a9fd777d5",
+      "matchesBuiltSource": true
+    },
+    {
+      "asset": "packing-upgrade.css",
+      "status": 200,
+      "type": "text/css",
+      "bytes": 20001,
+      "sha256": "fefdf444193efe73d5f61a33b8e4d82ebc480fa87b803c967d9fd08262248bbd",
+      "matchesBuiltSource": true
+    },
+    {
+      "asset": "assets/packing/inventory-clean.png",
+      "status": 200,
+      "type": "image/png",
+      "bytes": 2454200,
+      "sha256": "7ed996c7170c14ba9bfdf4be7beb2cc02075d59fc17b4931e5e9686252c1d926",
+      "matchesBuiltSource": null
+    }
+  ]
+}
