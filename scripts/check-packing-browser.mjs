@@ -50,6 +50,7 @@ try {
  await page.locator('input[name="qty"]').fill('5');
  await page.locator('input[name="ownedQty"]').fill('3');
  await page.locator('input[name="packedQty"]').fill('2');
+ await page.locator('input[name="weight"]').fill('0.1'); // Ensure 3 packed units exceed the deliberately small 0.2 kg test limit.
  await page.locator('select[name="tripId"]').selectOption({index:0});
  await page.locator('#dialog-form button[type=submit]').click();
  const saved=page.locator('.pack-card').filter({hasText:'Thermal socks'});
