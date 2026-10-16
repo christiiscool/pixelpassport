@@ -77,7 +77,12 @@
       "rome": "/assets/destinations/rome.webp",
       "finland": "/assets/destinations/finland.webp",
       "europePostcardsAtlas": "/assets/destinations/europe-postcards.webp",
-      "europePostcardsLayout": "2 columns x 2 rows: Austria, Finland, Greece, Venice"
+      "europePostcardsLayout": "2 columns x 2 rows: Vienna, Helsinki, Athens, Venice",
+      "preexchangeAtlas": "/assets/destinations/route-preexchange.webp",
+      "exchangeAtlas": "/assets/destinations/route-exchange.webp",
+      "familyAtlas": "/assets/destinations/route-family.webp",
+      "alpineAtlas": "/assets/destinations/route-alpine.webp",
+      "routeAtlasLayout": "3 columns x 2 rows; scene order is recorded in dist/postcards.js"
     },
     "skiing": {
       "alpineResort": "/assets/skiing/alpine-resort.webp"

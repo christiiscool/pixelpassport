@@ -26,7 +26,8 @@ export function PixelProgressBar({value,label}){const safeValue=Math.max(0,Math.
 export function AvatarSpeechBubble({children}){return <div className="avatar-speech-bubble">{children}<span aria-hidden="true">✦</span></div>}
 
 export function DestinationArt({name,className=''}){
-  const key=/paris|france/i.test(name)?'paris':/st\.?\s*gallen|switzerland/i.test(name)?'st-gallen':/rome|italy/i.test(name)?'rome':/vienna|austria/i.test(name)?'atlas-austria':/helsinki|finland/i.test(name)?'finland':/athens|greece/i.test(name)?'atlas-greece':/venice/i.test(name)?'atlas-venice':null;
+  const key=window.PPPostcards.forName(name);
+  if(Array.isArray(key))return <div role="img" aria-label={`Pixel art of ${name}`} className={`destination-art route-postcard route-${key[0]} ${className}`} style={{'--atlas-x':`${key[1]*50}%`,'--atlas-y':key[2]?'80%':'20%'}}/>;
   if(key?.startsWith('atlas'))return <div role="img" aria-label={`Pixel art of ${name}`} className={`destination-art atlas-postcard ${key} ${className}`}/>;
   if(key)return <img className={`destination-art ${className}`} src={`/assets/destinations/${key}.webp`} alt={`Pixel art of ${name}`}/>;
   return <div className={`destination-art illustrated-alpine-fallback ${className}`} role="img" aria-label="Illustrated Alpine landscape"/>;
