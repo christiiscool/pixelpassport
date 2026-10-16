@@ -26,3 +26,4 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #42
 /* One-shot scrapbook entrances must remain readable when ambient scenes are paused. */
 body[data-ambient=off] .journal-page{animation:none!important;opacity:1;transform:none}
 @media(max-width:600px){body[data-page=journal] .journal-page{animation:none!important;transform:none}}
+.painted-icon{background-size:contain;background-position:center;background-repeat:no-repeat;clip-path:none}

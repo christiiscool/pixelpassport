@@ -105,6 +105,8 @@
     "icons": {
       "paintedAtlas": "/assets/icons/travel-inventory-atlas.webp",
       "paintedAtlasLayout": "6 columns x 4 rows",
+      "paintedExtracted": "/assets/icons/painted/00.webp through 23.webp",
+      "paintedExtraction": "scripts/extract-painted-icons.py preserves full object bounds and transparent padding",
       "paintedAtlasNames": [
         "home",
         "backpack",

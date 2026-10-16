@@ -1,7 +1,7 @@
 /* Pixel Passport visual system. The existing local data model and actions stay intact. */
 const artRoot='/assets/';
 const paintedCells={home:0,trips:1,packing:1,map:2,compass:2,tasks:3,budget:4,coins:4,bookings:5,tickets:5,ski:6,journal:7,settings:8,plane:9,train:10,camera:11,jacket:12,pants:13,thermals:14,sweater:14,boots:15,gloves:16,goggles:17,helmet:18,toiletries:19,electronics:20,passport:21,bottle:22,adapter:23,suitcase:1};
-const pixelIcon=(name,extra='')=>paintedCells[name]===undefined?`<img class="pixel-icon ${extra}" src="${artRoot}icons/${name}.svg" alt="" aria-hidden="true">`:`<span class="painted-icon ${extra}" aria-hidden="true" style="background-position:${paintedCells[name]%6/5*100}% ${Math.floor(paintedCells[name]/6)/3*100}%"></span>`;
+const pixelIcon=(name,extra='')=>paintedCells[name]===undefined?`<img class="pixel-icon ${extra}" src="${artRoot}icons/${name}.svg" alt="" aria-hidden="true">`:`<span class="painted-icon ${extra}" aria-hidden="true" style="background-image:url('${artRoot}icons/painted/${String(paintedCells[name]).padStart(2,'0')}.webp')"></span>`;
 const pose=(n=0,extra='')=>`<span class="avatar-pose pose-${n} ${extra}" role="img" aria-label="Pixel travel companion"></span>`;
 const actionPose=(n=0)=>`<span class="action-pose pose-${n}" role="img" aria-label="Traveler action pose"></span>`;
 const viewPose=(n=0)=>`<span class="view-pose view-${n}" role="img" aria-label="Traveler turnaround view"></span>`;

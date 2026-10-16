@@ -11,7 +11,7 @@ const currency=(value,code)=>new Intl.NumberFormat('en-SG',{style:'currency',cur
 
 export function PixelIcon({name,className=''}){
   const cell=iconCells[name];
-  return cell===undefined?<img className={`pixel-icon ${className}`} src={`/assets/icons/${name}.svg`} alt="" aria-hidden="true"/>:<span className={`painted-icon ${className}`} style={{backgroundPosition:`${cell%6/5*100}% ${Math.floor(cell/6)/3*100}%`}} aria-hidden="true"/>;
+  return cell===undefined?<img className={`pixel-icon ${className}`} src={`/assets/icons/${name}.svg`} alt="" aria-hidden="true"/>:<span className={`painted-icon ${className}`} style={{backgroundImage:`url('/assets/icons/painted/${String(cell).padStart(2,'0')}.webp')`}} aria-hidden="true"/>;
 }
 function LegacyCharacterAvatar({expression=0,action=null,outfit=null,className='',label='Pip and her little cat, your travel companions'}){
   const sheet=outfit!==null?'traveler-outfits':action!==null?'traveler-actions':'traveler-poses';
