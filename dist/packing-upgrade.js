@@ -1,6 +1,6 @@
 (function upgradePacking(){
 'use strict';
-const categories=['Clothing','Ski gear','Essentials','Toiletries','Electronics','Accessories'];
+const categories=['Winter clothing','Everyday clothing','Footwear','Skiing and hiking','Toiletries','Health and first aid','Electronics','Travel documents','University and accommodation','Luggage and organization','Rental decisions','Clothing','Ski gear','Essentials','Accessories'];
 function category(p){if(categories.includes(p.category))return p.category;const icon=itemIcon(p);return /ski|goggle|helmet/.test(icon)?'Ski gear':/jacket|pant|thermal|sweater|boot|sock|scarf|hat|raincoat/.test(icon)?'Clothing':/toiletr|sunscreen|toothbrush|medicine/.test(icon)?'Toiletries':/electronic|adapter|cable|camera|headphone/.test(icon)?'Electronics':/passport|wallet|bottle/.test(icon)?'Essentials':'Accessories'}
 const priorityRank=p=>({high:0,normal:1,low:2}[p.priority||'normal']);
 let deletedItem=null;
@@ -44,12 +44,15 @@ function suggestions(){
  const existing=new Set(items().map(p=>p.name.trim().toLowerCase())),seen=new Set(),out=[];
  function add(name,reason,bag='checked luggage',qty=1,weight=0.2){
   const key=name.toLowerCase();
-  if(existing.has(key)||seen.has(key)||state.dismissed.includes(key)||state.dismissed.includes('pack:'+t.id+':'+key))return;
+  const equivalent={ 'travel adapter':/adapter/i,'walking shoes':/walking sneakers|walking shoes/i,'warm coat':/winter coat|warm coat/i,'thermal base layers':/thermal base.layer|ski base.layer/i,'waterproof boots':/waterproof winter boots|waterproof boots/i,'scarf':/warm scarf|^scarf$/i,'ski jacket':/ski jacket|waterproof shell/i,'ski pants':/ski pants/i,'waterproof gloves':/waterproof ski gloves|waterproof winter gloves/i,'ski goggles':/ski goggles/i,'ski socks':/ski socks/i,'helmet or rental':/ski helmet/i,'hiking shoes':/hiking shoes|trail shoes/i,'rain protection':/hiking rain cover|rain jacket|poncho/i};
+  if(existing.has(key)||items().some(p=>equivalent[key]?.test(p.name))||seen.has(key)||state.dismissed.includes(key)||state.dismissed.includes('pack:'+t.id+':'+key))return;
   seen.add(key);out.push({name,reason,bag,qty,weight,key});
  }
  if(ds.length){add('Passport','International travel','personal bag',1,.05);add('Travel adapter','Charging essentials','cabin luggage',1,.1);add('Reusable water bottle','Train rides and day trips','personal bag',1,.3);add('Walking shoes','Exploring cities','checked luggage',1,.7)}
  if(winter){add('Warm coat','Winter destination',undefined,1,1.2);add('Thermal base layers','Cold-weather layering',undefined,3,.2);add('Waterproof boots','Snowy or wet streets',undefined,1,1);add('Warm socks','Cold-weather essentials',undefined,4,.08);add('Scarf','Winter layering',undefined,1,.2)}
  if(skiing){add('Ski jacket','Ski trip',undefined,1,.9);add('Ski pants','Ski trip',undefined,1,.65);add('Waterproof gloves','Ski trip',undefined,1,.2);add('Ski goggles','Ski trip',undefined,1,.2);add('Ski socks','Ski trip',undefined,2,.12);add('Helmet or rental','Decide whether to rent locally','optional',1,.7);add('Sunscreen SPF 50','Mountain sun','personal bag',1,.1)}
+ const hiking=state.activities.some(a=>ds.some(d=>d.id===a.destinationId)&&/hik|gorge|trail|alpine walk/i.test(a.title+' '+a.notes));
+ if(hiking){add('Hiking shoes','Hiking activity','checked luggage',1,.8);add('Reusable water bottle','Hiking activity','personal bag',1,.3);add('Rain protection','Hiking activity','checked luggage',1,.3);add('Blister pads','Hiking activity','personal bag',1,.02)}
  const m=Number((t.start||'').slice(5,7));if(m>=5&&m<=9){add('Sun hat','Summer days','cabin luggage',1,.1);add('Sunscreen SPF 50','Summer sun','personal bag',1,.1)}
  const outfit=filters.packIncludeOutfit?state.profile.selectedOutfitId:null;
  const clothing={
@@ -74,12 +77,13 @@ function card(p){
  const c=counts(p),done=c.packed===c.qty;
  return '<article class="pack-card '+(done?'ready':'')+'" data-item-id="'+E(p.id)+'" data-search-name="'+E(p.name.toLowerCase())+'">'+
  '<div class="pack-card-art">'+art(itemIcon(p))+'<span class="pack-seal">'+(done?'✓':c.shopping?'!':'·')+'</span></div>'+
- '<h3>'+E(p.name)+'</h3><p>'+E(category(p))+' · '+(done?'Ready':c.packed?'Partly packed':c.shopping?'Shopping':'Owned')+'</p>'+
- '<div class="pack-chip-row"><span>'+c.packed+'/'+c.qty+' packed</span><span>'+c.owned+'/'+c.qty+' owned</span></div>'+quantityControl(p,c,'packed','Pack')+
+ '<h3>'+E(p.name)+'</h3><p>'+E(category(p))+' · '+(done?'Ready':c.packed?'Partly packed':p.ownership==='unknown'?'Ownership unknown':c.shopping?'Shopping':'Owned')+'</p>'+ 
+ '<div class="pack-chip-row"><span>'+c.packed+'/'+c.qty+' packed</span><span>'+(p.ownership==='unknown'?'Ownership unknown':c.owned+'/'+c.qty+' owned')+'</span></div>'+quantityControl(p,c,'packed','Pack')+
  '<details class="pack-item-settings"><summary>Details & quantities</summary>'+quantityControl(p,c,'qty','Need')+quantityControl(p,c,'owned','Own')+
- '<label class="pack-card-bag">Bag<select data-pack-move="'+E(p.id)+'" aria-label="Bag for '+E(p.name)+'">'+bags.map(([key,label])=>'<option value="'+key+'" '+(key===p.bag?'selected':'')+'>'+label+'</option>').join('')+'</select></label>'+
+ '<label class="pack-card-bag">Bag<select data-pack-move="'+E(p.id)+'" aria-label="Bag for '+E(p.name)+'">'+bags.map(([key,label])=>'<option value="'+key+'" '+(key===p.bag?'selected':'')+'>'+label+'</option>').join('')+'</select></label>'+ 
+ '<p class="small-text">Decision: '+E(p.decision||'bring')+'</p>'+ 
  (p.notes?'<p class="pack-item-note">'+E(p.notes)+'</p>':'')+'</details>'+
- '<div class="pack-card-actions"><button data-action="'+(c.owned?'packingAll':'packJump')+'" data-value="shopping" data-id="'+E(p.id)+'">'+(!c.owned?'Shopping list':c.packed===c.owned?'Unpack all':c.owned<c.qty?'Pack owned':'Pack all')+'</button><button data-action="editPacking" data-id="'+E(p.id)+'" aria-label="Edit '+E(p.name)+'">Edit</button><button data-action="packDelete" data-id="'+E(p.id)+'" aria-label="Delete '+E(p.name)+'">Delete</button></div></article>';
+ '<div class="pack-card-actions"><button data-action="'+(c.owned?'packingAll':p.ownership==='unknown'?'editPacking':'packJump')+'" data-value="shopping" data-id="'+E(p.id)+'">'+(p.ownership==='unknown'?'Set ownership':!c.owned?'Shopping list':c.packed===c.owned?'Unpack all':c.owned<c.qty?'Pack owned':'Pack all')+'</button><button data-action="editPacking" data-id="'+E(p.id)+'" aria-label="Edit '+E(p.name)+'">Edit</button><button data-action="packDelete" data-id="'+E(p.id)+'" aria-label="Delete '+E(p.name)+'">Delete</button></div></article>';
 }
 window.PPPackingPage=function(){
  const t=trip(),list=items(),sum=totals(list),percent=sum.units?Math.round(sum.packed/sum.units*100):0;
@@ -105,10 +109,11 @@ window.PPPackingForm=function(record){
  field('name','Item name',p.name||'','text','required maxlength="100"')+
  selectField('icon','Illustration',[{id:'',name:'Choose automatically'},...icons.map(k=>({id:k,name:k}))],p.icon&&icons.includes(p.icon)?p.icon:'')+
  field('qty','Quantity needed',c.qty,'number','min="1" max="999" step="1" required')+
+ selectField('ownership','Ownership',['unknown','known'],p.ownership||'known')+
  field('ownedQty','Quantity owned',c.owned,'number','min="0" max="999" step="1" required')+
  field('packedQty','Quantity packed',c.packed,'number','min="0" max="999" step="1" required')+
  field('weight','Weight per unit (kg)',p.weight??'','number','min="0" max="99" step="0.01"')+
- selectField('category','Category',categories,p.category||category(p))+selectField('priority','Priority',['high','normal','low'],p.priority||'normal')+selectField('bag','Bag',bags.map(x=>x[0]),p.bag||'checked luggage')+
+ selectField('category','Category',categories,p.category||category(p))+selectField('priority','Priority',['high','normal','low'],p.priority||'normal')+selectField('decision','Decision',['bring','buy','rent locally','undecided'],p.decision||'bring')+selectField('bag','Bag',bags.map(x=>x[0]),p.bag||'checked luggage')+
  selectField('tripId','Trip',state.trips,p.tripId||selectedTrip)+textField('notes','Notes',p.notes||''),
  v=>{
   const q=Number(v.qty),o=Number(v.ownedQty),pk=Number(v.packedQty);
@@ -116,7 +121,7 @@ window.PPPackingForm=function(record){
   if(!Number.isInteger(o)||o<0||o>q)throw Error('Owned quantity must be between 0 and total quantity.');
   if(!Number.isInteger(pk)||pk<0||pk>o)throw Error('Packed quantity cannot exceed owned quantity.');
   if(v.weight!==''&&(!Number.isFinite(Number(v.weight))||Number(v.weight)<0))throw Error('Enter a valid nonnegative weight.');
-  const val={...v,qty:q,ownedQty:o,packedQty:pk};
+  const val={...v,qty:q,ownedQty:o,packedQty:pk,purchaseNeededQty:v.ownership==='unknown'?null:q-o};
   if(record)sync(Object.assign(record,val));else state.packing.push(sync({id:id(),...val}));
  });
 };
@@ -153,7 +158,7 @@ actions.packingAdjust=({id,field,delta})=>{
  const c=counts(p),change=Number(delta);
  if(field==='packed'){p.packedQty=Math.max(0,Math.min(c.owned,c.packed+change));p.ownedQty=c.owned}
  else if(field==='qty'){p.qty=Math.min(999,Math.max(1,c.owned,c.qty+change));p.ownedQty=c.owned;p.packedQty=c.packed}
- else if(field==='owned'){p.ownedQty=Math.max(c.packed,Math.min(c.qty,c.owned+change));p.packedQty=c.packed}
+ else if(field==='owned'){p.ownedQty=Math.max(c.packed,Math.min(c.qty,c.owned+change));p.packedQty=c.packed;p.ownership='known';p.purchaseNeededQty=p.qty-p.ownedQty}
  sync(p);commitPacking();if(field==='packed'&&change>0)animatePacked(p);if(field==='owned'&&change>0&&state.profile.ambientMotion!=='off'&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const card=[...document.querySelectorAll('.pack-card')].find(n=>n.dataset.itemId===p.id);card?.animate([{transform:'scale(.98)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:280,easing:'ease-out'})}
 };
 actions.packingAll=({id})=>{const p=state.packing.find(p=>p.id===id);if(!p)return;const c=counts(p);p.packedQty=c.packed===c.owned?0:c.owned;p.ownedQty=c.owned;sync(p);commitPacking();if(p.packedQty>c.packed)animatePacked(p);if(p.status==='packed')toast('Everything packed! ✦')};

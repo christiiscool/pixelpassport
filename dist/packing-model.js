@@ -5,7 +5,7 @@ function counts(p){
  const qty=Math.max(1,num(p.qty,1));
  const owned=Math.min(qty,num(p.ownedQty,['purchased','packed'].includes(p.status)?qty:0));
  const packed=Math.min(owned,num(p.packedQty,p.status==='packed'?qty:0));
- return {qty,owned,packed,shopping:qty-owned};
+ return {qty,owned,packed,shopping:p.ownership==='unknown'?0:Math.max(0,qty-owned)};
 }
 function sync(p){
  const c=counts(p);
