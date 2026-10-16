@@ -35,6 +35,7 @@ body{font-family:var(--body);color:var(--ink);background:linear-gradient(115deg,
 :root{color-scheme:light}@media(max-width:800px){.field,select.field,textarea.field{font-size:16px}.sheet-close{width:40px;height:40px}.map-place-copy{padding-right:43px}.btn.small{min-height:42px;min-width:42px}}
 @media(max-width:800px){.destination-detail-cover{height:166px;scroll-margin-top:12px}.destination-detail-cover>div:last-child{left:17px;top:22px;max-width:85%}.destination-detail-cover strong{font-size:27px}.destination-detail-cover small{font-size:12px}.destination-detail-cover .eyebrow{font-size:7px}}
 @media(max-width:800px){body[data-page="trips"] .destination-detail-grid{grid-template-columns:minmax(0,1fr)}body[data-page="trips"] .destination-detail-grid .timeline-item{grid-template-columns:minmax(65px,90px) minmax(0,1fr)}body[data-page="trips"] .destination-detail-grid .timeline-content{min-width:0}}
+@media(max-width:800px){.sidebar:before{display:none}.sidebar .nav-icon{flex:none}}
 .destination-card{container-type:inline-size}
 .destination-card .actions{display:grid;grid-template-columns:minmax(78px,1fr) repeat(5,42px);gap:6px;align-items:center}
 .destination-card .actions .btn{height:42px;min-height:42px;margin:0;box-shadow:1px 2px 0 #d4d8c9}
