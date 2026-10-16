@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {existsSync} from 'node:fs';
 import '../dist/travel-template.js';
 import '../dist/travel-importer.js';
 const T=globalThis.PPTravelTemplate,I=globalThis.PPTravelImporter;
@@ -11,6 +12,7 @@ assert.equal(first.state.bookings[0].reference,'keep-me');
 assert.equal(first.state.expenses[0].amount,42);
 assert.equal(first.state.packing.length,T.packing.length);
 assert(first.state.packing.every(p=>p.ownership==='unknown'&&p.packedQty===0&&p.purchaseNeededQty===null));
+assert(T.packing.every(p=>p.icon&&(existsSync(new URL(`../dist/assets/icons/${p.icon}.svg`,import.meta.url))||p.icon==='suitcase')));
 assert(first.state.transfers.some(t=>t.origin==='Paris'&&t.destination==='Rome'&&t.mode==='flight'&&t.status==='planned'));
 assert(first.state.activities.some(a=>a.title.includes('King of Triglav')&&a.date==='2027-05-30'));
 assert(first.state.destinations.some(d=>d.name==='Hallstatt'&&d.tripId==='family-trip'));
