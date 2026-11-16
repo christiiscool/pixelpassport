@@ -42,4 +42,32 @@ backup=makeState();backup.trips.unshift({id:'old',name:'Old trip'});backup.trans
 assert.throws(()=>data.validateBackup(backup),/Invalid transfer date/);
 backup=makeState();backup.trips.unshift({id:'old',name:'Old trip'});backup.transfers[0].tripId='missing';
 assert.throws(()=>data.validateBackup(backup),/unknown trip/);
+// Route movement is deterministic and never collides with stop IDs from other trips.
+let route={
+ trips:[{id:'a',name:'A'},{id:'b',name:'B'}],
+ profile:{selectedTripId:'a'},
+ destinations:[
+  {id:'a1',tripId:'a',order:0},
+  {id:'a2',tripId:'a',order:0},
+  {id:'a3',tripId:'a',order:20},
+  {id:'b1',tripId:'b',order:0},
+  {id:'b2',tripId:'b',order:1}
+ ],
+ bookings:[],expenses:[],tasks:[],skiTrips:[],packing:[],transfers:[],journal:[]
+};
+const unique=(trip)=>{const orders=route.destinations.filter(d=>d.tripId===trip).map(d=>d.order);assert.equal(new Set(orders).size,orders.length);};
+assert.equal(data.normalizeRoute(route,'a').length,3,'normalize all stops');
+unique('a');
+assert.equal(data.reorderDestination(route,'a3',-1),true);
+assert.deepEqual(data.normalizeRoute(route,'a').map(d=>d.id),['a1','a3','a2']);
+assert.equal(data.reorderDestination(route,'a1',-1),false,'cannot move outside bounds');
+assert.equal(data.reorderDestination(route,'a1',100),false,'cannot move beyond route');
+assert.equal(data.moveDestinationTrip(route,route.destinations.find(d=>d.id==='a1'),'b'),true);
+assert.deepEqual(data.normalizeRoute(route,'b').map(d=>d.id),['b1','b2','a1']);
+unique('a');unique('b');
+route.trips.splice(0,1);assert.equal(data.rehomeTrip(route,'a'),'b');
+assert.deepEqual(data.normalizeRoute(route,'b').map(d=>d.id),['b1','b2','a1','a3','a2']);
+unique('b');
+assert.equal(route.profile.selectedTripId,'b');
+console.log('Route order normalization, reordering, and migration passed');
 console.log('UI/data audit checks passed');

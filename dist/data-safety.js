@@ -62,25 +62,45 @@ function conversion(record,values,profile,rates,timestamp){
 }
 function safeURL(value){try{const url=new URL(value);return ['http:','https:'].includes(url.protocol)?url.href:''}catch{return ''}}
 // Keep all trip-bound records discoverable after a trip is deleted.
-function rehomeTrip(data,deletedId){
-  const replacement=data.trips?.[0]?.id;
-  if(!replacement)throw Error('At least one trip is required');
-  for(const collection of ['destinations','bookings','expenses','tasks','skiTrips','packing','transfers','journal']){
-    for(const item of data[collection]||[])if(item.tripId===deletedId)item.tripId=replacement;
-  }
-  if(data.profile?.selectedTripId===deletedId)data.profile.selectedTripId=replacement;
-  return replacement;
+// Preserve a stable, unique stop order after deletions, reassignments, or duplicates.
+function normalizeRoute(data,tripId){
+ const rows=(data.destinations||[]).filter(d=>d.tripId===tripId).sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0));
+ rows.forEach((d,i)=>{d.order=i;});
+ return rows;
 }
-// Moving a stop also moves its associated trip-bound records, including linked ski costs.
+function reorderDestination(data,destinationId,delta){
+ const stop=data.destinations.find(d=>d.id===destinationId);
+ if(!stop)return false;
+ const ordered=normalizeRoute(data,stop.tripId),i=ordered.findIndex(d=>d.id===destinationId),next=i+Number(delta);
+ if(next<0||next>=ordered.length||!Number.isInteger(Number(delta)))return false;
+ const [moved]=ordered.splice(i,1);ordered.splice(next,0,moved);
+ ordered.forEach((d,n)=>{d.order=n;});
+ return true;
+}
+function rehomeTrip(data,deletedId){
+ const replacement=data.trips?.[0]?.id;
+ if(!replacement)throw Error('At least one trip is required');
+ // Place rehomed stops after the existing route so unrelated stops do not jump.
+ const existing=normalizeRoute(data,replacement),incoming=data.destinations.filter(d=>d.tripId===deletedId).sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0));
+ incoming.forEach((d,i)=>{d.tripId=replacement;d.order=existing.length+i;});
+ for(const collection of ['bookings','expenses','tasks','skiTrips','packing','transfers','journal']){
+  for(const item of data[collection]||[])if(item.tripId===deletedId)item.tripId=replacement;
+ }
+ if(data.profile?.selectedTripId===deletedId)data.profile.selectedTripId=replacement;
+ return replacement;
+}
 function moveDestinationTrip(data,destination,newTripId){
-  if(!data.trips.some(t=>t.id===newTripId))throw Error('Choose an existing trip');
-  if(destination.tripId===newTripId)return false;
-  for(const collection of ['bookings','expenses','tasks','skiTrips']){
-    for(const item of data[collection]||[])if(item.destinationId===destination.id)item.tripId=newTripId;
-  }
-  destination.tripId=newTripId;
-  destination.order=data.destinations.filter(d=>d.tripId===newTripId&&d.id!==destination.id).reduce((n,d)=>Math.max(n,Number(d.order)||0),-1)+1;
-  return true;
+ if(!data.trips.some(t=>t.id===newTripId))throw Error('Choose an existing trip');
+ if(destination.tripId===newTripId)return false;
+ const oldTripId=destination.tripId;
+ const order=normalizeRoute(data,newTripId).length;
+ for(const collection of ['bookings','expenses','tasks','skiTrips']){
+  for(const item of data[collection]||[])if(item.destinationId===destination.id)item.tripId=newTripId;
+ }
+ destination.tripId=newTripId;
+ destination.order=order;
+ normalizeRoute(data,oldTripId);
+ return true;
 }
 // Rebase only unconverted/stale entries after an explicit user decision.
 // Preserve previous conversions for historical review, never alter original amounts.
@@ -102,6 +122,6 @@ function reconcileCurrencies(data){
   }
   return {converted,skipped};
 }
-root.PPData={restore,validateBackup,successor,conversion,safeURL,rehomeTrip,moveDestinationTrip,reconcileCurrencies};
+root.PPData={restore,validateBackup,successor,conversion,safeURL,normalizeRoute,reorderDestination,rehomeTrip,moveDestinationTrip,reconcileCurrencies};
 })(typeof window==='undefined'?globalThis:window);
 

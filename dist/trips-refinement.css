@@ -1,0 +1,207 @@
+/* Trip and itinerary workspace — editorial storybook layout, accessible controls. */
+body[data-page="trips"] .trips-workspace{max-width:1340px;margin:0 auto}
+body[data-page="trips"] .page-banner-trips{height:185px;margin-bottom:17px}
+.trips-workspace .section-head{margin:12px 0 13px}
+.trip-collection{margin:0 0 20px}
+.trip-shelf{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:15px}
+.trip-shelf .trip-card{position:relative;min-width:0;overflow:hidden;padding:0 16px 15px;border:1px solid #d4cdbb;border-radius:13px;box-shadow:0 2px 0 #d8ddcf,0 8px 16px #7d6b5620;transition:border-color 160ms,box-shadow 160ms,transform 160ms;background:#fffaf0}
+.trip-shelf .trip-card.is-selected{border:2px solid #688f74;box-shadow:0 0 0 2px #dcebdc,0 4px 13px #5d867221}
+.trip-shelf .trip-card:focus-within{border-color:#6c9c82}
+.trip-shelf .trip-card:hover{transform:translateY(-2px)}
+.trip-shelf .trip-cover{height:99px;margin:0 -16px 11px;background-position:center 55%;border-bottom:1px solid #dacdbb}
+.trip-card-top{display:flex;align-items:center;gap:8px;min-height:23px}
+.trip-card-current{margin-left:auto;font:900 9px Nunito,sans-serif;letter-spacing:.7px;color:#407356}
+.trip-shelf .trip-card h3{font:700 21px/1.25 Fraunces,Georgia,serif;margin:7px 0;color:#334c41;min-height:0}
+.trip-shelf .trip-card p{font:650 12px/1.5 Nunito,sans-serif;color:#6c7f72;margin:0 0 10px}
+.trip-card-bottom{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-right:95px}
+.trip-card-bottom>span{font:800 11px Nunito,sans-serif;color:#718576}
+.trip-card-bottom .btn{min-height:38px;min-width:102px;font-size:11px}
+.trip-card-settings{position:absolute;right:15px;bottom:14px;display:flex;gap:5px}
+.trip-card-settings .btn{min-width:36px;width:36px;height:38px;min-height:38px;padding:4px;box-shadow:none}
+.route-summary{overflow:hidden;padding:21px 24px 16px;border:1px solid #b9cdb8;border-radius:17px;background:linear-gradient(112deg,#eef5e9 0%,#fbf8ea 75%);box-shadow:0 4px 0 #d3e1ce,0 10px 22px #7f947d17;margin:0 0 25px}
+.route-summary-header{display:flex;align-items:start;justify-content:space-between;gap:18px}
+.route-summary-header>div{min-width:0}
+.route-eyebrow{font:900 10px/1.3 Nunito,sans-serif;letter-spacing:1.3px;color:#6d8875}
+.route-summary-header h2,.route-section-head h2{font:700 clamp(22px,2.4vw,33px)/1.13 Fraunces,Georgia,serif;color:#355847;margin:7px 0}
+.route-summary-header p{font:600 13px/1.55 Nunito,sans-serif;color:#637869;margin:5px 0 0;max-width:740px}
+.route-summary-header>.btn{flex:none}
+.route-summary-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0 12px}
+.route-summary-stats>div{display:flex;flex-direction:column;gap:2px;padding:11px 14px;border:1px solid #d3dfce;border-radius:10px;background:#fffcf7a8}
+.route-summary-stats strong{font:700 27px/1.1 Fraunces,Georgia,serif;color:#416b53}
+.route-summary-stats span{font:800 11px Nunito,sans-serif;color:#687f71}
+.route-summary-note{font:650 11px/1.5 Nunito,sans-serif;color:#768979;margin:2px 0}
+.route-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:27px 0 13px;scroll-margin-top:20px}
+.route-section-head h2{margin:4px 0 5px}
+.route-section-head p{margin:0;font:650 12px/1.5 Nunito,sans-serif;color:#79857b}
+.route-section-head>.btn{flex:none;min-height:43px}
+.route-stops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.destination-card.route-stop{position:relative;display:flex;flex-direction:column;gap:0;padding:0;background:#fffaf2;border:1px solid #d7cbbb;border-radius:13px;min-width:0;overflow:visible;box-shadow:0 3px 0 #e0d4c4,0 9px 18px #725f4a1a;transition:transform 150ms,box-shadow 150ms}
+.destination-card.route-stop:hover{transform:translateY(-2px);box-shadow:0 6px 0 #e0d4c4,0 13px 19px #725f4a20}
+.destination-card.route-stop.route-stop-active{border:2px solid #7ba890;box-shadow:0 0 0 3px #dfeee1}
+.destination-card.route-stop.dragging{opacity:.5}
+.destination-card.route-stop.drag-over{outline:3px dashed #7ba890;outline-offset:4px}
+.destination-card.route-stop>.art{height:151px;width:100%;margin:0;border-radius:12px 12px 0 0;overflow:hidden;background:#e8efe7;border:0;border-bottom:1px solid #d5d9ca}
+.destination-card.route-stop>.art img,.destination-card.route-stop>.art .postcard{width:100%;height:100%;object-fit:cover}
+.route-stop-number{position:absolute;top:11px;left:11px;padding:7px 9px;border-radius:8px;background:#fdf7e9ec;color:#3e6a52;font:900 13px Nunito,sans-serif;border:1px solid #b3c8b6;box-shadow:0 2px 3px #4a625b22}
+.route-stop-info{padding:14px 16px 12px;flex:1}
+.route-stop-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.route-stop-label{font:900 10px Nunito,sans-serif;letter-spacing:1.1px;color:#819583}
+.route-stop-top .pill{font-size:10px}
+.route-stop-info h3{font:700 23px/1.17 Fraunces,Georgia,serif;color:#2d5242;margin:8px 0 2px;overflow-wrap:anywhere}
+.route-stop-info .route-stop-country{font:700 12px Nunito,sans-serif;color:#7a8379;margin:0 0 13px}
+.route-stop-info .route-stop-dates{font:750 12px/1.4 Nunito,sans-serif;color:#426d56;margin:4px 0}
+.route-stop-info .route-stop-activities{font:650 11px/1.4 Nunito,sans-serif;color:#6f7f73;margin:5px 0}
+.route-stop-actions{display:flex;align-items:stretch;gap:8px;padding:11px 13px 13px;border-top:1px solid #e5ddcd;flex-wrap:wrap}
+.route-stop-actions>.btn{min-height:43px;box-shadow:none;font:800 12px Nunito,sans-serif;padding:8px 9px}
+.route-stop-actions .route-open{flex:1;white-space:nowrap}
+.route-stop-actions .route-edit{flex:none}
+.route-more{position:relative;flex:none}
+.route-more summary{display:grid;place-items:center;min-width:43px;height:43px;border:1px solid #bdcabc;background:#f4f5ea;border-radius:8px;color:#4c7160;font:900 17px Nunito,sans-serif;cursor:pointer;list-style:none}
+.route-more summary::-webkit-details-marker{display:none}
+.route-more[open]{flex-basis:100%}
+.route-more[open] summary{margin-left:auto}
+.route-more-menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:8px}
+.route-more-menu button{min-height:42px;border:1px solid #c5d2c4;border-radius:7px;background:#f7f8ef;color:#426450;font:800 11px Nunito,sans-serif;cursor:pointer;padding:7px;white-space:normal}
+.route-more-menu button:hover{background:#e9f1e5}
+.route-more-menu button:disabled{opacity:.45;cursor:not-allowed}
+.route-more-menu button.danger{color:#964e49;background:#fbede7;border-color:#e2c7bc}
+.route-empty,.itinerary-empty{padding:24px;text-align:center;background:#f4f5eb;border:1px dashed #b4c7b4;border-radius:13px;color:#557064}
+.route-empty strong,.itinerary-empty strong{font:700 22px Fraunces,Georgia,serif;color:#355b49}
+.route-empty p,.itinerary-empty p{font:600 12px/1.5 Nunito,sans-serif;color:#73887c}
+.itinerary-detail{scroll-margin-top:24px;margin-top:32px}
+.itinerary-detail>.section-head{margin:14px 0}
+.itinerary-close-line{display:flex;margin:0 0 8px}
+.itinerary-close-line .btn{min-height:40px}
+.itinerary-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:13px 0}
+.itinerary-kpis>div{display:flex;flex-direction:column;gap:3px;padding:14px 16px;background:#fbf7ed;border:1px solid #e0d3bf;border-radius:10px}
+.itinerary-kpis strong{font:700 27px Fraunces,Georgia,serif;color:#436c56}
+.itinerary-kpis span{font:800 11px Nunito,sans-serif;color:#7e857b}
+.itinerary-toolbar{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:10px;padding:12px 13px;border:1px solid #d9d6c6;border-radius:11px;background:#faf9ef;margin:0 0 12px}
+.itinerary-views{display:flex;gap:5px;background:#e8ede1;border-radius:9px;padding:4px}
+.itinerary-views button{min-height:42px;border:0;border-radius:7px;background:transparent;color:#577263;padding:9px 12px;font:800 12px Nunito,sans-serif;cursor:pointer}
+.itinerary-views button.active{background:#fffdf5;color:#2e6b4d;box-shadow:0 2px 4px #667e5c22}
+.itinerary-filter-row{display:flex;gap:10px;flex-wrap:wrap}
+.itinerary-filter-row label{font:800 11px Nunito,sans-serif;color:#66816d;display:grid;gap:4px}
+.itinerary-filter-row select{min-height:42px;min-width:130px;font:700 12px Nunito,sans-serif}
+body[data-page="trips"] .destination-detail-grid{grid-template-columns:minmax(0,1.5fr) minmax(280px,.85fr);gap:14px}
+.itinerary-main{min-width:0;background:#fffaf1!important}
+.itinerary-main-heading{display:flex;justify-content:space-between;gap:11px;align-items:center;margin-bottom:16px}
+.itinerary-main-heading h3{font:700 23px Fraunces,Georgia,serif;margin:0}
+.itinerary-main-heading p{font:650 11px Nunito,sans-serif;color:#839083;margin:4px 0 0}
+.itinerary-days{display:grid;gap:17px}
+.itinerary-day{display:grid;grid-template-columns:115px minmax(0,1fr);gap:13px}
+.itinerary-day-marker{border-left:3px solid #91b4a0;padding:6px 10px 10px 11px;display:flex;flex-direction:column;gap:6px;background:#edf3e9;border-radius:0 9px 9px 0;align-self:start}
+.itinerary-day-marker small{font:900 9px Nunito,sans-serif;letter-spacing:1px;color:#5e8369}
+.itinerary-day-marker strong{font:700 14px/1.25 Fraunces,Georgia,serif;color:#385d47}
+.itinerary-day-marker span{font:700 10px Nunito,sans-serif;color:#758474}
+.itinerary-day-events{display:grid;gap:7px;min-width:0}
+.itinerary-activity{display:grid;grid-template-columns:68px minmax(0,1fr) auto;gap:11px;align-items:start;padding:12px;border:1px solid #ded8ca;border-radius:9px;background:#fffdf7;min-width:0}
+.itinerary-activity-time{font:850 11px Nunito,sans-serif;color:#48745e;padding-top:4px;white-space:nowrap}
+.itinerary-activity-info{min-width:0}
+.itinerary-activity-info strong{display:block;font:700 16px/1.2 Fraunces,Georgia,serif;color:#365c4c;overflow-wrap:anywhere}
+.itinerary-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.itinerary-tag{background:#eef1e6;border:1px solid #d7e2d2;padding:3px 6px;border-radius:5px;font:800 10px Nunito,sans-serif;color:#577360}
+.itinerary-status{background:#f6ebdd;border-color:#eadcc9;color:#8a735d}
+.itinerary-activity-notes{font:600 12px/1.5 Nunito,sans-serif;white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 2px;color:#617468}
+.itinerary-link{display:inline-block;margin-top:8px;color:#3a7a61;font:800 11px Nunito,sans-serif}
+.itinerary-activity-actions{display:flex;gap:5px}
+.itinerary-activity-actions .btn{min-height:36px;box-shadow:none;padding:5px 9px;font-size:10px}
+.itinerary-activity-actions .btn.danger{min-width:34px}
+.itinerary-activity-list{display:grid;gap:8px}
+.itinerary-calendar{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:11px}
+.itinerary-day-card{min-width:0;padding:12px 13px;background:#f0f3e8;border:1px solid #cdd8c7;border-radius:11px}
+.itinerary-day-card header{border-bottom:1px dashed #bccfbd;padding-bottom:9px;margin-bottom:10px}
+.itinerary-day-kicker{font:900 9px Nunito,sans-serif;letter-spacing:1px;color:#75907a}
+.itinerary-day-card h4{font:700 20px Fraunces,Georgia,serif;color:#3d634f;margin:5px 0}
+.itinerary-day-card header small{font:700 11px Nunito,sans-serif;color:#7a8e7c}
+.itinerary-day-card .itinerary-day-events{gap:6px}
+.itinerary-day-card .itinerary-day-events button{display:grid;grid-template-columns:65px minmax(0,1fr);gap:7px;text-align:left;border:1px solid #dfddcc;background:#fffdf5;border-radius:8px;padding:10px;cursor:pointer;color:#42604f}
+.itinerary-day-card .itinerary-day-events button:hover{background:#eaf3e8}
+.itinerary-day-card time{font:800 10px Nunito,sans-serif;color:#487b60}
+.itinerary-day-card .itinerary-day-events button span{font:700 12px Nunito,sans-serif;overflow-wrap:anywhere}
+.itinerary-notes{white-space:pre-wrap;overflow-wrap:anywhere}
+.itinerary-aside .card h3{font:700 20px Fraunces,Georgia,serif}
+.itinerary-aside .card p{font-size:12px;line-height:1.5}
+@media(max-width:1100px){
+ .route-stops{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body[data-page="trips"] .destination-detail-grid{grid-template-columns:minmax(0,1fr)}
+ .itinerary-toolbar{align-items:stretch}
+ .itinerary-filter-row{flex:1}
+}
+@media(max-width:800px){
+ body[data-page="trips"] .page-banner-trips{height:112px;margin:0 0 11px}
+ body[data-page="trips"] .page-banner-trips .page-banner-copy{left:14px;top:13px}
+ body[data-page="trips"] .page-banner-trips .page-banner-copy h2{font-size:23px;margin:2px 0}
+ body[data-page="trips"] .page-banner-trips .page-banner-copy p{font-size:11px;line-height:1.25}
+ body[data-page="trips"] .page-banner-trips .page-banner-stamp{display:none}
+ .trips-workspace .section-head{margin:6px 0 10px}
+ .trip-shelf{display:flex;gap:9px;overflow-x:auto;padding:4px 3px 9px;scroll-snap-type:x mandatory;overscroll-behavior-x:contain}
+ .trip-shelf .trip-card{min-width:232px;flex:0 0 min(275px,79vw);scroll-snap-align:start}
+ .trip-shelf .trip-cover{height:68px}
+ .trip-shelf .trip-card h3{font-size:18px}
+ .trip-card-bottom{margin-right:86px}
+ .trip-card-bottom .btn{font-size:10px;min-width:84px}
+ .trip-card-settings{right:11px}
+ .route-summary{padding:13px;margin:0 0 20px;border-radius:12px}
+ .route-summary-header h2{font-size:23px}
+ .route-summary-header p{font-size:11px;line-height:1.4}
+ .route-summary-header>.btn{font-size:11px;min-height:42px;padding:7px 9px}
+ .route-summary-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin:11px 0}
+ .route-summary-stats>div{min-width:0;padding:8px 5px}
+ .route-summary-stats strong{font-size:22px}
+ .route-summary-stats span{font-size:9px;line-height:1.2}
+ .route-summary-note{font-size:10px}
+ .route-section-head{margin:18px 0 11px}
+ .route-section-head h2{font-size:23px}
+ .route-section-head p{font-size:11px}
+ .route-section-head>.btn{font-size:11px;padding:9px}
+ .route-stops{grid-template-columns:minmax(0,1fr);gap:11px}
+ .destination-card.route-stop{display:grid;grid-template-columns:118px minmax(0,1fr);grid-template-areas:"art details" "actions actions";gap:0}
+ .destination-card.route-stop>.art{grid-area:art;width:118px;height:175px;border-radius:11px 0 0 0;border-bottom:0;border-right:1px solid #e6ddcf}
+ .destination-card.route-stop>.art .postcard{height:100%}
+ .route-stop-number{top:9px;left:9px;padding:5px 7px;font-size:10px}
+ .route-stop-info{grid-area:details;padding:12px 13px 9px}
+ .route-stop-info h3{font-size:22px;margin:5px 0 2px}
+ .route-stop-info .route-stop-country{margin-bottom:9px}
+ .route-stop-info .route-stop-dates{font-size:11px}
+ .route-stop-info .route-stop-activities{font-size:10px}
+ .route-stop-actions{grid-area:actions;padding:9px 10px;border-top:1px solid #e6ddcf}
+ .route-stop-actions>.btn{min-height:43px;font-size:11px}
+ .route-more summary{min-width:44px;height:43px}
+ .route-stop-label{font-size:9px}
+ .itinerary-detail{margin-top:21px}
+ .itinerary-kpis{gap:6px;margin:9px 0}
+ .itinerary-kpis>div{padding:10px 7px}
+ .itinerary-kpis strong{font-size:23px}
+ .itinerary-kpis span{font-size:9px}
+ .itinerary-toolbar{display:grid;gap:10px;padding:10px}
+ .itinerary-views{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+ .itinerary-views button{font-size:11px;padding:7px 6px;min-height:43px}
+ .itinerary-filter-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .itinerary-filter-row label{min-width:0;font-size:11px}
+ .itinerary-filter-row select{min-width:0;max-width:none;width:100%;font-size:12px}
+ .itinerary-main{padding:12px!important}
+ .itinerary-day{grid-template-columns:minmax(0,1fr);gap:7px}
+ .itinerary-day-marker{padding:8px 11px;display:flex;align-items:center;flex-direction:row;justify-content:space-between;gap:7px;border-left-width:3px}
+ .itinerary-day-marker strong{font-size:14px}
+ .itinerary-day-marker small,.itinerary-day-marker span{font-size:10px}
+ .itinerary-activity{grid-template-columns:57px minmax(0,1fr) auto;gap:7px;padding:11px 8px}
+ .itinerary-activity-time{font-size:10px}
+ .itinerary-activity-info strong{font-size:15px}
+ .itinerary-activity-actions{display:grid;gap:5px}
+ .itinerary-activity-actions .btn{min-height:35px;font-size:10px}
+ .itinerary-main-heading h3{font-size:20px}
+}
+@media(max-width:410px){
+ .route-summary-header{flex-direction:column;gap:9px}
+ .route-summary-header>.btn{align-self:flex-start}
+ .trip-shelf .trip-card{flex-basis:min(252px,78vw)}
+ .itinerary-activity{grid-template-columns:55px minmax(0,1fr);grid-template-areas:"time info" "actions actions"}
+ .itinerary-activity-time{grid-area:time}
+ .itinerary-activity-info{grid-area:info}
+ .itinerary-activity-actions{grid-area:actions;display:flex;justify-content:flex-end}
+}
+@media(prefers-reduced-motion:reduce){
+ .trip-shelf .trip-card,.destination-card.route-stop{transition:none}
+ .trip-shelf .trip-card:hover,.destination-card.route-stop:hover{transform:none}
+}

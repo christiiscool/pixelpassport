@@ -25,7 +25,7 @@ jobs:
         run: |
           npm install --no-save playwright@1.56.1
           npx playwright install --with-deps chromium
-      - name: Check packing interface in a real browser
+      - name: Test packing, trips, itinerary and cross-page flows in Chromium
         run: |
           npm run dev > /tmp/pixel-passport-server.log 2>&1 &
           for i in $(seq 1 40); do
@@ -33,9 +33,10 @@ jobs:
             sleep 1
           done
           node scripts/check-packing-browser.mjs
+          node scripts/check-trips-browser.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: packing-desktop-mobile-screenshots
+          name: responsive-ui-regression-screenshots
           path: artifacts/
           if-no-files-found: ignore
