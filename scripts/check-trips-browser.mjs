@@ -64,6 +64,15 @@ try{
  // Build a two-activity itinerary and verify all three display modes.
  await clickAndSave('newActivity',{title:'Old Town Walk',type:'sightseeing',status:'planned',date:'2027-03-05',time:'09:30',notes:'Walk by the river'});
  await clickAndSave('newActivity',{title:'Lunch in Chur',type:'food',status:'booked',date:'2027-03-05',time:'12:30'});
+ const diag=await page.evaluate(()=>({
+    hash:location.hash,
+    selectedTrip:typeof selectedTrip==='undefined'?null:selectedTrip,
+    selectedDestination:typeof selectedDestination==='undefined'?null:selectedDestination,
+    activities:JSON.parse(localStorage.getItem('pixel-passport-v1')).activities.map(a=>({title:a.title,destinationId:a.destinationId,date:a.date})),
+    view:document.querySelector('#destination-itinerary')?.textContent?.slice(0,1000)||'DETAIL MISSING',
+    stops:JSON.parse(localStorage.getItem('pixel-passport-v1')).destinations.filter(d=>d.name==='Chur').map(d=>({name:d.name,id:d.id,tripId:d.tripId}))
+ }));
+ console.log('TRIP_ACTIVITY_DIAGNOSTIC='+JSON.stringify(diag));
  assert.equal(await page.locator('.itinerary-activity').count(),2);
  assert.equal(await page.locator('.itinerary-day').count(),1);
  assert.ok((await page.locator('.itinerary-activity-info strong').allTextContents())[0].includes('Old Town Walk'));
