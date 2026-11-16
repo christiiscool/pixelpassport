@@ -96,3 +96,20 @@ body[data-page="budget"] .list-row>div:last-child{flex-wrap:wrap}
  body[data-page="budget"] .page-banner-budget .page-banner-stamp{display:none}
  body[data-page="bookings"] .booking-summary{margin-bottom:12px}
 }
+
+/* React's IllustratedPageHeader replaces page-banner at runtime.
+   Compact the real rendered scene, not the placeholder it supersedes. */
+@media(max-width:800px){
+ body[data-page="bookings"] .living-page-header,
+ body[data-page="budget"] .living-page-header{height:118px;contain-intrinsic-size:auto 118px;margin-bottom:13px;overflow:hidden;border-radius:11px}
+ body[data-page="bookings"] .living-page-header .living-scene,
+ body[data-page="budget"] .living-page-header .living-scene,
+ body[data-page="bookings"] .living-page-header .page-setting,
+ body[data-page="budget"] .living-page-header .page-setting{height:118px;min-height:0}
+ body[data-page="bookings"] .living-page-header .page-heading,
+ body[data-page="budget"] .living-page-header .page-heading{top:11px;left:11px;right:auto;max-width:calc(100% - 75px);padding:8px 10px}
+ body[data-page="bookings"] .living-page-header .page-heading h2,
+ body[data-page="budget"] .living-page-header .page-heading h2{font-size:21px;line-height:1.15}
+ body[data-page="bookings"] .living-page-header .page-heading p,
+ body[data-page="budget"] .living-page-header .page-heading p{display:none}
+}

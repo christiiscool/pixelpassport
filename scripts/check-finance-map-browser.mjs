@@ -144,8 +144,15 @@ try{
   await cleanShot('artifacts/finance-map-'+width+'.png');
   await overflow(width+'px map');
   await openPage('bookings');await overflow(width+'px bookings');
+  await page.locator('.living-page-header').waitFor();
+  const bookingsHero=await page.locator('.living-page-header').evaluate(el=>({height:el.getBoundingClientRect().height,caption:el.querySelector('.page-heading p')?getComputedStyle(el.querySelector('.page-heading p')).display:null}));
+  assert.ok(bookingsHero.height<=130,'Mobile booking header should be compact: '+JSON.stringify(bookingsHero));
+  assert.equal(bookingsHero.caption,'none','Mobile booking header hides repeated introduction text');
   if(width===390)await cleanShot('artifacts/finance-bookings-mobile.png');
   await openPage('budget');await overflow(width+'px budget');
+  await page.locator('.living-page-header').waitFor();
+  const budgetHeroHeight=await page.locator('.living-page-header').evaluate(el=>el.getBoundingClientRect().height);
+  assert.ok(budgetHeroHeight<=130,'Mobile budget header should be compact: '+budgetHeroHeight);
   if(width===390)await cleanShot('artifacts/finance-budget-mobile.png');
   await openPage('map');
  }
