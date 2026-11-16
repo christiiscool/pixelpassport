@@ -11,7 +11,17 @@ page.on('pageerror',e=>errors.push(e.message));
 page.on('dialog',dialog=>dialog.accept());
 const base='http://127.0.0.1:4173/';
 const state=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('pixel-passport-v1')));
-const openPage=async(name)=>{await page.locator('.sidebar [data-nav="'+name+'"]').click();await page.waitForFunction(n=>document.body.dataset.page===n,name)};
+const openPage=async(name)=>{
+ if(await page.evaluate(()=>innerWidth<=800)){
+  const direct=page.locator('[data-phone-nav="'+name+'"]');
+  if(await direct.count())await direct.click();
+  else{
+   await page.locator('[data-phone-nav="more"]').click();
+   await page.locator('.sidebar.open [data-nav="'+name+'"]').click();
+  }
+ }else await page.locator('.sidebar [data-nav="'+name+'"]').click();
+ await page.waitForFunction(n=>document.body.dataset.page===n,name);
+};
 const submit=async()=>{await page.locator('#dialog-form [type="submit"]').click();await page.locator('#dialog-form').waitFor({state:'detached'})};
 const set=async(fields)=>{
  for(const [name,value] of Object.entries(fields)){
