@@ -1,7 +1,9 @@
-/* Optimistic single-writer protection for the device-local dataset. */
+/* Optimistic stale-writer protection for the device-local dataset; not collaboration. */
 (function(){
  'use strict';
  let expected=localStorage.getItem(KEY),conflicted=false;
+ // Appearance migration may have persisted before the original save snapshot existed.
+ if(expected!==null)durableState=JSON.parse(expected);
  const previousSave=save,previousEnhance=window.pixelPassportEnhance;
  function paint(){
   document.getElementById('cross-tab-notice')?.remove();if(!conflicted)return;
@@ -15,15 +17,10 @@
   controls.append(backup,reload);panel.append(controls);if(host.classList.contains('form-actions'))host.before(panel);else host.after(panel);
  }
  save=function(options={}){
-  let actual;
-  try{actual=localStorage.getItem(KEY);}catch{return previousSave(options);}
-  if(actual!==expected){
-   conflicted=true;window.PPData.restore(state,durableState);paint();
-   const error=Error('Another tab saved newer plans. Reload before saving from this tab.');error.storageFailure=true;error.crossTabConflict=true;throw error;
-  }
+  let actual;try{actual=localStorage.getItem(KEY);}catch{return previousSave(options);}
+  if(actual!==expected){conflicted=true;window.PPData.restore(state,durableState);paint();const error=Error('Another tab saved newer plans. Reload before saving from this tab.');error.storageFailure=true;error.crossTabConflict=true;throw error;}
   const result=previousSave(options);expected=JSON.stringify(durableState);return result;
  };
- // Route filter preferences used to bypass the transactional save path.
  writeMapPreferences=function(){try{save({render:false});}catch(error){if(!error.storageFailure)toast(error.message);}};
  window.pixelPassportEnhance=function(...args){const result=previousEnhance?.apply(this,args);paint();return result;};
  window.addEventListener('storage',event=>{if(event.storageArea===localStorage&&(event.key===KEY||event.key===null)&&localStorage.getItem(KEY)!==expected){conflicted=true;paint();}});

@@ -34,19 +34,31 @@ jobs:
         run: |
           npm install --no-save playwright@1.56.1 @axe-core/playwright@4.10.2
           npx playwright install --with-deps chromium firefox webkit
-      - name: Cross-browser release verification
+      - name: Full workflows and cross-browser release verification
         run: |
           npm run dev > /tmp/pixel-passport-server.log 2>&1 &
           for i in $(seq 1 40); do
             if curl -fsS http://127.0.0.1:4173/healthz >/dev/null; then break; fi
             sleep 1
           done
+          npm run test:browser
           npm run test:release
-      - name: Build deployment image
-        run: docker build -t pixelpassport:review .
-      - name: Smoke-test non-root deployment image
+      - name: Record optional provider reachability
+        run: node scripts/check-live-services.mjs
+      - name: Assemble release candidate and checksum
         run: |
-          docker run -d --name pp-release -p 4180:4173 pixelpassport:review
+          mkdir -p release
+          git rev-parse HEAD > release/COMMIT.txt
+          tar -czf release/pixelpassport-release.tar.gz dist src scripts server.mjs security-headers.mjs package.json package-lock.json Dockerfile .dockerignore docs/deployment.md
+          (cd release && sha256sum pixelpassport-release.tar.gz > SHA256SUMS)
+      - name: Build image from the packaged release, not the working tree
+        run: |
+          mkdir -p /tmp/pixelpassport-candidate
+          tar -xzf release/pixelpassport-release.tar.gz -C /tmp/pixelpassport-candidate
+          docker build -t pixelpassport:review /tmp/pixelpassport-candidate
+      - name: Smoke-test read-only, non-root deployment image
+        run: |
+          docker run -d --read-only --cap-drop=ALL --security-opt=no-new-privileges --name pp-release -p 4180:4173 pixelpassport:review
           trap 'docker logs pp-release; docker rm -f pp-release' EXIT
           for i in $(seq 1 30); do
             if curl -fsS http://127.0.0.1:4180/healthz >/dev/null; then break; fi
@@ -55,12 +67,6 @@ jobs:
           curl -fsS http://127.0.0.1:4180/healthz
           curl -fsS http://127.0.0.1:4180/launch.js >/dev/null
           test "$(docker exec pp-release id -u)" != "0"
-      - name: Package validated release candidate
-        run: |
-          mkdir -p release
-          git rev-parse HEAD > release/COMMIT.txt
-          tar -czf release/pixelpassport-release.tar.gz dist server.mjs security-headers.mjs package.json Dockerfile docs/deployment.md
-          sha256sum release/pixelpassport-release.tar.gz > release/SHA256SUMS
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
