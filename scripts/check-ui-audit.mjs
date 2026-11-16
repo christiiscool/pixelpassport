@@ -13,8 +13,8 @@ const makeState=()=>({
   tasks:[{id:'task',tripId:'old',destinationId:'paris',title:'Book tour'}],
   expenses:[{id:'cost',title:'Train',tripId:'old',destinationId:'paris',amount:'111',currency:'USD',baseAmount:150,baseCurrency:'SGD',conversionRate:150/111}],
   bookings:[{id:'booking',tripId:'old',destinationId:'paris',expenseId:'cost'}],
-  skiTrips:[{id:'ski',tripId:'old',destinationId:'paris'}],
-  packing:[{id:'pack',tripId:'old'}],
+  skiTrips:[{id:'ski',tripId:'old',destinationId:'paris',resort:'Alps'}],
+  packing:[{id:'pack',tripId:'old',name:'Jacket'}],
   transfers:[{id:'train',tripId:'old',origin:'Paris',destination:'Rome',date:'2027-02-20'}],
   journal:[], dismissed:[]
 });
