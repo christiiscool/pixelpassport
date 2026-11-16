@@ -16,7 +16,7 @@ const bannerCopy={
   packing:['Pack a little adventure','Fresh air, open skies, and the essentials for your next escape.','st-gallen'],
   tasks:['The quest board','One small step at a time, the journey takes shape.','paris'],
   budget:['The travel ledger','Keep a thoughtful eye on every coin of the adventure.','rome'],
-  bookings:['The booking vault','Tickets, stays, and confirmations for the road ahead.','paris'],
+  bookings:['Tickets for the road','Stays, journeys and little discoveries.','paris'],
   ski:['Into the mountains','Fresh snow and winding trails are waiting for you.','st-gallen'],
   journal:['Pages from the road','Collect the little moments worth remembering.','rome'],
   settings:['Make it yours','Your traveler profile, preferences, and saved memories.','st-gallen']

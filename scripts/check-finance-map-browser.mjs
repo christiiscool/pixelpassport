@@ -32,6 +32,7 @@ const set=async(fields)=>{
  }
 };
 const create=async(action,fields)=>{await page.locator('[data-action="'+action+'"]').first().click();await page.locator('#dialog-form').waitFor();await set(fields);await submit()};
+const cleanShot=async path=>{await page.evaluate(()=>document.querySelector('#toast')?.replaceChildren());await page.screenshot({path,fullPage:true,animations:'disabled'})};
 const overflow=async(label)=>{const size=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth}));assert.ok(size.scroll<=size.width+5,label+' overflow: '+JSON.stringify(size))};
 
 try{
@@ -63,7 +64,7 @@ try{
  assert.equal(await page.locator('.main .list-row').filter({hasText:'Mountain pass'}).count(),1);
  assert.equal(await page.locator('.main .list-row').filter({hasText:'Hotel deposit'}).count(),0);
  await page.locator('#expense-trip').selectOption('');
- await page.screenshot({path:'artifacts/finance-budget-desktop.png',fullPage:true,animations:'disabled'});
+ await cleanShot('artifacts/finance-budget-desktop.png');
  // Test rate retrieval and consent-driven conversion without changing foreign originals.
  await page.locator('[data-action="refreshRates"]').click();
  await page.waitForFunction(()=>Boolean(JSON.parse(localStorage.getItem('pixel-passport-v1')).ratesUpdated));
@@ -96,7 +97,7 @@ try{
  assert.equal(await page.locator('.booking-card').count(),1,'Booking list trip filter');
  assert.match(await page.locator('.booking-card').innerText(),/Swiss Railway/);
  await page.locator('#booking-trip').selectOption('');
- await page.screenshot({path:'artifacts/finance-bookings-desktop.png',fullPage:true,animations:'disabled'});
+ await cleanShot('artifacts/finance-bookings-desktop.png');
  // Rebase profile currency without silently rewriting budgets.
  await openPage('settings');
  await page.locator('[name="baseCurrency"]').selectOption('EUR');
@@ -112,7 +113,7 @@ try{
  await create('setBudget',{exchangeBudget:'3000'});
  assert.equal((await state()).profile.exchangeBudgetCurrency,'EUR');
  assert.equal((await state()).profile.exchangeBudget,'3000');
- await page.screenshot({path:'artifacts/finance-budget-after-currency.png',fullPage:true,animations:'disabled'});
+ await cleanShot('artifacts/finance-budget-after-currency.png');
  // Preserve user-created locations while recovering incomplete coordinates.
  await page.evaluate(mainId=>{
   const key='pixel-passport-v1',s=JSON.parse(localStorage.getItem(key));
@@ -126,7 +127,7 @@ try{
  const invalid=page.locator('.atlas-place-row').filter({hasText:'Unmapped Stop'});
  assert.equal(await invalid.locator('[data-action="focusMap"]').count(),0,'Invalid coordinates cannot be mapped');
  assert.equal(await invalid.locator('[data-action="editDestination"]').count(),1,'Invalid location is directly editable');
- await page.screenshot({path:'artifacts/finance-map-unmapped-desktop.png',fullPage:true,animations:'disabled'});
+ await cleanShot('artifacts/finance-map-unmapped-desktop.png');
  await invalid.locator('[data-action="editDestination"]').click();
  await form.waitFor();
  await set({lat:'46.8523',lng:'9.5319'});
@@ -136,16 +137,16 @@ try{
  assert.equal(await page.locator('.atlas-place-row').filter({hasText:'Unmapped Stop'}).locator('[data-action="focusMap"]').count(),1);
  // Map popups must not create executable inline event-handler attributes.
  assert.equal(await page.locator('#map-canvas [onclick]').count(),0);
- await page.screenshot({path:'artifacts/finance-map-desktop.png',fullPage:true,animations:'disabled'});
+ await cleanShot('artifacts/finance-map-desktop.png');
  // Responsive smoke across 390/430/768 in each upgraded workflow.
  for(const [width,height] of [[390,844],[430,932],[768,1024]]){
   await page.setViewportSize({width,height});
-  await page.screenshot({path:'artifacts/finance-map-'+width+'.png',fullPage:true,animations:'disabled'});
+  await cleanShot('artifacts/finance-map-'+width+'.png');
   await overflow(width+'px map');
   await openPage('bookings');await overflow(width+'px bookings');
-  if(width===390)await page.screenshot({path:'artifacts/finance-bookings-mobile.png',fullPage:true,animations:'disabled'});
+  if(width===390)await cleanShot('artifacts/finance-bookings-mobile.png');
   await openPage('budget');await overflow(width+'px budget');
-  if(width===390)await page.screenshot({path:'artifacts/finance-budget-mobile.png',fullPage:true,animations:'disabled'});
+  if(width===390)await cleanShot('artifacts/finance-budget-mobile.png');
   await openPage('map');
  }
  // Show all data is intact on reload: no accidental conversion of booking cost into expenses.

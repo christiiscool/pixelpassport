@@ -81,3 +81,18 @@ body[data-page="budget"] .list-row>div:last-child{flex-wrap:wrap}
 @media(prefers-reduced-motion:reduce){
  .booking-card,.booking-grid{transition:none}
 }
+
+/* Consistent, compact illustrated introductions on small screens. */
+@media(max-width:800px){
+ body[data-page="bookings"] .page-banner-bookings,
+ body[data-page="budget"] .page-banner-budget{height:116px;margin-bottom:13px;box-shadow:0 2px 0 #c9d3be}
+ body[data-page="bookings"] .page-banner-bookings .page-banner-copy,
+ body[data-page="budget"] .page-banner-budget .page-banner-copy{top:14px;left:13px;max-width:235px}
+ body[data-page="bookings"] .page-banner-bookings .page-banner-copy h2,
+ body[data-page="budget"] .page-banner-budget .page-banner-copy h2{font-size:22px;line-height:1.08;margin:4px 0}
+ body[data-page="bookings"] .page-banner-bookings .page-banner-copy p,
+ body[data-page="budget"] .page-banner-budget .page-banner-copy p{display:none}
+ body[data-page="bookings"] .page-banner-bookings .page-banner-stamp,
+ body[data-page="budget"] .page-banner-budget .page-banner-stamp{display:none}
+ body[data-page="bookings"] .booking-summary{margin-bottom:12px}
+}
