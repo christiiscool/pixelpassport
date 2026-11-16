@@ -27,10 +27,24 @@ function validateBackup(data){
       for(const [field,limit] of [['lat',90],['lng',180]])if(record[field]!=null&&record[field]!==''&&(!Number.isFinite(Number(record[field]))||Math.abs(Number(record[field]))>limit))throw Error('Invalid coordinates in '+key);
     }
   }
+  // Transfers were introduced after the v1 backups; accept missing arrays but validate any supplied records.
+  if(data.transfers!=null){
+    if(!Array.isArray(data.transfers))throw Error('Invalid backup collection: transfers');
+    const ids=new Set();
+    for(const record of data.transfers){
+      if(!object(record)||typeof record.id!=='string'||!record.id||ids.has(record.id))throw Error('Invalid or duplicate transfer');
+      ids.add(record.id);
+      if(typeof record.origin!=='string'||!record.origin.trim()||typeof record.destination!=='string'||!record.destination.trim())throw Error('Invalid transfer endpoints');
+      if(typeof record.date!=='string'||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(record.date)||Number.isNaN(Date.parse(record.date+'T12:00:00Z')))throw Error('Invalid transfer date');
+      if(record.tripId!=null&&(!data.trips.some(t=>t.id===record.tripId)))throw Error('Transfer references an unknown trip');
+      for(const field of ['tripId','mode','status','departureTime','arrivalTime','provider','reference','notes'])if(record[field]!=null&&typeof record[field]!=='string')throw Error('Invalid '+field+' in transfers');
+      if(record.estimatedCost!=null&&record.estimatedCost!==''&&(!Number.isFinite(Number(record.estimatedCost))||Number(record.estimatedCost)<0))throw Error('Invalid transfer cost');
+    }
+  }
   if(!data.trips.length)throw Error('A backup needs at least one trip');
   if(data.dismissed!=null&&(!Array.isArray(data.dismissed)||data.dismissed.some(x=>typeof x!=='string')))throw Error('Invalid dismissed suggestions');
   if(data.rates!=null&&(!object(data.rates)||Object.values(data.rates).some(x=>!Number.isFinite(Number(x))||Number(x)<=0)))throw Error('Invalid exchange rates');
-  return {...data,dismissed:data.dismissed||[],rates:data.rates||null};
+  return {...data,transfers:data.transfers||[],dismissed:data.dismissed||[],rates:data.rates||null};
 }
 function successor(task,tasks,newId){
   if(!task.done||!['weekly','monthly'].includes(task.recurrence)||!task.due)return null;
@@ -47,6 +61,47 @@ function conversion(record,values,profile,rates,timestamp){
   return {baseAmount:rate==null?null:Math.round(n*rate*100)/100,conversionRate:rate,baseCurrency:profile.baseCurrency,rateTimestamp:rate==null?null:timestamp};
 }
 function safeURL(value){try{const url=new URL(value);return ['http:','https:'].includes(url.protocol)?url.href:''}catch{return ''}}
-root.PPData={restore,validateBackup,successor,conversion,safeURL};
+// Keep all trip-bound records discoverable after a trip is deleted.
+function rehomeTrip(data,deletedId){
+  const replacement=data.trips?.[0]?.id;
+  if(!replacement)throw Error('At least one trip is required');
+  for(const collection of ['destinations','bookings','expenses','tasks','skiTrips','packing','transfers']){
+    for(const item of data[collection]||[])if(item.tripId===deletedId)item.tripId=replacement;
+  }
+  if(data.profile?.selectedTripId===deletedId)data.profile.selectedTripId=replacement;
+  return replacement;
+}
+// Moving a stop also moves its associated trip-bound records, including linked ski costs.
+function moveDestinationTrip(data,destination,newTripId){
+  if(!data.trips.some(t=>t.id===newTripId))throw Error('Choose an existing trip');
+  if(destination.tripId===newTripId)return false;
+  for(const collection of ['bookings','expenses','tasks','skiTrips']){
+    for(const item of data[collection]||[])if(item.destinationId===destination.id)item.tripId=newTripId;
+  }
+  destination.tripId=newTripId;
+  destination.order=data.destinations.filter(d=>d.tripId===newTripId&&d.id!==destination.id).reduce((n,d)=>Math.max(n,Number(d.order)||0),-1)+1;
+  return true;
+}
+// Rebase only unconverted/stale entries after an explicit user decision.
+// Preserve previous conversions for historical review, never alter original amounts.
+function reconcileCurrencies(data){
+  if(!data.rates||!data.profile?.baseCurrency)throw Error('Refresh live exchange rates first.');
+  const base=data.profile.baseCurrency;let converted=0,skipped=0;
+  for(const item of data.expenses||[]){
+    if(item.currency===base||(item.baseAmount!=null&&item.baseCurrency===base))continue;
+    const rate=Number(data.rates[item.currency]),amount=Number(item.amount);
+    if(!Number.isFinite(rate)||rate<=0||!Number.isFinite(amount)||amount<0){skipped++;continue;}
+    if(item.baseAmount!=null&&item.baseCurrency&&item.baseCurrency!==base){
+      (item.conversionHistory??=[]).push({baseAmount:item.baseAmount,baseCurrency:item.baseCurrency,conversionRate:item.conversionRate,rateTimestamp:item.rateTimestamp});
+    }
+    item.baseAmount=Math.round(amount/rate*100)/100;
+    item.baseCurrency=base;
+    item.conversionRate=1/rate;
+    item.rateTimestamp=data.ratesUpdated||null;
+    converted++;
+  }
+  return {converted,skipped};
+}
+root.PPData={restore,validateBackup,successor,conversion,safeURL,rehomeTrip,moveDestinationTrip,reconcileCurrencies};
 })(typeof window==='undefined'?globalThis:window);
 

@@ -1,7 +1,7 @@
 name: Pixel Passport quality checks
 on:
   push:
-    branches: [main, feature/pixel-packing-inventory-v2]
+    branches: [main, feature/pixel-packing-inventory-v2, fix/ui-data-review-2026-11-16]
   pull_request:
     branches: [main]
 jobs:
