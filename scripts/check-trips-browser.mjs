@@ -8,6 +8,7 @@ const errors=[];
 const page=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1});
 page.on('pageerror',err=>errors.push(err.message));
 const base='http://127.0.0.1:4173/';
+const ready=async()=>{await page.waitForFunction(()=>window.PPBoot?.ready||window.PPBoot?.failed);assert.equal(await page.evaluate(()=>window.PPBoot.ready),true,await page.locator('body').innerText());};
 const clickAndSave=async(action,fields={})=>{
  await page.locator('[data-action="'+action+'"]').first().click();
  await page.locator('#dialog-form').waitFor();
@@ -21,7 +22,7 @@ const clickAndSave=async(action,fields={})=>{
  await page.locator('#dialog-form').waitFor({state:'detached'});
 };
 try{
- await page.goto(base+'#trips',{waitUntil:'domcontentloaded'});
+ await page.goto(base+'#trips',{waitUntil:'domcontentloaded'});await ready();
  await page.evaluate(()=>{
   const key='pixel-passport-v1';
   const state=JSON.parse(localStorage.getItem(key));
@@ -29,13 +30,12 @@ try{
   state.profile.ambientMotion='off';
   localStorage.setItem(key,JSON.stringify(state));
  });
- await page.reload({waitUntil:'domcontentloaded'});
+ await page.reload({waitUntil:'domcontentloaded'});await ready();
  await page.locator('.trips-workspace').waitFor({timeout:15000});
  assert.equal(await page.locator('.trip-card').count(),2,'seed has two selectable trips');
  assert.equal(await page.locator('.route-summary').count(),1,'route summary is visible');
  assert.ok(await page.locator('.route-stop').count()>0,'seed includes route stops');
  await page.screenshot({path:'artifacts/trips-desktop-overview.png',fullPage:true,animations:'disabled'});
- // New trip selection and editable stops, including out-of-sequence dates.
  await clickAndSave('newTrip',{name:'Alpine Weekend',start:'2027-03-05',end:'2027-03-08',status:'planned'});
  await page.locator('.route-summary h2').filter({hasText:'Alpine Weekend'}).waitFor();
  const newTripId=await page.evaluate(()=>JSON.parse(localStorage.getItem('pixel-passport-v1')).trips.find(t=>t.name==='Alpine Weekend').id);
@@ -61,7 +61,6 @@ try{
  assert.match(await page.locator('#destination-itinerary .section-head h2').innerText(),/Chur/i);
  assert.equal(await page.locator('[data-action="closeDestination"]').count(),1);
  await page.screenshot({path:'artifacts/trips-desktop-itinerary-empty.png',fullPage:true,animations:'disabled'});
- // Build a two-activity itinerary and verify all three display modes.
  await clickAndSave('newActivity',{title:'Old Town Walk',type:'sightseeing',status:'planned',date:'2027-03-05',time:'09:30',notes:'Walk by the river'});
  await clickAndSave('newActivity',{title:'Lunch in Chur',type:'food',status:'booked',date:'2027-03-05',time:'12:30'});
  assert.equal(await page.locator('.itinerary-day .diary-activity').count(),2);
@@ -88,7 +87,6 @@ try{
  await page.locator('#dialog-form').waitFor({state:'detached'});
  assert.equal(await page.locator('.itinerary-day').count(),2,'schedule change sorts the activity into a different day');
  await page.screenshot({path:'artifacts/trips-desktop-itinerary-filled.png',fullPage:true,animations:'disabled'});
- // Test the same itinerary at phone/tablet widths and capture previews.
  await page.setViewportSize({width:390,height:844});
  await page.waitForTimeout(200);
  await page.screenshot({path:'artifacts/trips-mobile-itinerary-390.png',fullPage:true,animations:'disabled'});
@@ -107,18 +105,15 @@ try{
  dims=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:innerWidth}));
  assert.ok(dims.scroll<=dims.width+5,'768px route must not overflow '+JSON.stringify(dims));
  await page.setViewportSize({width:1440,height:900});
- // Switching trips updates visible route without deleting any itinerary.
  await page.locator('.trip-card').filter({hasText:'Europe Exchange 2027'}).locator('[data-action="selectTrip"]').click();
  assert.match(await page.locator('.route-summary h2').innerText(),/Europe Exchange 2027/);
  await page.locator('.trip-card').filter({hasText:'Alpine Weekend'}).locator('[data-action="selectTrip"]').click();
  assert.equal(await page.locator('.route-stop').count(),3);
- // Route selection and recorded itinerary survive reload.
- await page.reload({waitUntil:'domcontentloaded'});
+ await page.reload({waitUntil:'domcontentloaded'});await ready();
  await page.locator('.trips-workspace').waitFor();
  assert.match(await page.locator('.route-summary h2').innerText(),/Alpine Weekend/);
  await page.locator('.route-stop').filter({has:page.getByRole('heading',{name:'Chur',exact:true})}).locator('[data-action="openDestination"]').click();
  assert.equal(await page.locator('.diary-activity').count(),2);
- // Exercise remaining navigation and map rebuild via repeated entry/exit.
  for(const tab of ['map','budget','bookings','tasks','ski','journal','settings','trips','map','trips']){
   await page.locator('.sidebar .nav [data-nav="'+tab+'"]').click();
   await page.waitForTimeout(100);
