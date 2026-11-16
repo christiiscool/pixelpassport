@@ -64,32 +64,24 @@ try{
  // Build a two-activity itinerary and verify all three display modes.
  await clickAndSave('newActivity',{title:'Old Town Walk',type:'sightseeing',status:'planned',date:'2027-03-05',time:'09:30',notes:'Walk by the river'});
  await clickAndSave('newActivity',{title:'Lunch in Chur',type:'food',status:'booked',date:'2027-03-05',time:'12:30'});
- const diag=await page.evaluate(()=>({
-    hash:location.hash,
-    selectedTrip:typeof selectedTrip==='undefined'?null:selectedTrip,
-    selectedDestination:typeof selectedDestination==='undefined'?null:selectedDestination,
-    activities:JSON.parse(localStorage.getItem('pixel-passport-v1')).activities.map(a=>({title:a.title,destinationId:a.destinationId,date:a.date})),
-    view:document.querySelector('#destination-itinerary')?.textContent?.slice(0,1000)||'DETAIL MISSING',
-    stops:JSON.parse(localStorage.getItem('pixel-passport-v1')).destinations.filter(d=>d.name==='Chur').map(d=>({name:d.name,id:d.id,tripId:d.tripId}))
- }));
- console.log('TRIP_ACTIVITY_DIAGNOSTIC='+JSON.stringify(diag));
- assert.equal(await page.locator('.itinerary-activity').count(),2);
+ assert.equal(await page.locator('.itinerary-day .diary-activity').count(),2);
  assert.equal(await page.locator('.itinerary-day').count(),1);
- assert.ok((await page.locator('.itinerary-activity-info strong').allTextContents())[0].includes('Old Town Walk'));
- assert.equal(await page.locator('.itinerary-activity[draggable]').count(),0,'activities should not advertise non-persistent drag-and-drop');
+ assert.ok((await page.locator('.diary-activity summary strong').allTextContents())[0].includes('Old Town Walk'));
+ assert.equal(await page.locator('.itinerary-day [draggable]').count(),0,'activities should not advertise non-persistent drag-and-drop');
  await page.screenshot({path:'artifacts/trips-desktop-timeline.png',fullPage:true,animations:'disabled'});
  await page.locator('.itinerary-views [data-value="calendar"]').click();
  assert.equal(await page.locator('.itinerary-day-card').count(),1,'day cards group activities by date');
  assert.equal(await page.locator('.itinerary-day-card .itinerary-day-events button').count(),2);
  await page.locator('.itinerary-views [data-value="list"]').click();
- assert.equal(await page.locator('.itinerary-activity-list .itinerary-activity').count(),2);
+ assert.equal(await page.locator('.itinerary-activity-list .diary-activity').count(),2);
  await page.locator('#activity-type-filter').selectOption('food');
- assert.equal(await page.locator('.itinerary-activity').count(),1);
- assert.match(await page.locator('.itinerary-activity').innerText(),/Lunch in Chur/);
+ assert.equal(await page.locator('.diary-activity').count(),1);
+ assert.match(await page.locator('.diary-activity').innerText(),/Lunch in Chur/);
  await page.locator('[data-action="clearActivityFilters"]').click();
- assert.equal(await page.locator('.itinerary-activity').count(),2);
+ assert.equal(await page.locator('.diary-activity').count(),2);
  await page.locator('.itinerary-views [data-value="timeline"]').click();
- await page.locator('.itinerary-activity').filter({hasText:'Old Town Walk'}).locator('[data-action="editActivity"]').click();
+ await page.locator('.diary-activity').filter({hasText:'Old Town Walk'}).locator('summary').click();
+ await page.locator('.diary-activity').filter({hasText:'Old Town Walk'}).locator('[data-action="editActivity"]').click();
  await page.locator('#dialog-form [name="date"]').fill('2027-03-06');
  await page.locator('#dialog-form [name="time"]').fill('10:00');
  await page.locator('#dialog-form [type="submit"]').click();
@@ -125,7 +117,7 @@ try{
  await page.locator('.trips-workspace').waitFor();
  assert.match(await page.locator('.route-summary h2').innerText(),/Alpine Weekend/);
  await page.locator('.route-stop').filter({has:page.getByRole('heading',{name:'Chur',exact:true})}).locator('[data-action="openDestination"]').click();
- assert.equal(await page.locator('.itinerary-activity').count(),2);
+ assert.equal(await page.locator('.diary-activity').count(),2);
  // Exercise remaining navigation and map rebuild via repeated entry/exit.
  for(const tab of ['map','budget','bookings','tasks','ski','journal','settings','trips','map','trips']){
   await page.locator('.sidebar .nav [data-nav="'+tab+'"]').click();

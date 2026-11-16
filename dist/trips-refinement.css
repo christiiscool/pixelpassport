@@ -205,3 +205,25 @@ body[data-page="trips"] .destination-detail-grid{grid-template-columns:minmax(0,
  .trip-shelf .trip-card,.destination-card.route-stop{transition:none}
  .trip-shelf .trip-card:hover,.destination-card.route-stop:hover{transform:none}
 }
+
+/* Existing interactive diary cards remain functional inside the redesigned agenda. */
+body[data-page="trips"] .itinerary-day .diary-activity,
+body[data-page="trips"] .itinerary-activity-list .diary-activity{border:1px solid #dad8cb;border-radius:10px;margin:0;background:#fffdf6;box-shadow:0 2px 0 #e5e8dc}
+body[data-page="trips"] .itinerary-day .diary-activity summary,
+body[data-page="trips"] .itinerary-activity-list .diary-activity summary{min-height:59px;padding:11px 13px;gap:10px;color:#3b5d4b}
+body[data-page="trips"] .diary-activity summary>span{min-width:0;flex:1}
+body[data-page="trips"] .diary-activity summary strong{font:700 16px/1.28 Fraunces,Georgia,serif;color:#315642;display:block;overflow-wrap:anywhere}
+body[data-page="trips"] .diary-activity summary small{font:700 11px Nunito,sans-serif;color:#708373;margin-top:3px}
+body[data-page="trips"] .diary-activity summary .painted-icon,
+body[data-page="trips"] .diary-activity summary .pixel-icon{width:32px;height:32px;flex:none}
+body[data-page="trips"] .diary-activity[open]{border-color:#a8c7ad;background:#fffef8}
+body[data-page="trips"] .diary-activity[open] summary{background:#eef5e8}
+body[data-page="trips"] .diary-activity .activity-details{padding:11px 13px 13px;background:#fffef9;border-top:1px dashed #cfdecf}
+body[data-page="trips"] .diary-activity .activity-controls button{min-height:39px;font-size:11px}
+body[data-page="trips"] .itinerary-activity-list{gap:9px}
+@media(max-width:800px){
+ body[data-page="trips"] .diary-activity summary{padding:10px 12px}
+ body[data-page="trips"] .diary-activity summary strong{font-size:16px}
+ body[data-page="trips"] .diary-activity summary small{font-size:11px}
+ body[data-page="trips"] .diary-activity .activity-controls button{min-height:42px}
+}
