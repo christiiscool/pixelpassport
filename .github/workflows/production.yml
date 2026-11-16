@@ -41,7 +41,7 @@ jobs:
             if curl -fsS http://127.0.0.1:4173/healthz >/dev/null; then break; fi
             sleep 1
           done
-          node scripts/check-release-browser.mjs
+          npm run test:release
       - name: Build deployment image
         run: docker build -t pixelpassport:review .
       - name: Smoke-test non-root deployment image

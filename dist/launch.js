@@ -4,7 +4,7 @@
  const KEY='pixel-passport-v1',MAX=20*1024*1024;
  const boot=window.PPBoot={ready:false,failed:false};
  let original=null;
- const files=['travel-template.js','travel-importer.js','postcards.js','app.js','dashboard-react.js','storybook.js','living-world.js','character-world.js','packing-model.js','packing-upgrade.js','reliability.js','release-runtime.js'];
+ const files=['travel-template.js','travel-importer.js','postcards.js','app.js','dashboard-react.js','storybook.js','living-world.js','character-world.js','packing-model.js','packing-upgrade.js','reliability.js','concurrent-storage.js','release-runtime.js'];
  const downloadRaw=()=>{
   if(original===null)return;
   const url=URL.createObjectURL(new Blob([original],{type:'application/json'}));
@@ -16,7 +16,7 @@
   const panel=document.createElement('main');panel.className='boot-recovery';panel.setAttribute('aria-labelledby','boot-title');
   const title=document.createElement('h1');title.id='boot-title';title.textContent='Your saved plans need attention';
   const text=document.createElement('p');text.textContent=message;
-  const note=document.createElement('p');note.textContent='Nothing has been reset. Download your original device data before replacing it with a backup.';
+  const note=document.createElement('p');note.textContent='Your saved plans have not been reset. Download your original device data before replacing it with a backup.';
   const actions=document.createElement('div');actions.className='boot-actions';
   const retry=document.createElement('button');retry.type='button';retry.textContent='Try loading again';retry.dataset.bootAction='retry';retry.onclick=()=>location.reload();actions.append(retry);
   if(original!==null){const exportButton=document.createElement('button');exportButton.type='button';exportButton.textContent='Download original data';exportButton.dataset.bootAction='export';exportButton.onclick=downloadRaw;actions.append(exportButton);}
@@ -53,7 +53,6 @@
    window.dispatchEvent(new Event(navigator.onLine?'online':'offline'));
    stylesheet('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fraunces:opsz,wght,SOFT,WONK@9..144,500,80,1;9..144,600,80,1;9..144,700,80,1&family=Press+Start+2P&display=swap');
    stylesheet('https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css');
-   // Map CDN failure must not block trips, packing, forms or backup access.
    script('https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js',10000).then(()=>{
     if(document.querySelector('.modal,[role="dialog"]'))return;
     if(typeof page!=='undefined'&&page==='map')render();
