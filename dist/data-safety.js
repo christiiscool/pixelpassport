@@ -65,7 +65,7 @@ function safeURL(value){try{const url=new URL(value);return ['http:','https:'].i
 function rehomeTrip(data,deletedId){
   const replacement=data.trips?.[0]?.id;
   if(!replacement)throw Error('At least one trip is required');
-  for(const collection of ['destinations','bookings','expenses','tasks','skiTrips','packing','transfers']){
+  for(const collection of ['destinations','bookings','expenses','tasks','skiTrips','packing','transfers','journal']){
     for(const item of data[collection]||[])if(item.tripId===deletedId)item.tripId=replacement;
   }
   if(data.profile?.selectedTripId===deletedId)data.profile.selectedTripId=replacement;
