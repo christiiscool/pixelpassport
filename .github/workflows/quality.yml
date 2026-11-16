@@ -25,7 +25,7 @@ jobs:
         run: |
           npm install --no-save playwright@1.56.1
           npx playwright install --with-deps chromium
-      - name: Test packing, trips, itinerary and cross-page flows in Chromium
+      - name: Test packing, trips, map, bookings and budget in Chromium
         run: |
           npm run dev > /tmp/pixel-passport-server.log 2>&1 &
           for i in $(seq 1 40); do
@@ -34,6 +34,7 @@ jobs:
           done
           node scripts/check-packing-browser.mjs
           node scripts/check-trips-browser.mjs
+          node scripts/check-finance-map-browser.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

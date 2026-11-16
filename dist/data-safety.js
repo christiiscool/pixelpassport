@@ -16,6 +16,10 @@ function restore(target,snapshot){
 function validateBackup(data){
   const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
   if(!object(data)||!object(data.profile)||!['SGD','EUR','CHF','GBP','USD'].includes(data.profile.baseCurrency))throw Error('Invalid backup: traveler profile or base currency');
+  const validCurrency=new Set(['SGD','EUR','CHF','GBP','USD']);
+  if(data.profile.exchangeBudgetCurrency!=null&&!validCurrency.has(data.profile.exchangeBudgetCurrency))throw Error('Invalid exchange budget currency');
+  for(const trip of data.trips||[])if(trip.budgetCurrency!=null&&!validCurrency.has(trip.budgetCurrency))throw Error('Invalid trip budget currency');
+
   const visit=value=>{if(!value||typeof value!=='object')return;for(const [key,item] of Object.entries(value)){if(['__proto__','constructor','prototype'].includes(key))throw Error('Invalid backup key');visit(item)}};visit(data);
   for(const key of collections){
     if(!Array.isArray(data[key]))throw Error('Invalid backup collection: '+key);
@@ -61,6 +65,12 @@ function conversion(record,values,profile,rates,timestamp){
   return {baseAmount:rate==null?null:Math.round(n*rate*100)/100,conversionRate:rate,baseCurrency:profile.baseCurrency,rateTimestamp:rate==null?null:timestamp};
 }
 function safeURL(value){try{const url=new URL(value);return ['http:','https:'].includes(url.protocol)?url.href:''}catch{return ''}}
+function hasCoordinates(place){
+ if(place==null||place.lat===null||place.lng===null||place.lat===undefined||place.lng===undefined||place.lat===''||place.lng==='')return false;
+ const lat=Number(place.lat),lng=Number(place.lng);
+ return Number.isFinite(lat)&&Number.isFinite(lng)&&Math.abs(lat)<=90&&Math.abs(lng)<=180;
+}
+
 // Keep all trip-bound records discoverable after a trip is deleted.
 // Preserve a stable, unique stop order after deletions, reassignments, or duplicates.
 function normalizeRoute(data,tripId){
@@ -122,6 +132,6 @@ function reconcileCurrencies(data){
   }
   return {converted,skipped};
 }
-root.PPData={restore,validateBackup,successor,conversion,safeURL,normalizeRoute,reorderDestination,rehomeTrip,moveDestinationTrip,reconcileCurrencies};
+root.PPData={restore,validateBackup,successor,conversion,safeURL,hasCoordinates,normalizeRoute,reorderDestination,rehomeTrip,moveDestinationTrip,reconcileCurrencies};
 })(typeof window==='undefined'?globalThis:window);
 

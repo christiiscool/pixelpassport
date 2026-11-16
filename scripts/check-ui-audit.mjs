@@ -70,4 +70,20 @@ assert.deepEqual(data.normalizeRoute(route,'b').map(d=>d.id),['b1','b2','a1','a3
 unique('b');
 assert.equal(route.profile.selectedTripId,'b');
 console.log('Route order normalization, reordering, and migration passed');
+// Imported/legacy locations may lack coordinates: never render them as valid map pins.
+assert.equal(data.hasCoordinates({lat:46.85,lng:9.53}),true);
+assert.equal(data.hasCoordinates({lat:0,lng:0}),true,'zero coordinates are valid');
+assert.equal(data.hasCoordinates({lat:'',lng:9.53}),false);
+assert.equal(data.hasCoordinates({lat:46.85,lng:null}),false);
+assert.equal(data.hasCoordinates({lat:91,lng:10}),false);
+assert.equal(data.hasCoordinates({lat:46,lng:'not a number'}),false);
+const invalidBudget=makeState();
+invalidBudget.trips.unshift({id:'old',name:'Old trip',budgetCurrency:'XYZ'});
+assert.throws(()=>data.validateBackup(invalidBudget),/Invalid trip budget currency/);
+invalidBudget.trips[0].budgetCurrency='SGD';
+invalidBudget.profile.exchangeBudgetCurrency='EUR';
+assert.equal(data.validateBackup(invalidBudget).profile.exchangeBudgetCurrency,'EUR');
+invalidBudget.profile.exchangeBudgetCurrency='XYZ';
+assert.throws(()=>data.validateBackup(invalidBudget),/Invalid exchange budget currency/);
+console.log('Map location validation and budget currency protections passed');
 console.log('UI/data audit checks passed');
