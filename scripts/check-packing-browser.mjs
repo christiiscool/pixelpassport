@@ -126,6 +126,7 @@ try {
  await page.locator('[data-phone-nav="home"]').click();
  await page.locator('#react-dashboard').waitFor({timeout:10000});
  await page.waitForTimeout(400);
+ assert.equal(await page.locator('.scene-action-rail').evaluate(el=>getComputedStyle(el).display),'none','Home should not duplicate the fixed mobile navigation');
  await page.screenshot({path:'artifacts/home-mobile-review.png',fullPage:true,animations:'disabled'});
  await page.locator('[data-phone-nav="trips"]').click();
  await page.waitForTimeout(250);

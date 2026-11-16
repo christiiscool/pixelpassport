@@ -66,3 +66,11 @@ body{font-family:var(--body);color:var(--ink);background:linear-gradient(115deg,
 @media(prefers-reduced-motion:reduce){
  .phone-nav button:active{transform:none}
 }
+
+/* Mobile Home already has fixed primary navigation; remove the duplicate illustrated shortcuts. */
+@media(max-width:800px){
+ body[data-page="home"] .scene-action-rail{display:none!important}
+ body[data-page="home"] .reference-landscape{overflow:hidden;border-radius:11px 11px 0 0}
+ body[data-page="home"] .reference-dashboard{border-radius:12px;overflow:hidden}
+ body[data-page="home"] .reference-welcome{border-top:1px solid #d7dfcd}
+}
