@@ -113,6 +113,8 @@ try{
  await create('setBudget',{exchangeBudget:'3000'});
  assert.equal((await state()).profile.exchangeBudgetCurrency,'EUR');
  assert.equal((await state()).profile.exchangeBudget,'3000');
+ assert.match(await page.locator('.remaining-panel strong').innerText(),/Incomplete/,'Remaining balance is withheld while actuals need conversion');
+ assert.match(await page.locator('.main .stat').last().innerText(),/percentage unavailable/i,'Budget utilization is not reported as zero with missing expenses');
  await cleanShot('artifacts/finance-budget-after-currency.png');
  // Preserve user-created locations while recovering incomplete coordinates.
  await page.evaluate(mainId=>{
