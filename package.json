@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "node server.mjs",
-    "check": "node --check dist/app.js && node --check dist/storybook.js && node --check dist/living-world.js && node --check dist/character-world.js && node scripts/check-living-model.mjs && node scripts/check-avatar-model.mjs && node --check dist/packing-model.js && node --check dist/packing-upgrade.js && node --check dist/data-safety.js && node scripts/check-audit.mjs && node scripts/check-packing-upgrade.mjs && node scripts/check-travel-import.mjs && node scripts/check-ui-audit.mjs",
-    "build": "node scripts/build-dashboard.mjs"
+    "check": "node --check dist/app.js && node --check dist/storybook.js && node --check dist/living-world.js && node --check dist/character-world.js && node scripts/check-living-model.mjs && node scripts/check-avatar-model.mjs && node --check dist/packing-model.js && node --check dist/packing-upgrade.js && node --check dist/data-safety.js && node --check dist/reliability.js && node scripts/check-audit.mjs && node scripts/check-packing-upgrade.mjs && node scripts/check-travel-import.mjs && node scripts/check-ui-audit.mjs && node scripts/check-reliability.mjs",
+    "build": "node scripts/build-dashboard.mjs",
+    "test:browser": "node scripts/check-packing-browser.mjs && node scripts/check-trips-browser.mjs && node scripts/check-finance-map-browser.mjs && node scripts/check-recovery-browser.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",

@@ -1,0 +1,14 @@
+/* Visible recovery states, sharing the planner's quiet paper-and-sage palette. */
+.data-recovery{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:12px 0 18px;padding:15px 17px;border:1px solid #dbc3b6;border-left:4px solid #b77864;border-radius:11px;background:#fff3e9;color:#63493f;box-shadow:0 2px 0 #e5d7c8}
+.data-recovery-copy{min-width:0;flex:1}
+.data-recovery-copy strong{display:block;font:800 14px/1.4 Nunito,system-ui,sans-serif;color:#684b40}
+.data-recovery-copy p{margin:5px 0 0;font:600 12px/1.6 Nunito,system-ui,sans-serif;overflow-wrap:anywhere}
+.data-recovery-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.data-recovery-actions button{min-height:44px;padding:9px 12px;border:1px solid #c5ab9b;border-radius:8px;background:#fffdf5;font:800 12px Nunito,system-ui,sans-serif;color:#634d42;cursor:pointer}
+.data-recovery-actions button:hover{background:#f6e7d8}
+.data-recovery-actions button:focus-visible{outline:3px solid #476f66;outline-offset:3px}
+.data-recovery-success{border-color:#b9ceb6;border-left-color:#648d70;background:#eff6e9;color:#416448}
+.data-recovery-success .data-recovery-copy strong{color:#416448}
+.data-recovery-offline,.data-recovery-warning{border-color:#d4cda7;border-left-color:#ad9459;background:#fff9e5;color:#6f623b}
+.modal .data-recovery{flex-direction:column;align-items:stretch;margin:13px 0 0}
+@media(max-width:800px){.data-recovery{flex-direction:column;align-items:stretch;gap:10px;padding:12px;margin:10px 0 14px}.data-recovery-actions button{flex:1}.data-recovery-copy p{font-size:12px}.data-recovery-copy strong{font-size:14px}}

@@ -16,25 +16,22 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Build and run syntax checks
+      - name: Build and run syntax and model checks
         run: |
           npm run build
           npm run check
-          node scripts/check-packing-upgrade.mjs
       - name: Install browser tooling
         run: |
           npm install --no-save playwright@1.56.1
           npx playwright install --with-deps chromium
-      - name: Test packing, trips, map, bookings and budget in Chromium
+      - name: Test responsive workflows and failure recovery in Chromium
         run: |
           npm run dev > /tmp/pixel-passport-server.log 2>&1 &
           for i in $(seq 1 40); do
             if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
             sleep 1
           done
-          node scripts/check-packing-browser.mjs
-          node scripts/check-trips-browser.mjs
-          node scripts/check-finance-map-browser.mjs
+          npm run test:browser
       - uses: actions/upload-artifact@v4
         if: always()
         with:
