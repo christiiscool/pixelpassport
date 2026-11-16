@@ -211,3 +211,44 @@ body[data-ambient=off] .packing-v2 *,body[data-hidden=true] .packing-v2 *{animat
  .pack-stats em{font-size:8px}
  .pack-find-row .btn{padding:7px 8px;font-size:11px}
 }
+
+/* November polish pass: one trip selector, clearer packing controls and less visual repetition. */
+.pack-trip{display:flex;align-items:center;gap:12px;padding:10px 15px;background:#fcf6e9;border-color:#d5d9c4;box-shadow:none}
+.pack-trip-picker{display:flex!important;flex:1 1 auto;align-items:center;gap:14px;min-width:0;font-weight:800}
+.pack-trip-picker>span{flex:none;color:#667d69;font:900 10px Nunito,sans-serif;letter-spacing:1.3px;white-space:nowrap}
+.pack-trip-picker>select{flex:1 1 auto;max-width:410px;min-width:0;min-height:42px;border:1px solid #b6cbb8;background:#f3f6ed;color:#325a49;border-radius:9px;padding:7px 12px;font:800 14px Nunito,sans-serif}
+.pack-trip>.btn{flex:none;margin-left:auto}
+.pack-hero-actions .btn.ghost{background:#fff9ebd9;border:1px solid #b9cbb9;box-shadow:0 2px 0 #b3c3b0;color:#375e4e;min-height:40px;padding:8px 15px;font-size:12px}
+.pack-hero-actions .btn.ghost:hover{background:#ecf3e2}
+.pack-filter-note{display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid #c7d6c2;border-radius:9px;background:#edf4e8;color:#426653;padding:8px 12px;margin:0 0 9px;font:750 12px Nunito,sans-serif}
+.pack-filter-note button{min-height:36px;border:1px solid #b4c7b4;border-radius:7px;background:#fffdf7;color:#365c4a;padding:6px 11px;font:800 12px Nunito,sans-serif}
+.pack-filter-note button:hover{background:#deecdc}
+.pack-card{box-shadow:0 2px 0 #d3decf}
+.pack-card>p{color:#64766d}
+.pack-card .pack-quantity output{font:900 14px Nunito,sans-serif;color:#2d5847}
+.pack-card-actions button:last-child{background:transparent;border-color:#d9c7c0;color:#925c54}
+.pack-card-actions button:last-child:hover{background:#f7e7e1}
+.pack-section-head{margin-top:19px}
+.pack-chapter-nav button{letter-spacing:.1px}
+@media(max-width:800px){
+ .pack-trip{display:flex;align-items:center;gap:7px;padding:9px 11px;margin-bottom:8px}
+ .pack-trip-picker{display:flex!important;flex:1;gap:6px;min-width:0}
+ .pack-trip-picker>span{font-size:9px;letter-spacing:.35px;max-width:62px;white-space:normal;line-height:1.2}
+ .pack-trip-picker>select{min-width:0;max-width:none;min-height:43px;font-size:12px;padding:7px 4px}
+ .pack-trip>.btn{min-height:43px;min-width:0;margin-left:0;font-size:10px;padding:6px 7px;white-space:normal;max-width:90px}
+ .pack-hero-actions{margin-top:5px}
+ .pack-hero-actions .btn.ghost{min-height:36px;font-size:11px;padding:6px 11px}
+ .pack-stats>div{border-radius:10px}
+ .pack-stats p{color:#5c7167}
+ .pack-chapter-nav button{font-size:11px}
+ .pack-filter-note{font-size:11px;padding:8px 10px}
+ .pack-filter-note button{font-size:11px;white-space:nowrap}
+ .pack-card h3{font-size:19px}
+ .pack-card>p{font-size:12px}
+ .pack-card .pack-quantity output{font-size:15px}
+ .pack-card-actions button:last-child{font-size:11px}
+}
+@media(max-width:370px){
+ .pack-trip-picker>span{display:none}
+ .pack-trip>.btn{max-width:82px;font-size:9px}
+}

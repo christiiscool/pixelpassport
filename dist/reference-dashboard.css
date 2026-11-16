@@ -43,3 +43,26 @@ body{font-family:var(--body);color:var(--ink);background:linear-gradient(115deg,
 .destination-card .actions .btn.icon img{display:block;width:24px;height:24px;object-fit:contain;image-rendering:auto}
 .destination-card .actions .btn.icon.danger{background:#f9e9e5;border-color:#c79c98}
 @container (max-width:340px){.destination-card .actions{grid-template-columns:repeat(5,minmax(0,1fr))}.destination-card .actions .btn.primary{grid-column:1/-1}.destination-card .actions .btn.icon{width:100%;min-width:0}}
+
+/* Consistent navigation and accessible mobile menu — November usability pass. */
+.sidebar-close{display:none}
+.sidebar .nav button[aria-current="page"]{font-weight:900}
+@media(max-width:800px){
+ html.navigation-open{overflow:hidden}
+ .sidebar.open{box-shadow:8px 0 30px #263d3d44;overscroll-behavior:contain}
+ .sidebar-close{display:flex;justify-content:center;align-items:center;gap:7px;width:calc(100% - 20px);min-height:44px;margin:4px 10px 6px;border:1px solid #bdcdb9;background:#edf3e6;border-radius:9px;color:#355d4b;font:800 13px Nunito,sans-serif;cursor:pointer}
+ .sidebar-close:hover{background:#dfecdc}
+ .sidebar .nav button{border-radius:11px}
+ .sidebar .nav button[aria-current="page"]{background:#e1eddb;border-left:3px solid #608975;color:#2f604b}
+ .phone-nav{background:#fef9eefa;border-top:1px solid #b9c5ac;box-shadow:0 -3px 19px #55674b20;padding:5px max(6px,env(safe-area-inset-left)) calc(5px + env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-right))}
+ .phone-nav button{position:relative;border-radius:11px;font-size:11px;gap:2px;color:#6e766e;min-height:56px}
+ .phone-nav button .painted-icon{width:30px;height:30px}
+ .phone-nav button.active{background:#e5efde;color:#37644f;box-shadow:inset 0 -2px #8ab79a}
+ .phone-nav button:active{transform:scale(.97)}
+ .phone-nav button[aria-expanded="true"]{background:#e5efde;color:#37644f}
+ .phone-menu-scrim{background:#25382e85}
+ .sidebar .nav button{min-height:48px}
+}
+@media(prefers-reduced-motion:reduce){
+ .phone-nav button:active{transform:none}
+}
