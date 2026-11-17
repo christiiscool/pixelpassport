@@ -14,13 +14,14 @@ for(const [name,engine] of Object.entries({chromium,firefox,webkit})){
  const context=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'reduce'});
  await context.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
  await context.addInitScript(data=>{if(localStorage.getItem('pixel-passport-v1')===null)localStorage.setItem('pixel-passport-v1',JSON.stringify(data));},fixture());
- const page=await context.newPage();page.setDefaultTimeout(15000);const errors=[],confirmations=[];let approve=true;
+ const page=await context.newPage();page.setDefaultTimeout(15000);const errors=[],confirmations=[];let approve=true,releaseLookup=()=>{};
  page.on('pageerror',error=>errors.push(error.message));page.on('dialog',dialog=>{confirmations.push(dialog.message());return approve?dialog.accept():dialog.dismiss();});
  const ready=async()=>{await page.waitForFunction(()=>window.PPBoot?.ready||window.PPBoot?.failed);assert.equal(await page.evaluate(()=>window.PPBoot.ready),true,await page.locator('body').innerText());};
  const stored=()=>page.evaluate(()=>localStorage.getItem('pixel-passport-v1'));
  const assertValid=()=>page.evaluate(()=>{window.PPData.validateBackup(JSON.parse(localStorage.getItem('pixel-passport-v1')));return true;});
  const go=async section=>{await page.locator('.sidebar [data-nav="'+section+'"]').click();await page.waitForFunction(s=>document.body.dataset.page===s,section);};
  const submit=()=>page.locator('#dialog-form [type="submit"]').click();
+ const lookup=async()=>{const request=page.waitForRequest(r=>r.url().startsWith('https://nominatim.openstreetmap.org/'),{timeout:8000});await page.locator('#lookup-place').click();await request;};
  try{
   await page.goto(base+'#trips',{waitUntil:'domcontentloaded'});await ready();
   await page.locator('[data-action="editDestination"][data-id="d1"]').click();
@@ -44,6 +45,7 @@ for(const [name,engine] of Object.entries({chromium,firefox,webkit})){
   await submit();await page.locator('#dialog-form').waitFor({state:'detached'});await assertValid();
   data=JSON.parse(await stored());assert.equal(data.bookings.find(b=>b.id==='b1').expenseId,'');assert.equal(data.expenses.find(e=>e.id==='e1').amount,'200');
   await page.reload({waitUntil:'domcontentloaded'});await ready();await assertValid();
+  console.log(name+': linked moves and reload passed');
   await go('trips');await page.locator('[data-action="newTrip"]').first().click();
   await page.locator('#dialog-form [name="name"]').fill('   ');const validBefore=await stored();await submit();
   await page.locator('#data-recovery-notice').filter({hasText:'Missing name'}).waitFor();assert.equal(await stored(),validBefore);
@@ -54,25 +56,25 @@ for(const [name,engine] of Object.entries({chromium,firefox,webkit})){
   await go('settings');const profileBefore=await stored();await page.locator('[name="weightTarget"]').fill('-5');
   await page.locator('[data-action="saveProfile"]').click();await page.locator('#data-recovery-notice').filter({hasText:'weightTarget'}).waitFor();
   assert.equal(await stored(),profileBefore);await page.locator('[name="weightTarget"]').fill('20');await page.locator('[data-action="saveProfile"]').click();await assertValid();
-  let mode='delayed',release,requested;
-  let gate=new Promise(resolve=>{release=resolve;}),requestedPromise=new Promise(resolve=>{requested=resolve;});
+  console.log(name+': form rejection and correction passed');
+  let mode='delayed',gate=new Promise(resolve=>{releaseLookup=resolve;});
   await context.route('https://nominatim.openstreetmap.org/**',async route=>{
-   if(mode==='delayed'){requested();await gate;}
+   if(mode==='delayed')await gate;
    const payload=mode==='invalid'?[{lat:'999',lon:'9.53'}]:[{lat:'46.85',lon:'9.53'}];
-   try{await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(payload)});}catch(error){if(!route.request().failure())throw error;}
+   try{await route.fulfill({status:200,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify(payload)});}catch(error){if(!route.request().failure())throw error;}
   });
   await go('trips');await page.locator('[data-action="newDestination"]').first().click();
   await page.locator('#dialog-form [name="name"]').fill('Old query');await page.locator('#dialog-form [name="country"]').fill('Switzerland');
-  await page.locator('#lookup-place').click();await requestedPromise;await page.locator('.modal .close').click();release();await page.waitForTimeout(150);
+  await lookup();await page.locator('.modal .close').click();releaseLookup();await page.waitForTimeout(150);
   assert.equal(await page.locator('#dialog-form').count(),0);assert.deepEqual(errors,[],'closed lookup never writes to a missing form');
-  gate=new Promise(resolve=>{release=resolve;});requestedPromise=new Promise(resolve=>{requested=resolve;});
+  gate=new Promise(resolve=>{releaseLookup=resolve;});
   await page.locator('[data-action="newDestination"]').first().click();await page.locator('#dialog-form [name="name"]').fill('Before query');
-  await page.locator('#dialog-form [name="country"]').fill('Switzerland');await page.locator('#lookup-place').click();await requestedPromise;
-  await page.locator('#dialog-form [name="name"]').fill('After query');release();await page.waitForFunction(()=>!document.getElementById('lookup-place').disabled);
+  await page.locator('#dialog-form [name="country"]').fill('Switzerland');await lookup();
+  await page.locator('#dialog-form [name="name"]').fill('After query');releaseLookup();await page.waitForFunction(()=>!document.getElementById('lookup-place').disabled);
   assert.equal(await page.locator('#dialog-form [name="lat"]').inputValue(),'','stale query cannot populate changed form');
-  mode='invalid';await page.locator('#lookup-place').click();await page.waitForFunction(()=>!document.getElementById('lookup-place').disabled);
+  mode='invalid';await lookup();await page.waitForFunction(()=>!document.getElementById('lookup-place').disabled);
   assert.equal(await page.locator('#dialog-form [name="lat"]').inputValue(),'','invalid coordinates not applied');
-  mode='success';await page.locator('#lookup-place').click();await page.waitForFunction(()=>document.querySelector('#dialog-form [name="lat"]').value==='46.85');
+  mode='success';await lookup();await page.waitForFunction(()=>document.querySelector('#dialog-form [name="lat"]').value==='46.85');
   await page.screenshot({path:'artifacts/release-'+name+'-safe-lookup.png',fullPage:true,animations:'disabled'});
   await submit();await page.locator('#dialog-form').waitFor({state:'detached'});await assertValid();
   await page.reload({waitUntil:'domcontentloaded'});await ready();await assertValid();
@@ -81,5 +83,5 @@ for(const [name,engine] of Object.entries({chromium,firefox,webkit})){
  }catch(error){
   results.push({engine:name,status:'failed',error:String(error)});await page.screenshot({path:'artifacts/release-'+name+'-save-invariants-failure.png',fullPage:true,animations:'disabled'}).catch(()=>{});
   writeFileSync('artifacts/release-'+name+'-save-invariants-failure.txt',String(error)+'\n'+errors.join('\n'));throw error;
- }finally{writeFileSync('artifacts/release-save-invariants.json',JSON.stringify(results,null,2));await browser.close();}
+ }finally{releaseLookup();writeFileSync('artifacts/release-save-invariants.json',JSON.stringify(results,null,2));await browser.close();}
 }

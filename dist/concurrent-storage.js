@@ -16,9 +16,15 @@
   const reload=document.createElement('button');reload.type='button';reload.textContent='Reload latest plans';reload.dataset.crossTabReload='true';reload.onclick=()=>{if(document.querySelector('#dialog-form')&&!confirm('Reload newer plans? Unsaved edits in this form will be lost.'))return;location.reload();};
   controls.append(backup,reload);panel.append(controls);if(host.classList.contains('form-actions'))host.before(panel);else host.after(panel);
  }
- save=function(options={}){
-  let actual;try{actual=localStorage.getItem(KEY);}catch{return previousSave(options);}
+ function assertCurrent(){
+  let actual;try{actual=localStorage.getItem(KEY);}catch{return;}
   if(actual!==expected){conflicted=true;window.PPData.restore(state,durableState);paint();const error=Error('Another tab saved newer plans. Reload before saving from this tab.');error.storageFailure=true;error.crossTabConflict=true;throw error;}
+ }
+ // The reliability layer rechecks immediately after any confirmation dialogue.
+ // This remains optimistic stale-writer protection, not atomic cross-tab locking.
+ window.PPAssertStorageCurrent=assertCurrent;
+ save=function(options={}){
+  assertCurrent();
   const result=previousSave(options);expected=JSON.stringify(durableState);return result;
  };
  writeMapPreferences=function(){try{save({render:false});}catch(error){if(!error.storageFailure)toast(error.message);}};

@@ -54,11 +54,14 @@ save=function(options={}){
     throw error;
   }
   try{
+    // Another tab may have saved while a native confirmation was open.
+    window.PPAssertStorageCurrent?.();
     const result=originalSave(options);
     if(['Changes were not saved','Changes need review'].includes(notice?.title))notice=null;
     if(detached.length)announce('Trip links updated',detached.length+' booking-to-expense connection(s) were removed after your confirmation. All booking and expense records were kept.','success');
     paint();return result;
   }catch(error){
+    if(error.crossTabConflict)throw error;
     if(error.storageFailure){
       if(!state.trips.some(t=>t.id===selectedTrip))selectedTrip=state.trips.some(t=>t.id===durableState.profile.selectedTripId)?durableState.profile.selectedTripId:state.trips[0]?.id;
       if(!state.destinations.some(d=>d.id===selectedDestination))selectedDestination=null;
