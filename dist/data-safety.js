@@ -134,16 +134,39 @@ function rehomeTrip(data,deletedId){
   const replacement=data.trips?.[0]?.id;if(!replacement)throw Error('At least one trip is required');
   const existing=normalizeRoute(data,replacement),incoming=data.destinations.filter(d=>d.tripId===deletedId).sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0));
   incoming.forEach((d,i)=>{d.tripId=replacement;d.order=existing.length+i;});
-  for(const key of ['bookings','expenses','tasks','skiTrips','packing','transfers','journal'])for(const item of data[key]||[])if(item.tripId===deletedId)item.tripId=replacement;
+  for(const key of ['activities','bookings','expenses','tasks','skiTrips','packing','transfers','journal'])for(const item of data[key]||[])if(item.tripId===deletedId)item.tripId=replacement;
   if(data.profile?.selectedTripId===deletedId)data.profile.selectedTripId=replacement;return replacement;
 }
 function moveDestinationTrip(data,destination,newTripId){
   if(!data.trips.some(t=>t.id===newTripId))throw Error('Choose an existing trip');
   if(destination.tripId===newTripId)return false;
   const oldTripId=destination.tripId,order=normalizeRoute(data,newTripId).length;
-  for(const key of ['bookings','expenses','tasks','skiTrips'])for(const item of data[key]||[])if(item.destinationId===destination.id)item.tripId=newTripId;
+  // Preserve optional trip links on all records associated with the moved stop.
+  for(const key of ['activities','bookings','expenses','tasks','skiTrips','journal','packing','transfers']){
+    for(const item of data[key]||[])if(item.destinationId===destination.id&&Object.hasOwn(item,'tripId'))item.tripId=newTripId;
+  }
   destination.tripId=newTripId;destination.order=order;normalizeRoute(data,oldTripId);return true;
 }
+// Return connections made invalid by a move. The persistence boundary asks for
+// confirmation before saving; amounts and records themselves are never deleted.
+function detachMovedExpenseLinks(data,previous){
+  const oldExpenses=new Map((previous.expenses||[]).map(e=>[e.id,e]));
+  const oldBookings=new Map((previous.bookings||[]).map(b=>[b.id,b]));
+  const expenses=new Map((data.expenses||[]).map(e=>[e.id,e]));
+  const detached=[];
+  for(const booking of data.bookings||[]){
+    const expense=expenses.get(booking.expenseId);
+    if(!expense||!booking.tripId||!expense.tripId||booking.tripId===expense.tripId)continue;
+    const oldExpense=oldExpenses.get(expense.id),oldBooking=oldBookings.get(booking.id);
+    const expenseMoved=oldExpense&&oldExpense.tripId!==expense.tripId;
+    const bookingMoved=oldBooking&&oldBooking.tripId!==booking.tripId;
+    if(!expenseMoved&&!bookingMoved)continue;
+    detached.push({bookingId:booking.id,expenseId:expense.id});
+    booking.expenseId='';
+  }
+  return detached;
+}
+
 function reconcileCurrencies(data){
   if(!data.rates||!data.profile?.baseCurrency)throw Error('Refresh live exchange rates first.');
   const base=data.profile.baseCurrency;let converted=0,skipped=0;
@@ -158,5 +181,5 @@ function reconcileCurrencies(data){
   }
   return {converted,skipped};
 }
-root.PPData={restore,validateBackup,validDate,successor,conversion,safeURL,hasCoordinates,validateRates,normalizeRoute,reorderDestination,rehomeTrip,moveDestinationTrip,reconcileCurrencies};
+root.PPData={restore,validateBackup,validDate,successor,conversion,safeURL,hasCoordinates,validateRates,normalizeRoute,reorderDestination,rehomeTrip,moveDestinationTrip,detachMovedExpenseLinks,reconcileCurrencies};
 })(typeof window==='undefined'?globalThis:window);

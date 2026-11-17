@@ -2,7 +2,13 @@
 (function(){
 'use strict';
 const MAX_BACKUP_BYTES=20*1024*1024;
-let notice=null,importBusy=false,rateRequest=0,activeRateController=null;
+let notice=null,importBusy=false,rateRequest=0,activeRateController=null,activeLookupController=null;
+function restoreFailedState(){
+  window.PPData.restore(state,durableState);
+  if(state.trips.some(t=>t.id===durableState.profile.selectedTripId))selectedTrip=durableState.profile.selectedTripId;
+  else if(!state.trips.some(t=>t.id===selectedTrip))selectedTrip=state.trips[0]?.id;
+  if(!state.destinations.some(d=>d.id===selectedDestination))selectedDestination=null;
+}
 const originalSave=save,originalEnhance=window.pixelPassportEnhance;
 function announce(title,message,kind='error'){
   notice={title,message,kind};paint();
@@ -32,9 +38,25 @@ function paint(){
   if(host.classList.contains('form-actions'))host.before(panel);else host.after(panel);
 }
 save=function(options={}){
+  let detached;
+  try{
+    detached=window.PPData.detachMovedExpenseLinks(state,durableState);
+    // Never persist data that the next startup would reject.
+    window.PPData.validateBackup(state);
+    if(detached.length&&!confirm('Moving these records will unlink '+detached.length+' booking-to-expense connection(s) across different trips. Both bookings and expenses will be kept, with their amounts unchanged. Continue?')){
+      throw Error('Save cancelled. No stored plans were changed.');
+    }
+  }catch(cause){
+    restoreFailedState();
+    const error=Error(cause.message||'Review the values and linked records before saving.');
+    error.validationFailure=true;
+    announce('Changes need review',error.message+' Your last saved plans are unchanged; the open form can still be corrected.');
+    throw error;
+  }
   try{
     const result=originalSave(options);
-    if(notice?.kind==='error'&&notice.title==='Changes were not saved')notice=null;
+    if(['Changes were not saved','Changes need review'].includes(notice?.title))notice=null;
+    if(detached.length)announce('Trip links updated',detached.length+' booking-to-expense connection(s) were removed after your confirmation. All booking and expense records were kept.','success');
     paint();return result;
   }catch(error){
     if(error.storageFailure){
@@ -47,7 +69,7 @@ save=function(options={}){
 };
 window.pixelPassportEnhance=function(...args){const result=originalEnhance?.apply(this,args);paint();return result;};
 const previousClose=closeModal;
-closeModal=function(...args){const result=previousClose.apply(this,args);paint();return result;};
+closeModal=function(...args){activeLookupController?.abort();activeLookupController=null;const result=previousClose.apply(this,args);paint();return result;};
 window.addEventListener('offline',paint);window.addEventListener('online',paint);
 document.addEventListener('DOMContentLoaded',paint);
 // Capture only this input so the older import handler never also replaces state.
@@ -110,5 +132,39 @@ actions.refreshRates=async()=>{
       if(button?.isConnected){button.disabled=false;button.removeAttribute('aria-busy');button.textContent=label;}
     }
   }
+};
+
+// Late lookup responses belong to one live form and its original query only.
+const previousDestinationForm=destinationForm;
+destinationForm=function(...args){
+  previousDestinationForm.apply(this,args);
+  const form=document.getElementById('dialog-form'),button=document.getElementById('lookup-place');
+  if(!form||!button)return;
+  button.onclick=async()=>{
+    const name=form.elements.name.value.trim(),country=form.elements.country.value.trim();
+    if(!name){toast('Enter a place name first');return;}
+    activeLookupController?.abort();
+    const controller=new AbortController();activeLookupController=controller;
+    const label=button.textContent;
+    const isCurrent=()=>activeLookupController===controller&&form.isConnected&&document.getElementById('dialog-form')===form&&form.elements.name.value.trim()===name&&form.elements.country.value.trim()===country;
+    button.disabled=true;button.setAttribute('aria-busy','true');button.textContent='Looking up coordinates...';
+    const timer=setTimeout(()=>controller.abort(),10000);
+    try{
+      const query=name+(country?', '+country:'');
+      const response=await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q='+encodeURIComponent(query),{signal:controller.signal});
+      if(!response.ok)throw Error('Location lookup is unavailable. Enter coordinates manually.');
+      const results=await response.json(),place=Array.isArray(results)?results[0]:null;
+      if(!place||!window.PPData.hasCoordinates({lat:place.lat,lng:place.lon}))throw Error('No valid location was returned. Enter coordinates manually.');
+      if(!isCurrent())return;
+      form.elements.lat.value=String(Number(place.lat));form.elements.lng.value=String(Number(place.lon));
+      toast('Coordinates found. Review them before saving.');
+    }catch(error){
+      if(isCurrent())toast(error.name==='AbortError'?'Location lookup timed out. Try again or enter coordinates manually.':error.message);
+    }finally{
+      clearTimeout(timer);
+      if(activeLookupController===controller)activeLookupController=null;
+      if(button.isConnected){button.disabled=false;button.removeAttribute('aria-busy');button.textContent=label;}
+    }
+  };
 };
 })();
