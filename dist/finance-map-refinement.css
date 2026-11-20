@@ -1,0 +1,115 @@
+/* Pixel Passport — Map, Bookings and Budget visual refinement (review branch). */
+.atlas-overview,.booking-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 17px}
+.atlas-overview>div,.booking-summary>div{display:flex;flex-direction:column;gap:5px;min-width:0;background:linear-gradient(125deg,#f0f5e9,#fef9ed);border:1px solid #d6dccc;border-radius:12px;padding:14px 17px;box-shadow:0 2px 0 #dae4d5}
+.atlas-overview strong,.booking-summary strong{font:700 28px/1.1 Fraunces,Georgia,serif;color:#3d7055}
+.atlas-overview span,.booking-summary span{font:800 11px Nunito,sans-serif;letter-spacing:.2px;color:#6d8273}
+body[data-page="map"] .atlas-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:13px;padding:10px;border:1px solid #d7e0d3;background:#f7f7ed;border-radius:11px}
+body[data-page="map"] .atlas-toolbar input{min-height:44px;min-width:180px;flex:2}
+body[data-page="map"] .atlas-toolbar select{min-height:44px;min-width:140px;max-width:220px;flex:1;font:750 12px Nunito,sans-serif}
+body[data-page="map"] .atlas-toolbar>.btn{min-height:44px}
+.atlas-warning{border:1px solid #e0ca9b;border-left:4px solid #d1ad69;border-radius:9px;background:#fff6df;margin:0 0 11px;padding:11px 13px;font:750 12px/1.5 Nunito,sans-serif;color:#795a31}
+.atlas-place-row{min-width:0;gap:8px}
+.atlas-place-row>div{min-width:0;overflow-wrap:anywhere}
+.atlas-place-row .btn{flex:none;min-height:41px}
+body[data-page="map"] .atlas-lower{gap:14px}
+body[data-page="map"] .atlas-lower>.card{min-width:0}
+.map-safe-popup p{margin:6px 0 10px;font:700 12px Nunito,sans-serif;color:#587766}
+.map-safe-popup button{border:1px solid #9ebe9a;border-radius:7px;background:#e9f3e6;min-height:36px;padding:7px 11px;font:800 12px Nunito,sans-serif;cursor:pointer;color:#3a6750}
+.booking-alert{margin:0 0 16px;padding:12px 15px;border:1px solid #d9d9bc;border-radius:10px;background:#fbf8e9;color:#697969;font:650 12px/1.55 Nunito,sans-serif}
+.booking-alert strong{color:#445f4e}
+body[data-page="bookings"] .booking-toolbar{display:flex;gap:10px;align-items:end;flex-wrap:wrap;padding:12px;background:#f5f4e9;border:1px solid #e1dec9;border-radius:10px;margin:0 0 15px}
+.booking-toolbar label{display:grid;gap:5px;flex:1;min-width:135px;font:850 11px Nunito,sans-serif;color:#607866}
+.booking-toolbar select{width:100%;min-height:43px;max-width:none;font:700 12px Nunito,sans-serif}
+.booking-grid{gap:15px;align-items:stretch}
+.booking-card{position:relative;display:flex;flex-direction:column;gap:0;min-width:0;overflow:hidden!important;border-color:#d5d9c6!important;background:#fffdf5!important;box-shadow:0 2px 0 #d5dfce,0 9px 16px #7e896e1a!important;padding:16px!important}
+.booking-card-top{align-items:center;min-height:33px}
+.booking-card-top .place-icon{display:grid;place-items:center;background:#e9f0e6;border-radius:10px;width:45px;height:45px;font-size:25px}
+.booking-card-top .pill{max-width:45%;overflow-wrap:anywhere}
+.booking-card .booking-art{display:none}
+.booking-card-body{flex:1;min-width:0}
+.booking-card h3{font:700 22px/1.2 Fraunces,Georgia,serif;color:#355746!important;margin:13px 0 9px}
+.booking-card-meta{margin:0 0 13px;font:800 12px/1.55 Nunito,sans-serif;color:#607968;overflow-wrap:anywhere}
+.booking-card-meta span{display:block;margin-top:3px;font-weight:650;color:#8a9084}
+.booking-card-reference{padding:10px 11px;border:1px dashed #c5d5bf;border-radius:8px;background:#f2f5e9;display:flex;flex-direction:column;gap:4px}
+.booking-card-reference span{font:900 9px Nunito,sans-serif;letter-spacing:1px;color:#829584}
+.booking-card-reference strong{font:800 13px Nunito,sans-serif;color:#496753;overflow-wrap:anywhere}
+.booking-card-cost{margin:13px 0 6px;font:750 13px Nunito,sans-serif;color:#355c48}
+.booking-card-cost small{font:650 11px Nunito,sans-serif;color:#869184;display:block;margin-top:3px}
+.booking-card-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid #e2e8d8}
+.booking-card-actions .btn{min-height:43px;box-shadow:none!important;font:800 11px Nunito,sans-serif}
+.booking-card-actions .btn.primary{flex:1}
+.booking-card-actions .btn.icon.danger{min-width:43px}
+.booking-empty{grid-column:1/-1;padding:22px;text-align:center;background:#f4f6ec;border:1px dashed #bad0b9;border-radius:10px;color:#61806b;font:700 13px Nunito,sans-serif}
+body[data-page="budget"] .finance-filter-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+body[data-page="budget"] .finance-filter-toolbar select{min-height:43px;flex:1 1 140px;max-width:220px}
+body[data-page="budget"] .trip-budget-row{min-width:0;padding:15px;background:#f7f7ec;border:1px solid #d6e0ce;border-radius:11px}
+body[data-page="budget"] .trip-budget-row strong{display:block;font:700 18px Fraunces,Georgia,serif;color:#3d6650}
+body[data-page="budget"] .trip-budget-row p{font:700 12px/1.6 Nunito,sans-serif;color:#748674;margin:5px 0 0}
+body[data-page="budget"] .bar-row{min-width:0}
+body[data-page="budget"] .list-row{min-width:0}
+body[data-page="budget"] .list-row>div:first-child{min-width:0;overflow-wrap:anywhere}
+body[data-page="budget"] .list-row>div:last-child{flex-wrap:wrap}
+@media(max-width:800px){
+ .atlas-overview,.booking-summary{gap:7px;margin-bottom:12px}
+ .atlas-overview>div,.booking-summary>div{padding:10px 8px}
+ .atlas-overview strong,.booking-summary strong{font-size:23px}
+ .atlas-overview span,.booking-summary span{font-size:10px;line-height:1.22}
+ body[data-page="map"] .atlas-toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ body[data-page="map"] .atlas-toolbar input{grid-column:1/-1;min-width:0;max-width:none;width:100%}
+ body[data-page="map"] .atlas-toolbar .btn{grid-column:1/-1}
+ body[data-page="map"] .atlas-toolbar select{min-width:0;max-width:none;width:100%;font-size:12px}
+ body[data-page="map"] .map-shell{height:340px}
+ body[data-page="map"] .atlas-lower{grid-template-columns:minmax(0,1fr)}
+ .atlas-warning{font-size:11px}
+ .booking-alert{font-size:11px;padding:10px 12px}
+ body[data-page="bookings"] .booking-toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:10px}
+ .booking-toolbar label{min-width:0}
+ .booking-toolbar label:first-child{grid-column:1/-1}
+ .booking-toolbar select{font-size:12px}
+ .booking-grid{grid-template-columns:minmax(0,1fr);gap:11px}
+ .booking-card{padding:14px!important}
+ .booking-card h3{font-size:20px}
+ .booking-card-actions .btn{min-height:44px}
+ body[data-page="budget"] .finance-filter-toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ body[data-page="budget"] .finance-filter-toolbar select{min-width:0;max-width:none;width:100%;font-size:12px}
+ body[data-page="budget"] .finance-filter-toolbar select:first-child{grid-column:1/-1}
+}
+@media(max-width:360px){
+ .booking-card-actions .btn.primary{flex:1 1 100%}
+ body[data-page="map"] .atlas-toolbar select{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+ .booking-card,.booking-grid{transition:none}
+}
+
+/* Consistent, compact illustrated introductions on small screens. */
+@media(max-width:800px){
+ body[data-page="bookings"] .page-banner-bookings,
+ body[data-page="budget"] .page-banner-budget{height:116px;margin-bottom:13px;box-shadow:0 2px 0 #c9d3be}
+ body[data-page="bookings"] .page-banner-bookings .page-banner-copy,
+ body[data-page="budget"] .page-banner-budget .page-banner-copy{top:14px;left:13px;max-width:235px}
+ body[data-page="bookings"] .page-banner-bookings .page-banner-copy h2,
+ body[data-page="budget"] .page-banner-budget .page-banner-copy h2{font-size:22px;line-height:1.08;margin:4px 0}
+ body[data-page="bookings"] .page-banner-bookings .page-banner-copy p,
+ body[data-page="budget"] .page-banner-budget .page-banner-copy p{display:none}
+ body[data-page="bookings"] .page-banner-bookings .page-banner-stamp,
+ body[data-page="budget"] .page-banner-budget .page-banner-stamp{display:none}
+ body[data-page="bookings"] .booking-summary{margin-bottom:12px}
+}
+
+/* React's IllustratedPageHeader replaces page-banner at runtime.
+   Compact the real rendered scene, not the placeholder it supersedes. */
+@media(max-width:800px){
+ body[data-page="bookings"] .living-page-header,
+ body[data-page="budget"] .living-page-header{height:118px;contain-intrinsic-size:auto 118px;margin-bottom:13px;overflow:hidden;border-radius:11px}
+ body[data-page="bookings"] .living-page-header .living-scene,
+ body[data-page="budget"] .living-page-header .living-scene,
+ body[data-page="bookings"] .living-page-header .page-setting,
+ body[data-page="budget"] .living-page-header .page-setting{height:118px;min-height:0}
+ body[data-page="bookings"] .living-page-header .page-heading,
+ body[data-page="budget"] .living-page-header .page-heading{top:11px;left:11px;right:auto;max-width:calc(100% - 75px);padding:8px 10px}
+ body[data-page="bookings"] .living-page-header .page-heading h2,
+ body[data-page="budget"] .living-page-header .page-heading h2{font-size:21px;line-height:1.15}
+ body[data-page="bookings"] .living-page-header .page-heading p,
+ body[data-page="budget"] .living-page-header .page-heading p{display:none}
+}

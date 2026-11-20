@@ -1,0 +1,9 @@
+.git
+node_modules
+artifacts
+source-art
+docs
+*.log
+.env
+.env.*
+release

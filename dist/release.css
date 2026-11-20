@@ -1,0 +1,16 @@
+/* Visible keyboard states and failure UI are part of the release, not only the demo. */
+:focus-visible{outline:3px solid #285b47!important;outline-offset:3px!important}
+.skip-to-content{position:fixed;top:8px;left:8px;transform:translateY(-180%);z-index:10000;padding:12px 18px;background:#fffaf0;color:#254f3c;border:2px solid #285b47;border-radius:8px;font:800 15px/1.4 sans-serif}
+.skip-to-content:focus{transform:none}
+[hidden]{display:none!important}
+.modal .muted,.modal .small-text{color:#52655a!important}
+.btn.primary{color:#244936!important}
+.boot-recovery{max-width:660px;margin:8vh auto;padding:30px;background:#fffaf0;border:1px solid #b9c8b8;border-radius:16px;color:#304e3c;box-shadow:0 8px 32px #31543c20;font:16px/1.6 system-ui,sans-serif}
+.boot-recovery h1{font:700 28px/1.2 Georgia,serif}
+.boot-recovery p{overflow-wrap:anywhere}
+.boot-actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.boot-actions button,.boot-recovery input{font:700 14px system-ui,sans-serif;min-height:44px;padding:10px;border:1px solid #8aa48d;background:#eaf1e4;color:#2b513c;border-radius:8px}
+.boot-recovery label{display:grid;gap:10px}
+.boot-recovery input{max-width:100%;box-sizing:border-box}
+@media(max-width:800px){.modal input.field,.modal select.field,.modal textarea.field{font-size:16px}.boot-recovery{margin:20px 12px;padding:22px}.boot-recovery h1{font-size:25px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.skip-to-content{transition:none}}
